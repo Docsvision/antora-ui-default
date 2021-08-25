@@ -1,0 +1,12 @@
+.uicontrol {
+  font-weight: 600;
+}
+
+.keyword {
+  font-weight: 700;
+}
+
+.parmname,
+.varname {
+  font-style: italic;
+}
