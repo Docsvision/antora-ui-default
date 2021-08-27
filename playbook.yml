@@ -20,6 +20,7 @@ ui:
     url: ./build/ui-bundle.zip
     snapshot: true
   supplemental_files:
+    - path: ui.yml
       contents: |
         static_files: [ search.html ]
     - path: search.html
