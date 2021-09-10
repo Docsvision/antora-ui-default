@@ -29,11 +29,11 @@ nav.pagination span::before {
 }
 
 nav.pagination .prev::before {
-  content: "Prev";
+  content: "Пред.";
 }
 
 nav.pagination .next::before {
-  content: "Next";
+  content: "След.";
 }
 
 nav.pagination a {
