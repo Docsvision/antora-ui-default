@@ -50,6 +50,22 @@ th {
   font-weight: var(--body-font-weight-bold);
 }
 
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
 em em { /* stylelint-disable-line */
   font-style: normal;
 }
@@ -69,6 +85,12 @@ button {
 button::-moz-focus-inner {
   border: none;
   padding: 0;
+}
+
+summary {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
 }
 
 table {

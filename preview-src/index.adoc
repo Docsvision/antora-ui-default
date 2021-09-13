@@ -6,7 +6,7 @@ Author Name
 :!table-caption:
 :page-pagination:
 
-image:multirepo-ssg.svg[Multirepo SSG,200,float=right]
+image:multirepo-ssg.svg[Multirepo SSG,200,150,float=right]
 Platonem complectitur mediocritatem ea eos.
 Ei nonumy deseruisse ius.
 Mel id omnes verear.
@@ -21,8 +21,10 @@ https://example.org[Curabitur,role=unresolved] ut massa aliquam, cursus enim et,
 
 Nominavi luptatum eos, an vim hinc philosophia intellegebat.
 Lorem pertinacia `expetenda` et nec, [.underline]#wisi# illud [.line-through]#sonet# qui ea.
+H~2~0.
+E = mc^2^.
 Eum an doctus <<liber-recusabo,maiestatis efficiantur>>.
-Eu mea inani iriure.
+Eu mea inani iriure.footnote:[Quisque porta facilisis tortor, vitae bibendum velit fringilla vitae! Lorem ipsum dolor sit amet, consectetur adipiscing elit.]
 
 [source,json]
 ----
@@ -49,6 +51,25 @@ This is an example paragraph.
 .Optional title
 [example]
 This is an example paragraph.
+
+++++
+<details>
+<summary class="title">Summary</summary>
+<div class="content">
+<div class="paragraph">
+<p>Details</p>
+</div>
+<details class="result">
+<summary class="title">Summary</summary>
+<div class="content">
+<div class="paragraph">
+<p>Details</p>
+</div>
+</div>
+</details>
+</div>
+</details>
+++++
 
 === Some Code
 
@@ -252,7 +273,7 @@ Est in reque homero principes, meis deleniti mediocrem ad has.
 Ex nam suas nemore dignissim, vel apeirian democritum et.
 
 .Antora is a multi-repo documentation site generator
-image::multirepo-ssg.svg[Multirepo SSG,250]
+image::multirepo-ssg.svg[Multirepo SSG,300,225]
 
 Make the switch today!
 
@@ -262,7 +283,7 @@ Make the switch today!
 Altera atomorum his ex, has cu elitr melius propriae.
 Eos suscipit scaevola at.
 
-[quote, 'Famous Person. Cum dicat putant ne.', 'Cum dicat putant ne. https://example.com[Famous Person Website]']
+[, 'Famous Person. Cum dicat putant ne.', 'Cum dicat putant ne. https://example.com[Famous Person Website]']
 ____
 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 Mauris eget leo nunc, nec tempus mi? Curabitur id nisl mi, ut vulputate urna.
