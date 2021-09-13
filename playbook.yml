@@ -5,6 +5,7 @@ site:
   robots: allow
 urls:
   latest_version_segment: '5.5.16'
+  latest_version_segment_strategy: replace
   html_extension_style: indexify
 content:
   branches: '5.5.16'
