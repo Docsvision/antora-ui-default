@@ -35,7 +35,7 @@ ui:
             <meta name="generator" content="Antora 2.3.4">
             <link rel="stylesheet" href="/_/css/site.css">
             <script>var uiRootPath = '/_'</script>
-        	<script async src="/_/js/vendor/fess-ss.js"></script>
+        	<script async src="/_/js/vendor/fess-ss.min.js"></script>
           </head>
           <body class="article">
         <header class="header">
@@ -80,7 +80,7 @@ ui:
             fess.type = 'text/javascript';
             fess.async = true;
             // Set the URL of FSS JS to src
-            fess.src = 'http://192.168.56.136:5000/_/js/vendor/fess-ss.js';
+            fess.src = 'http://192.168.56.136:5000/_/js/vendor/fess-ss.min.js';
             fess.charset = 'utf-8';
             fess.setAttribute ('id', 'fess-ss');
             // Set the URL of Fess search API to fess-url
