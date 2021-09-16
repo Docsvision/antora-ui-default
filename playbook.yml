@@ -18,7 +18,6 @@ git:
 ui:
   bundle:
     url: ./build/ui-bundle.zip
-    snapshot: true
   supplemental_files:
     - path: ui.yml
       contents: |
@@ -106,9 +105,9 @@ asciidoc:
     sectids: ''
     sectlinks: ''
     sectanchors: ''
-    toc-title: Содержание
     icons: font
     page-pagination: ''
+    toclevels: 10
 output:
   dir: wwwroot
 runtime:
