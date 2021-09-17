@@ -108,13 +108,13 @@ asciidoc:
     icons: font
     page-pagination: ''
     toclevels: 10
+    experimental: ''
+    source-highlighter: highlightjs
+    toc-title: Содержание
     figure-caption: Рисунок
     table-caption: Таблица
     appendix-caption: Приложение
     example-caption: Пример
-    experimental: ''
-    source-highlighter: highlightjs
-    toc-title: Содержание
 output:
   dir: wwwroot
 runtime:
