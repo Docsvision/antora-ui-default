@@ -3,9 +3,6 @@
   "description": "An archetype project that produces a UI for creating documentation sites with Antora",
   "homepage": "https://gitlab.com/antora/antora-ui-default",
   "license": "MPL-2.0",
-  "scripts": {
-    "build": "gulp bundle && antora antora-playbook.yml"
-  },
   "repository": {
     "type": "git",
     "url": "https://gitlab.com/antora/antora-ui-default.git"
@@ -17,8 +14,6 @@
     "last 2 versions"
   ],
   "devDependencies": {
-    "@antora/cli": "^3.0.0-alpha.8",
-    "@antora/site-generator-default": "^3.0.0-alpha.8",
     "asciidoctor.js": "1.5.9",
     "autoprefixer": "~9.7",
     "browser-pack-flat": "~3.4",
