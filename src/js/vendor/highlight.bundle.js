@@ -19,6 +19,7 @@
   hljs.registerLanguage('yaml', require('highlight.js/lib/languages/yaml'))
   hljs.registerLanguage('pgSQL', require('highlight.js/lib/languages/pgsql'))
   hljs.registerLanguage('typescript', require('highlight.js/lib/languages/typescript'))
+  hljs.registerLanguage('shell', require('highlight.js/lib/languages/shell'))
   ;[].slice.call(document.querySelectorAll('pre code.hljs')).forEach(function (node) {
     hljs.highlightBlock(node)
   })
