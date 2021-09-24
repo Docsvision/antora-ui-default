@@ -86,7 +86,7 @@ vfs
   .pipe(uglify())
   .pipe(gulp.dest('build'))
 ----
-<1> The tap function is used to wiretap the data in the pipe.
+<1> The `tap` function is used to wiretap the data in the pipe.
 <2> Wrap each streaming file in a buffer so the files can be processed by uglify.
 Uglify can only work with buffers, not streams.
 
@@ -273,7 +273,7 @@ Est in reque homero principes, meis deleniti mediocrem ad has.
 Ex nam suas nemore dignissim, vel apeirian democritum et.
 
 .Antora is a multi-repo documentation site generator
-image::multirepo-ssg.svg[Multirepo SSG,300,225]
+image::multirepo-ssg.svg[Multirepo SSG,3000,opts=interactive]
 
 Make the switch today!
 

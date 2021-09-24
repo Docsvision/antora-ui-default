@@ -42,8 +42,12 @@
   }
 }
 
-h1.page + aside.toc.embedded {
+.doc > h1.page:first-child + aside.toc.embedded {
   margin-top: -0.5rem;
+}
+
+.doc > h2#name + .sectionbody {
+  margin-top: 1rem;
 }
 
 #preamble + .sect1,
@@ -130,7 +134,8 @@ h1.page + aside.toc.embedded {
 }
 
 .doc p code,
-.doc thead code {
+.doc thead code,
+.doc .colist > table code {
   color: var(--code-font-color);
   background: var(--code-background);
   border-radius: 0.25em;
@@ -393,7 +398,11 @@ h1.page + aside.toc.embedded {
 }
 
 .doc .imageblock img,
-.doc .image > img {
+.doc .imageblock object,
+.doc .imageblock svg,
+.doc .image > img,
+.doc .image > object,
+.doc .image > svg {
   display: inline-block;
   height: auto;
   max-width: 100%;
@@ -924,7 +933,7 @@ h1.page + aside.toc.embedded {
   line-height: calc(1 / 1.1);
 }
 
-.doc .nowrap {
+.doc :not(pre).nowrap {
   white-space: nowrap;
 }
 
@@ -937,6 +946,10 @@ h1.page + aside.toc.embedded {
   font-size: 0.85em;
   line-height: 1.5;
   margin: 2rem -0.5rem 0;
+}
+
+.doc td.tableblock > .content #footnotes {
+  margin: 2rem 0 0;
 }
 
 #footnotes hr {
