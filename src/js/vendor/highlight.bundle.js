@@ -13,7 +13,6 @@
   hljs.registerLanguage('json', require('highlight.js/lib/languages/json'))
   hljs.registerLanguage('markdown', require('highlight.js/lib/languages/markdown'))
   hljs.registerLanguage('properties', require('highlight.js/lib/languages/properties'))
-  hljs.registerLanguage('shell', require('highlight.js/lib/languages/shell'))
   hljs.registerLanguage('sql', require('highlight.js/lib/languages/sql'))
   hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'))
   hljs.registerLanguage('yaml', require('highlight.js/lib/languages/yaml'))
