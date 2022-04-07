@@ -18,6 +18,7 @@
   hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'))
   hljs.registerLanguage('yaml', require('highlight.js/lib/languages/yaml'))
   hljs.registerLanguage('vbnet', require('highlight.js/lib/languages/vbnet'))
+  hljs.registerLanguage('ps', require('highlight.js/lib/languages/ps'))
   ;[].slice.call(document.querySelectorAll('pre code.hljs')).forEach(function (node) {
     hljs.highlightBlock(node)
   })
