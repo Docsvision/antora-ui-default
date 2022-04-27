@@ -19,11 +19,11 @@
   --color-black: #000;
   --color-dv-green: #bbd02d;
   --color-dv-font: #4a3b87;
-  --hover-green: #a7ba24;
+  --hover-green: #adc229;
   /* fonts */
   --rem-base: 18; /* used to compute rem value from desired pixel value (e.g., calc(18 / var(--rem-base) * 1rem) = 18px) */
-  --body-font-size: 1.0625em; /* 17px */
-  --body-font-size--desktop: 1.125em; /* 18px */
+  --body-font-size: 1.1625em; /* 17px */
+  --body-font-size--desktop: 1.225em; /* 18px */
   --body-font-size--print: 0.9375em; /* 15px */
   --body-line-height: 1.15;
   --body-font-color: var(--color-jet-70);
@@ -33,7 +33,7 @@
   --monospace-font-weight-bold: 500;
   /* base */
   --body-background: var(--color-white);
-  --panel-background: var(--color-smoke-30);
+  --panel-background: var(--color-smoke-50);
   --panel-border-color: var(--color-smoke-90);
   --scrollbar-track-color: var(--color-smoke-30);
   --scrollbar-thumb-color: var(--color-gray-10);
@@ -86,8 +86,8 @@
   --heading-font-weight: normal;
   --alt-heading-font-weight: var(--body-font-weight-bold);
   --section-divider-color: var(--panel-border-color);
-  --link-font-color: #1565c0;
-  --link_hover-font-color: #104d92;
+  --link-font-color: #7555f9;
+  --link_hover-font-color: #4c22f7;
   --link_unresolved-font-color: var(--important-color);
   --abstract-background: var(--color-smoke-70);
   --abstract-font-color: var(--color-jet-20);
@@ -133,7 +133,7 @@
   --nav-height--desktop: var(--body-min-height);
   --nav-panel-menu-height: calc(100% - var(--drawer-height));
   --nav-panel-explore-height: calc(50% + var(--drawer-height));
-  --nav-width: calc(270 / var(--rem-base) * 1rem);
+  --nav-width: calc(300 / var(--rem-base) * 1rem);
   --toc-top: calc(var(--body-top) + var(--toolbar-height));
   --toc-height: calc(100vh - var(--toc-top) - 2.5rem);
   --toc-width: calc(162 / var(--rem-base) * 1rem);
