@@ -1,7 +1,8 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="{{{or site.url (or siteRootUrl siteRootPath)}}}"><link rel="icon" href="{{{uiRootPath}}}/img/dv-logo.png">{{site.title}}</a>
+	  <a class="navbar-item logo" title="{{site.title}}" href="{{{or site.url (or siteRootUrl siteRootPath)}}}">
+	  <image src="{{{uiRootPath}}}/img/dv-logo.png" alt="{{site.title}}">{{site.title}}</a>
       {{#if env.SITE_SEARCH_PROVIDER}}
       <div class="navbar-item search hide-for-print">
         <div id="search-field" class="field">
@@ -18,7 +19,10 @@
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
 		<div class="navbar-item hide-for-print">
-			<input type="search" id="searchbar" placeholder="Поиск">
+			<form action="/search.html" method="get">
+               		<input type="text" name="q" placeholder="Поиск">
+               		<input type="submit" value="Поиск">
+               	  </form>
 		</div>
         <a class="navbar-item" href="https://docsvision.com/">Docsvision.com</a>
         <div class="navbar-item has-dropdown is-hoverable">
