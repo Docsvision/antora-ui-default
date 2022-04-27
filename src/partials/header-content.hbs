@@ -2,7 +2,10 @@
   <nav class="navbar">
     <div class="navbar-brand">
 	  <a class="navbar-item logo" title="{{site.title}}" href="{{{or site.url (or siteRootUrl siteRootPath)}}}">
-	  <image src="{{{uiRootPath}}}/img/dv-logo.png" alt="{{site.title}}">{{site.title}}</a>
+	  <image src="{{{uiRootPath}}}/img/book.svg" alt="{{site.title}}" width="40" height="40">
+	  <a class="navbar-item title" href="{{{or site.url (or siteRootUrl siteRootPath)}}}" {{site.title}}</a>
+	  </a>
+
       {{#if env.SITE_SEARCH_PROVIDER}}
       <div class="navbar-item search hide-for-print">
         <div id="search-field" class="field">

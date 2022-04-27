@@ -18,7 +18,8 @@
   --color-jet-80: #191919;
   --color-black: #000;
   --color-dv-green: #bbd02d;
-  --color-dv-font: #271d47;
+  --color-dv-font: #4a3b87;
+  --hover-green: #a7ba24;
   /* fonts */
   --rem-base: 18; /* used to compute rem value from desired pixel value (e.g., calc(18 / var(--rem-base) * 1rem) = 18px) */
   --body-font-size: 1.0625em; /* 17px */
@@ -40,10 +41,10 @@
   /* navbar */
   --navbar-background: var(--color-dv-green);
   --navbar-font-color: var(--color-dv-font);
-  --navbar_hover-background: var(--color-black);
+  --navbar_hover-background: var(--hover-green);
   --navbar-button-background: var(--color-white);
   --navbar-button-border-color: var(--panel-border-color);
-  --navbar-button-font-color: var(--body-font-color);
+  --navbar-button-font-color: var(--color-dv-font);
   --navbar-menu-border-color: var(--panel-border-color);
   --navbar-menu-background: var(--color-white);
   --navbar-menu-font-color: var(--body-font-color);
