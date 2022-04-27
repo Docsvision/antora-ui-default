@@ -38,7 +38,7 @@
   --scrollbar-thumb-color: var(--color-gray-10);
   --scrollbar_hover-thumb-color: var(--color-gray-30);
   /* navbar */
-  --navbar-background: var(--color-dv-green-80);
+  --navbar-background: var(--color-dv-green);
   --navbar-font-color: var(--color-dv-font);
   --navbar_hover-background: var(--color-black);
   --navbar-button-background: var(--color-white);
