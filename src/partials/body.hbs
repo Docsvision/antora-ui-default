@@ -8,7 +8,7 @@
     typesenseCollectionName: 'help-docsvision', // Should match the collection name you mention in the docsearch scraper config.js
     typesenseServerConfig: { 
       nodes: [{
-        host: 'ts.docsvision.com', // For Typesense Cloud use xxx.a1.typesense.net
+        host: window.location.hostname, // For Typesense Cloud use xxx.a1.typesense.net
         port: '8108',      // For Typesense Cloud use 443
         protocol: 'https'   // For Typesense Cloud use https
       }],
