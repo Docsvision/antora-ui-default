@@ -1,19 +1,4 @@
 <div class="body">
 {{> nav}}
 {{> main}}
-<script src="https://cdn.jsdelivr.net/npm/typesense-docsearch.js@latest/dist/cdn/docsearch.min.js"></script>
-<script>
-  docsearch({
-    inputSelector: '#searchbar',
-    typesenseCollectionName: 'help-docsvision', // Should match the collection name you mention in the docsearch scraper config.js
-    typesenseServerConfig: { 
-      nodes: [{
-        host: window.location.hostname, // For Typesense Cloud use xxx.a1.typesense.net
-        port: '8108',      // For Typesense Cloud use 443
-        protocol: 'https'   // For Typesense Cloud use https
-      }],
-      apiKey: 'KW5VF7J3qWybPoPcwudh2uEgGOnCGIOf', // Use API Key with only Search permissions
-    },
-  });
-</script>
 </div>

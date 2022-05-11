@@ -1,2 +1,4 @@
     <link rel="stylesheet" href="{{{uiRootPath}}}/css/site.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typesense-docsearch.js@latest/dist/cdn/docsearch.min.css"/>
+    {{#if env.SITE_SEARCH_PROVIDER}}
+    {{> search-styles}}
+    {{/if}}
