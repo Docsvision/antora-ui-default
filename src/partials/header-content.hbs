@@ -1,34 +1,27 @@
 <header class="header">
   <nav class="navbar">
-	<div class="navbar-brand">
-		<a class="navbar-item logo" href="{{{or site.url siteRootPath}}}" title="{{site.title}}">
-		<img src="{{{uiRootPath}}}/img/logo.svg" alt="{{site.title}}" width="24"></a>
-		<a class="navbar-item title" href="{{{or site.url siteRootPath}}}">{{site.title}}</a>
-	</div>
+    <div class="navbar-brand">
+      <a class="navbar-item logo" href="{{{or site.url siteRootPath}}}" title="{{site.title}}">
+        <img src="{{{uiRootPath}}}/img/logo.svg" alt="{{site.title}}" width="24"></a>
+      <a class="navbar-item title" href="{{{or site.url siteRootPath}}}">{{site.title}}</a>
       {{#if env.SITE_SEARCH_PROVIDER}}
       <div class="navbar-item search hide-for-print">
         <div id="search-field" class="field">
-          <input id="search-input" type="text" placeholder="Search the docs"{{#if page.home}} autofocus{{/if}}>
+          <input id="search-input" type="text" placeholder="Поиск"{{#if page.home}} autofocus{{/if}}>
         </div>
       </div>
       {{/if}}
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
-		<div class="navbar-item hide-for-print">
-			<form action="/search.html" method="get">
-               		<input type="text" name="q" placeholder="Поиск">
-               		<input type="submit" value="Поиск">
-            </form>
-		</div>
         <a class="navbar-item" href="https://docsvision.com/">Сайт Docsvision</a>
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link">Дополнительно</div>
           <div class="navbar-dropdown is-right">
             <a class="navbar-item" href="https://docsvision.github.io/WebClient-JsDocApi">Справочник JavaScript API модуля Web-клиент</a>
             <a class="navbar-item" href="https://github.com/Docsvision/WebClient-Samples">Docsvision Web-клиент. Примеры разработки</a>
-			<a class="navbar-item" href="https://docsvision.com/info-centr/istoriya-izmeneniy-docsvision">История изменений Docsvision</a>
-			<a class="navbar-item" href="https://docsvision.itsm365.com/sd/">Портал технической поддержки Docsvision</a>
+            <a class="navbar-item" href="https://docsvision.com/info-centr/istoriya-izmeneniy-docsvision">История изменений Docsvision</a>
+            <a class="navbar-item" href="https://docsvision.itsm365.com/sd/">Портал технической поддержки Docsvision</a>
           </div>
         </div>
       </div>
