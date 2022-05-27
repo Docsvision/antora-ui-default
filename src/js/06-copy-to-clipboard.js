@@ -30,7 +30,7 @@
     if (lang) toolbox.appendChild(lang)
     if (window.navigator.clipboard) {
       ;(copy = document.createElement('button')).className = 'copy-button'
-      copy.setAttribute('title', 'Copy to clipboard')
+      copy.setAttribute('title', 'Копировать')
       if (config.svgAs === 'svg') {
         var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
         svg.setAttribute('class', 'copy-icon')
