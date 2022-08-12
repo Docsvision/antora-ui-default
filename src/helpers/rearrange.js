@@ -1,7 +1,6 @@
 'use strict'
 
 module.exports = (collection, property, orderSpec) => {
-  console.log()
   if (orderSpec == null || orderSpec === '*') return Object.values(collection)
   const sourceCollection = Object.values(collection).reduce((accum, it) => accum.set(it[property], it), new Map())
   const order = orderSpec
