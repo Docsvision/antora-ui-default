@@ -15,6 +15,7 @@
   hljs.registerLanguage('none', require('highlight.js/lib/languages/plaintext'))
   hljs.registerLanguage('shell', require('highlight.js/lib/languages/shell'))
   hljs.registerLanguage('sql', require('highlight.js/lib/languages/sql'))
+  hljs.registerLanguage('pgsql', require('highlight.js/lib/languages/pgsql'))
   hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'))
   hljs.registerLanguage('yaml', require('highlight.js/lib/languages/yaml'))
   hljs.registerLanguage('vbnet', require('highlight.js/lib/languages/vbnet'))
