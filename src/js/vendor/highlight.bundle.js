@@ -20,7 +20,7 @@
   hljs.registerLanguage('yaml', require('highlight.js/lib/languages/yaml'))
   hljs.registerLanguage('vbnet', require('highlight.js/lib/languages/vbnet'))
   hljs.registerLanguage('powershell', require('highlight.js/lib/languages/powershell'))
-  ;[].slice.call(document.querySelectorAll('pre code.hljs')).forEach(function (node) {
+  ;[].slice.call(document.querySelectorAll('pre code.hljs[data-lang]')).forEach(function (node) {
     hljs.highlightBlock(node)
   })
 })()
