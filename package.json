@@ -55,6 +55,7 @@
     "vinyl-fs": "~3.0"
   },
   "dependencies": {
+    "@fontsource/material-icons": "^4.5.4",
     "asciidoctor-kroki": "^0.14.0",
     "medium-zoom": "^1.0.6"
   }
