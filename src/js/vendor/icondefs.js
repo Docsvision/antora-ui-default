@@ -3,13 +3,6 @@
   // prettier-ignore
   var defs = [
     {
-      id: 'icon-nav-group',
-      viewBox: '0 0 16 16',
-      paths: [
-        { d: 'm12.78 5.345a0.75 0.75 0 0 1 0 1.06l-4.25 4.25a0.75 0.75 0 0 1-1.06 0l-4.25-4.25a0.75 0.75 0 0 1 1.06-1.06l3.72 3.72 3.72-3.72a0.75 0.75 0 0 1 1.06 0z' },
-      ],
-    },
-    {
       id: 'icon-nav-item-toggle',
       viewBox: '0 0 16 16',
       paths: [
