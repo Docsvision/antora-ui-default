@@ -1,3 +1,7 @@
 main > .content {
   display: block !important;
 }
+
+.content .doc {
+  padding-bottom: 0;	
+}
