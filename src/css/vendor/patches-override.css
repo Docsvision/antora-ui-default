@@ -2,12 +2,12 @@ main > .content {
   display: block !important;
 }
 
-.content h1,
-.content h2,
-.content h3,
-.content h4,
-.content h5,
-.content h6 {
+.body .article .content h1,
+.body .article .content h2,
+.body .article .content h3,
+.body .article .content h4,
+.body .article .content h5,
+.body .article .content h6 {
   color: var(--heading-font-color);
   font-weight: var(--heading-font-weight);
   hyphens: none;
@@ -15,55 +15,55 @@ main > .content {
   margin: 1rem 0 0;
 }
 
-.content > h1.page:first-child {
+.body .article .content > h1.page:first-child {
   font-size: calc(36 / var(--rem-base) * 1rem);
   margin: 1.5rem 0;
 }
 
 @media screen and (min-width: 769px) {
-  .content > h1.page:first-child {
+  .body .article .content > h1.page:first-child {
     margin-top: 2.5rem;
   }
 }
 
-.content > h1.page:first-child + aside.toc.embedded {
+.body .article .content > h1.page:first-child + aside.toc.embedded {
   margin-top: -0.5rem;
 }
 
-.content > h2#name + .sectionbody {
+.body .article .content > h2#name + .sectionbody {
   margin-top: 1rem;
 }
 
 #preamble + .sect1,
-.content .sect1 + .sect1 {
+.body .article .content .sect1 + .sect1 {
   margin-top: 2rem;
 }
 
-.content h1.sect0 {
+.body .article .content h1.sect0 {
   background: var(--abstract-background);
   font-size: 1.8em;
   margin: 1.5rem -1rem 0;
   padding: 0.5rem 1rem;
 }
 
-.content h2:not(.discrete) {
+.body .article .content h2:not(.discrete) {
   border-bottom: 1px solid var(--section-divider-color);
   margin-left: -1rem;
   margin-right: -1rem;
   padding: 0.4rem 1rem 0.1rem;
 }
 
-.content h3:not(.discrete),
-.content h4:not(.discrete) {
+.body .article .content h3:not(.discrete),
+.body .article .content h4:not(.discrete) {
   font-weight: var(--alt-heading-font-weight);
 }
 
-.content h1 .anchor,
-.content h2 .anchor,
-.content h3 .anchor,
-.content h4 .anchor,
-.content h5 .anchor,
-.content h6 .anchor {
+.body .article .content h1 .anchor,
+.body .article .content h2 .anchor,
+.body .article .content h3 .anchor,
+.body .article .content h4 .anchor,
+.body .article .content h5 .anchor,
+.body .article .content h6 .anchor {
   position: absolute;
   text-decoration: none;
   width: 1.75ex;
@@ -74,53 +74,53 @@ main > .content {
   padding-top: 0.05em;
 }
 
-.content h1 .anchor::before,
-.content h2 .anchor::before,
-.content h3 .anchor::before,
-.content h4 .anchor::before,
-.content h5 .anchor::before,
-.content h6 .anchor::before {
+.body .article .content h1 .anchor::before,
+.body .article .content h2 .anchor::before,
+.body .article .content h3 .anchor::before,
+.body .article .content h4 .anchor::before,
+.body .article .content h5 .anchor::before,
+.body .article .content h6 .anchor::before {
   content: "\00a7";
 }
 
-.content h1:hover .anchor,
-.content h2:hover .anchor,
-.content h3:hover .anchor,
-.content h4:hover .anchor,
-.content h5:hover .anchor,
-.content h6:hover .anchor {
+.body .article .content h1:hover .anchor,
+.body .article .content h2:hover .anchor,
+.body .article .content h3:hover .anchor,
+.body .article .content h4:hover .anchor,
+.body .article .content h5:hover .anchor,
+.body .article .content h6:hover .anchor {
   visibility: visible;
 }
 
-.content p,
-.content dl {
+.body .article .content p,
+.body .article .content dl {
   margin: 0;
 }
 
-.content a {
+.body .article .content a {
   color: var(--link-font-color);
 }
 
-.content a:hover {
+.body .article .content a:hover {
   color: var(--link_hover-font-color);
 }
 
-.content a.bare {
+.body .article .content a.bare {
   hyphens: none;
 }
 
-.content a.unresolved {
+.body .article .content a.unresolved {
   color: var(--link_unresolved-font-color);
 }
 
-.content i.fa {
+.body .article .content i.fa {
   hyphens: none;
   font-style: normal;
 }
 
-.content p code,
-.content thead code,
-.content .colist > table code {
+.body .article .content p code,
+.body .article .content thead code,
+.body .article .content .colist > table code {
   color: var(--code-font-color);
   background: var(--code-background);
   border-radius: 0.25em;
@@ -128,221 +128,221 @@ main > .content {
   padding: 0.125em 0.25em;
 }
 
-.content code,
-.content pre {
+.body .article .content code,
+.body .article .content pre {
   hyphens: none;
 }
 
-.content pre {
+.body .article .content pre {
   font-size: calc(16 / var(--rem-base) * 1rem);
   line-height: 1.5;
   margin: 0;
 }
 
-.content blockquote {
+.body .article .content blockquote {
   margin: 0;
 }
 
-.content .paragraph.lead > p {
+.body .article .content .paragraph.lead > p {
   font-size: calc(18 / var(--rem-base) * 1rem);
 }
 
-.content .right {
+.body .article .content .right {
   float: right;
 }
 
-.content .left {
+.body .article .content .left {
   float: left;
 }
 
-.content .float-gap.right {
+.body .article .content .float-gap.right {
   margin: 0 1rem 1rem 0;
 }
 
-.content .float-gap.left {
+.body .article .content .float-gap.left {
   margin: 0 0 1rem 1rem;
 }
 
-.content .float-group::after {
+.body .article .content .float-group::after {
   content: "";
   display: table;
   clear: both;
 }
 
-.content .stretch {
+.body .article .content .stretch {
   width: 100%;
 }
 
-.content .underline {
+.body .article .content .underline {
   text-decoration: underline;
 }
 
-.content .line-through {
+.body .article .content .line-through {
   text-decoration: line-through;
 }
 
-.content .paragraph,
-.content .dlist,
-.content .hdlist,
-.content .olist,
-.content .ulist,
-.content .exampleblock,
-.content .imageblock,
-.content .listingblock,
-.content .literalblock,
-.content .sidebarblock,
-.content .verseblock,
-.content .videoblock,
-.content .quoteblock,
-.content .partintro,
-.content details,
-.content hr {
+.body .article .content .paragraph,
+.body .article .content .dlist,
+.body .article .content .hdlist,
+.body .article .content .olist,
+.body .article .content .ulist,
+.body .article .content .exampleblock,
+.body .article .content .imageblock,
+.body .article .content .listingblock,
+.body .article .content .literalblock,
+.body .article .content .sidebarblock,
+.body .article .content .verseblock,
+.body .article .content .videoblock,
+.body .article .content .quoteblock,
+.body .article .content .partintro,
+.body .article .content details,
+.body .article .content hr {
   margin: 1rem 0 0;
 }
 
-.content table.tableblock {
+.body .article .content table.tableblock {
   font-size: calc(15 / var(--rem-base) * 1rem);
   margin: 1.5rem 0 0;
 }
 
-.content table.tableblock + * {
+.body .article .content table.tableblock + * {
   margin-top: 1.5rem;
 }
 
-.content p.tableblock + p.tableblock {
+.body .article .content p.tableblock + p.tableblock {
   margin-top: 0.5rem;
 }
 
-.content td.tableblock > .content > :first-child {
+.body .article .content td.tableblock > .body .article .content > :first-child {
   margin-top: 0;
 }
 
-.content table.tableblock th,
-.content table.tableblock td {
+.body .article .content table.tableblock th,
+.body .article .content table.tableblock td {
   padding: 0.5rem;
 }
 
-.content table.tableblock,
-.content table.tableblock > * > tr > * {
+.body .article .content table.tableblock,
+.body .article .content table.tableblock > * > tr > * {
   border: 0 solid var(--table-border-color);
 }
 
-.content table.grid-all > * > tr > * {
+.body .article .content table.grid-all > * > tr > * {
   border-width: 1px;
 }
 
-.content table.grid-cols > * > tr > * {
+.body .article .content table.grid-cols > * > tr > * {
   border-width: 0 1px;
 }
 
-.content table.grid-rows > * > tr > * {
+.body .article .content table.grid-rows > * > tr > * {
   border-width: 1px 0;
 }
 
-.content table.grid-all > thead th,
-.content table.grid-rows > thead th {
+.body .article .content table.grid-all > thead th,
+.body .article .content table.grid-rows > thead th {
   border-bottom-width: 2.5px;
 }
 
-.content table.frame-all {
+.body .article .content table.frame-all {
   border-width: 1px;
 }
 
-.content table.frame-ends {
+.body .article .content table.frame-ends {
   border-width: 1px 0;
 }
 
-.content table.frame-sides {
+.body .article .content table.frame-sides {
   border-width: 0 1px;
 }
 
-.content table.frame-none > colgroup + * > :first-child > *,
-.content table.frame-sides > colgroup + * > :first-child > * {
+.body .article .content table.frame-none > colgroup + * > :first-child > *,
+.body .article .content table.frame-sides > colgroup + * > :first-child > * {
   border-top-width: 0;
 }
 
 /* NOTE let the grid win in case of frame-none */
-.content table.frame-sides > :last-child > :last-child > * {
+.body .article .content table.frame-sides > :last-child > :last-child > * {
   border-bottom-width: 0;
 }
 
-.content table.frame-none > * > tr > :first-child,
-.content table.frame-ends > * > tr > :first-child {
+.body .article .content table.frame-none > * > tr > :first-child,
+.body .article .content table.frame-ends > * > tr > :first-child {
   border-left-width: 0;
 }
 
-.content table.frame-none > * > tr > :last-child,
-.content table.frame-ends > * > tr > :last-child {
+.body .article .content table.frame-none > * > tr > :last-child,
+.body .article .content table.frame-ends > * > tr > :last-child {
   border-right-width: 0;
 }
 
-.content table.stripes-all > tbody > tr,
-.content table.stripes-odd > tbody > tr:nth-of-type(odd),
-.content table.stripes-even > tbody > tr:nth-of-type(even),
-.content table.stripes-hover > tbody > tr:hover {
+.body .article .content table.stripes-all > tbody > tr,
+.body .article .content table.stripes-odd > tbody > tr:nth-of-type(odd),
+.body .article .content table.stripes-even > tbody > tr:nth-of-type(even),
+.body .article .content table.stripes-hover > tbody > tr:hover {
   background: var(--table-stripe-background);
 }
 
-.content table.tableblock > tfoot {
+.body .article .content table.tableblock > tfoot {
   background: var(--table-footer-background);
 }
 
-.content .halign-left {
+.body .article .content .halign-left {
   text-align: left;
 }
 
-.content .halign-right {
+.body .article .content .halign-right {
   text-align: right;
 }
 
-.content .halign-center {
+.body .article .content .halign-center {
   text-align: center;
 }
 
-.content .valign-top {
+.body .article .content .valign-top {
   vertical-align: top;
 }
 
-.content .valign-bottom {
+.body .article .content .valign-bottom {
   vertical-align: bottom;
 }
 
-.content .valign-middle {
+.body .article .content .valign-middle {
   vertical-align: middle;
 }
 
-.content .admonitionblock {
+.body .article .content .admonitionblock {
   margin: 1.4rem 0 0;
 }
 
-.content .admonitionblock p,
-.content .admonitionblock td.content {
+.body .article .content .admonitionblock p,
+.body .article .content .admonitionblock td.body .article .content {
   font-size: calc(16 / var(--rem-base) * 1rem);
 }
 
-.content .admonitionblock td.content > :not(.title):first-child,
-.content .admonitionblock td.content > .title + * {
+.body .article .content .admonitionblock td.body .article .content > :not(.title):first-child,
+.body .article .content .admonitionblock td.body .article .content > .title + * {
   margin-top: 0;
 }
 
-.content .admonitionblock pre {
+.body .article .content .admonitionblock pre {
   font-size: calc(15 / var(--rem-base) * 1rem);
 }
 
-.content .admonitionblock > table {
+.body .article .content .admonitionblock > table {
   table-layout: fixed;
   position: relative;
   width: 100%;
 }
 
-.content .admonitionblock td.content {
+.body .article .content .admonitionblock td.body .article .content {
   padding: 1rem 1rem 0.75rem;
   background: var(--admonition-background);
   width: 100%;
   word-wrap: anywhere;
 }
 
-.content .admonitionblock .icon {
+.body .article .content .admonitionblock .icon {
   position: absolute;
   top: 0;
   left: 0;
@@ -356,75 +356,75 @@ main > .content {
   transform: translate(-0.5rem, -50%);
 }
 
-.content .admonitionblock.caution .icon {
+.body .article .content .admonitionblock.caution .icon {
   background-color: var(--caution-color);
   color: var(--caution-on-color);
 }
 
-.content .admonitionblock.important .icon {
+.body .article .content .admonitionblock.important .icon {
   background-color: var(--important-color);
   color: var(--important-on-color);
 }
 
-.content .admonitionblock.note .icon {
+.body .article .content .admonitionblock.note .icon {
   background-color: var(--note-color);
   color: var(--note-on-color);
 }
 
-.content .admonitionblock.tip .icon {
+.body .article .content .admonitionblock.tip .icon {
   background-color: var(--tip-color);
   color: var(--tip-on-color);
 }
 
-.content .admonitionblock.warning .icon {
+.body .article .content .admonitionblock.warning .icon {
   background-color: var(--warning-color);
   color: var(--warning-on-color);
 }
 
-.content .admonitionblock .icon i {
+.body .article .content .admonitionblock .icon i {
   display: inline-flex;
   align-items: center;
   height: 100%;
 }
 
-.content .admonitionblock .icon i::after {
+.body .article .content .admonitionblock .icon i::after {
   content: attr(title);
 }
 
-.content .imageblock,
-.content .videoblock {
+.body .article .content .imageblock,
+.body .article .content .videoblock {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.content .imageblock.text-left,
-.content .videoblock.text-left {
+.body .article .content .imageblock.text-left,
+.body .article .content .videoblock.text-left {
   align-items: flex-start;
 }
 
-.content .imageblock.text-right,
-.content .videoblock.text-right {
+.body .article .content .imageblock.text-right,
+.body .article .content .videoblock.text-right {
   align-items: flex-end;
 }
 
-.content .imageblock img,
-.content .imageblock object,
-.content .imageblock svg,
-.content .image > img,
-.content .image > object,
-.content .image > svg {
+.body .article .content .imageblock img,
+.body .article .content .imageblock object,
+.body .article .content .imageblock svg,
+.body .article .content .image > img,
+.body .article .content .image > object,
+.body .article .content .image > svg {
   display: inline-block;
   height: auto;
   max-width: 100%;
   vertical-align: middle;
 }
 
-.content .image:not(.left):not(.right) > img {
+.body .article .content .image:not(.left):not(.right) > img {
   margin-top: -0.2em;
 }
 
-.content .videoblock iframe {
+.body .article .content .videoblock iframe {
   max-width: 100%;
   vertical-align: middle;
 }
@@ -437,162 +437,162 @@ main > .content {
   padding: 0.75em 1em;
 }
 
-.content .quoteblock,
-.content .verseblock {
+.body .article .content .quoteblock,
+.body .article .content .verseblock {
   background: var(--quote-background);
   border-left: 5px solid var(--quote-border-color);
   color: var(--quote-font-color);
 }
 
-.content .quoteblock {
+.body .article .content .quoteblock {
   padding: 0.25rem 2rem 1.25rem;
 }
 
-.content .quoteblock .attribution {
+.body .article .content .quoteblock .attribution {
   color: var(--quote-attribution-font-color);
   font-size: calc(15 / var(--rem-base) * 1rem);
   margin-top: 0.75rem;
 }
 
-.content .quoteblock blockquote {
+.body .article .content .quoteblock blockquote {
   margin-top: 1rem;
 }
 
-.content .quoteblock .paragraph {
+.body .article .content .quoteblock .paragraph {
   font-style: italic;
 }
 
-.content .quoteblock cite {
+.body .article .content .quoteblock cite {
   padding-left: 1em;
 }
 
-.content .verseblock {
+.body .article .content .verseblock {
   font-size: 1.15em;
   padding: 1rem 2rem;
 }
 
-.content .verseblock pre {
+.body .article .content .verseblock pre {
   font-family: inherit;
   font-size: inherit;
 }
 
-.content ol,
-.content ul {
+.body .article .content ol,
+.body .article .content ul {
   margin: 0;
   padding: 0 0 0 2rem;
 }
 
-.content ul.checklist,
-.content ul.none,
-.content ol.none,
-.content ul.no-bullet,
-.content ol.unnumbered,
-.content ul.unstyled,
-.content ol.unstyled {
+.body .article .content ul.checklist,
+.body .article .content ul.none,
+.body .article .content ol.none,
+.body .article .content ul.no-bullet,
+.body .article .content ol.unnumbered,
+.body .article .content ul.unstyled,
+.body .article .content ol.unstyled {
   list-style-type: none;
 }
 
-.content ul.no-bullet,
-.content ol.unnumbered {
+.body .article .content ul.no-bullet,
+.body .article .content ol.unnumbered {
   padding-left: 1.25rem;
 }
 
-.content ul.unstyled,
-.content ol.unstyled {
+.body .article .content ul.unstyled,
+.body .article .content ol.unstyled {
   padding-left: 0;
 }
 
-.content ul.circle {
+.body .article .content ul.circle {
   list-style-type: square;
 }
 
-.content ul.disc {
+.body .article .content ul.disc {
   list-style-type: square;
 }
 
-.content ul.square {
+.body .article .content ul.square {
   list-style-type: square;
 }
 
-.content ol.arabic {
+.body .article .content ol.arabic {
   list-style-type: decimal;
 }
 
-.content ol.decimal {
+.body .article .content ol.decimal {
   list-style-type: decimal-leading-zero;
 }
 
-.content ol.loweralpha {
+.body .article .content ol.loweralpha {
   list-style-type: lower-alpha;
 }
 
-.content ol.upperalpha {
+.body .article .content ol.upperalpha {
   list-style-type: upper-alpha;
 }
 
-.content ol.lowerroman {
+.body .article .content ol.lowerroman {
   list-style-type: lower-roman;
 }
 
-.content ol.upperroman {
+.body .article .content ol.upperroman {
   list-style-type: upper-roman;
 }
 
-.content ol.lowergreek {
+.body .article .content ol.lowergreek {
   list-style-type: lower-greek;
 }
 
-.content ul.checklist {
+.body .article .content ul.checklist {
   padding-left: 1.75rem;
 }
 
-.content ul.checklist p > i.fa-check-square-o:first-child,
-.content ul.checklist p > i.fa-square-o:first-child {
+.body .article .content ul.checklist p > i.fa-check-square-o:first-child,
+.body .article .content ul.checklist p > i.fa-square-o:first-child {
   display: inline-flex;
   justify-content: center;
   width: 1.25rem;
   margin-left: -1.25rem;
 }
 
-.content ul.checklist i.fa-check-square-o::before {
+.body .article .content ul.checklist i.fa-check-square-o::before {
   content: "\2713";
 }
 
-.content ul.checklist i.fa-square-o::before {
+.body .article .content ul.checklist i.fa-square-o::before {
   content: "\274f";
 }
 
-.content .dlist .dlist,
-.content .dlist .olist,
-.content .dlist .ulist,
-.content .olist .dlist,
-.content .olist .olist,
-.content .olist .ulist,
-.content .ulist .dlist,
-.content .ulist .olist,
-.content .ulist .ulist {
+.body .article .content .dlist .dlist,
+.body .article .content .dlist .olist,
+.body .article .content .dlist .ulist,
+.body .article .content .olist .dlist,
+.body .article .content .olist .olist,
+.body .article .content .olist .ulist,
+.body .article .content .ulist .dlist,
+.body .article .content .ulist .olist,
+.body .article .content .ulist .ulist {
   margin-top: 0.5rem;
 }
 
-.content .olist li + li,
-.content .ulist li + li {
+.body .article .content .olist li + li,
+.body .article .content .ulist li + li {
   margin-top: 0.5rem;
 }
 
-.content .ulist .listingblock,
-.content .olist .listingblock,
-.content .admonitionblock .listingblock {
+.body .article .content .ulist .listingblock,
+.body .article .content .olist .listingblock,
+.body .article .content .admonitionblock .listingblock {
   padding: 0;
 }
 
-.content .admonitionblock .title,
-.content .exampleblock .title,
-.content .imageblock .title,
-.content .literalblock .title,
-.content .listingblock .title,
-.content .openblock .title,
-.content .videoblock .title,
-.content .tableblock caption {
+.body .article .content .admonitionblock .title,
+.body .article .content .exampleblock .title,
+.body .article .content .imageblock .title,
+.body .article .content .literalblock .title,
+.body .article .content .listingblock .title,
+.body .article .content .openblock .title,
+.body .article .content .videoblock .title,
+.body .article .content .tableblock caption {
   color: var(--caption-font-color);
   font-size: calc(16 / var(--rem-base) * 1rem);
   font-style: var(--caption-font-style);
@@ -602,38 +602,38 @@ main > .content {
   padding-bottom: 0.075rem;
 }
 
-.content .tableblock caption {
+.body .article .content .tableblock caption {
   text-align: left;
 }
 
-.content .ulist .title,
-.content .olist .title {
+.body .article .content .ulist .title,
+.body .article .content .olist .title {
   font-style: var(--caption-font-style);
   font-weight: var(--caption-font-weight);
   margin-bottom: 0.25rem;
 }
 
-.content .imageblock .title {
+.body .article .content .imageblock .title {
   margin-top: 0.5rem;
   padding-bottom: 0;
 }
 
-.content details {
+.body .article .content details {
   margin-left: 1rem;
 }
 
-.content details > summary {
+.body .article .content details > summary {
   display: block;
   position: relative;
   line-height: var(--doc-line-height);
   margin-bottom: 0.5rem;
 }
 
-.content details > summary::-webkit-details-marker {
+.body .article .content details > summary::-webkit-details-marker {
   display: none;
 }
 
-.content details > summary::before {
+.body .article .content details > summary::before {
   content: "";
   border: solid transparent;
   border-left-color: currentColor;
@@ -644,13 +644,13 @@ main > .content {
   transform: translateX(15%);
 }
 
-.content details[open] > summary::before {
+.body .article .content details[open] > summary::before {
   border-color: currentColor transparent transparent;
   border-width: 0.5rem 0.3rem 0;
   transform: translateY(15%);
 }
 
-.content details > summary::after {
+.body .article .content details > summary::after {
   content: "";
   width: 1rem;
   height: 1em;
@@ -659,47 +659,47 @@ main > .content {
   left: -1rem;
 }
 
-.content details.result {
+.body .article .content details.result {
   margin-top: 0.25rem;
 }
 
-.content details.result > summary {
+.body .article .content details.result > summary {
   color: var(--caption-font-color);
   font-style: italic;
   margin-bottom: 0;
 }
 
-.content details.result > .content {
+.body .article .content details.result > .body .article .content {
   margin-left: -1rem;
 }
 
-.content .exampleblock > .content,
-.content details.result > .content {
+.body .article .content .exampleblock > .body .article .content,
+.body .article .content details.result > .body .article .content {
   background: var(--example-background);
   border: 0.25rem solid var(--example-border-color);
   border-radius: 0.5rem;
   padding: 0.75rem;
 }
 
-.content .exampleblock > .content::after,
-.content details.result > .content::after {
+.body .article .content .exampleblock > .body .article .content::after,
+.body .article .content details.result > .body .article .content::after {
   content: "";
   display: table;
   clear: both;
 }
 
-.content .exampleblock > .content > :first-child,
-.content details > .content > :first-child {
+.body .article .content .exampleblock > .body .article .content > :first-child,
+.body .article .content details > .body .article .content > :first-child {
   margin-top: 0;
 }
 
-.content .sidebarblock {
+.body .article .content .sidebarblock {
   background: var(--sidebar-background);
   border-radius: 0.75rem;
   padding: 0.75rem 1.5rem;
 }
 
-.content .sidebarblock > .content > .title {
+.body .article .content .sidebarblock > .body .article .content > .title {
   font-size: calc(22.5 / var(--rem-base) * 1rem);
   font-weight: var(--alt-heading-font-weight);
   line-height: 1.3;
@@ -707,19 +707,19 @@ main > .content {
   text-align: center;
 }
 
-.content .sidebarblock > .content > :not(.title):first-child {
+.body .article .content .sidebarblock > .body .article .content > :not(.title):first-child {
   margin-top: 0;
 }
 
 /* NEEDS REVIEW prevent pre in table from causing article to exceed bounds */
-.content .tableblock pre,
-.content .listingblock.wrap pre {
+.body .article .content .tableblock pre,
+.body .article .content .listingblock.wrap pre {
   white-space: pre-wrap;
 }
 
-.content pre.highlight code,
-.content .listingblock pre:not(.highlight),
-.content .literalblock pre {
+.body .article .content pre.highlight code,
+.body .article .content .listingblock pre:not(.highlight),
+.body .article .content .literalblock pre {
   background: var(--pre-background);
   box-shadow: inset 0 0 1.75px var(--pre-border-color);
   display: block;
@@ -727,11 +727,11 @@ main > .content {
   padding: 0.875em;
 }
 
-.content .listingblock > .content {
+.body .article .content .listingblock > .body .article .content {
   position: relative;
 }
 
-.content .source-toolbox {
+.body .article .content .source-toolbox {
   display: flex;
   visibility: hidden;
   position: absolute;
@@ -744,22 +744,22 @@ main > .content {
   white-space: nowrap;
 }
 
-.content .listingblock:hover .source-toolbox {
+.body .article .content .listingblock:hover .source-toolbox {
   visibility: visible;
 }
 
-.content .source-toolbox .source-lang {
+.body .article .content .source-toolbox .source-lang {
   text-transform: uppercase;
   letter-spacing: 0.075em;
 }
 
-.content .source-toolbox > :not(:last-child)::after {
+.body .article .content .source-toolbox > :not(:last-child)::after {
   content: "|";
   letter-spacing: 0;
   padding: 0 1ch;
 }
 
-.content .source-toolbox .copy-button {
+.body .article .content .source-toolbox .copy-button {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -774,21 +774,21 @@ main > .content {
   height: 1em;
 }
 
-.content .source-toolbox .copy-icon {
+.body .article .content .source-toolbox .copy-icon {
   flex: none;
   width: inherit;
   height: inherit;
 }
 
-.content .source-toolbox img.copy-icon {
+.body .article .content .source-toolbox img.copy-icon {
   filter: invert(50.2%);
 }
 
-.content .source-toolbox svg.copy-icon {
+.body .article .content .source-toolbox svg.copy-icon {
   fill: currentColor;
 }
 
-.content .source-toolbox .copy-toast {
+.body .article .content .source-toolbox .copy-toast {
   flex: none;
   position: relative;
   display: inline-flex;
@@ -803,7 +803,7 @@ main > .content {
   transition: opacity 0.5s ease 0.5s;
 }
 
-.content .source-toolbox .copy-toast::after {
+.body .article .content .source-toolbox .copy-toast::after {
   content: "";
   position: absolute;
   top: 0;
@@ -815,64 +815,64 @@ main > .content {
   transform-origin: left;
 }
 
-.content .source-toolbox .copy-button.clicked .copy-toast {
+.body .article .content .source-toolbox .copy-button.clicked .copy-toast {
   opacity: 1;
   transition: none;
 }
 
-.content .language-console .hljs-meta {
+.body .article .content .language-console .hljs-meta {
   user-select: none;
 }
 
-.content .dlist dt {
+.body .article .content .dlist dt {
   font-style: italic;
 }
 
-.content .dlist dd {
+.body .article .content .dlist dd {
   margin: 0 0 0.25rem 1.5rem;
 }
 
-.content .dlist dd:last-of-type {
+.body .article .content .dlist dd:last-of-type {
   margin-bottom: 0;
 }
 
-.content td.hdlist1,
-.content td.hdlist2 {
+.body .article .content td.hdlist1,
+.body .article .content td.hdlist2 {
   padding: 0.5rem 0 0;
   vertical-align: top;
 }
 
-.content tr:first-child > .hdlist1,
-.content tr:first-child > .hdlist2 {
+.body .article .content tr:first-child > .hdlist1,
+.body .article .content tr:first-child > .hdlist2 {
   padding-top: 0;
 }
 
-.content td.hdlist1 {
+.body .article .content td.hdlist1 {
   font-weight: var(--body-font-weight-bold);
   padding-right: 0.25rem;
 }
 
-.content td.hdlist2 {
+.body .article .content td.hdlist2 {
   padding-left: 0.25rem;
 }
 
-.content .colist {
+.body .article .content .colist {
   font-size: calc(16 / var(--rem-base) * 1rem);
   margin: 0.25rem 0 -0.25rem;
 }
 
-.content .colist > table > tr > :first-child,
-.content .colist > table > tbody > tr > :first-child {
+.body .article .content .colist > table > tr > :first-child,
+.body .article .content .colist > table > tbody > tr > :first-child {
   padding: 0.25em 0.5rem 0;
   vertical-align: top;
 }
 
-.content .colist > table > tr > :last-child,
-.content .colist > table > tbody > tr > :last-child {
+.body .article .content .colist > table > tr > :last-child,
+.body .article .content .colist > table > tbody > tr > :last-child {
   padding: 0.25rem 0;
 }
 
-.content .conum[data-value] {
+.body .article .content .conum[data-value] {
   border: 1px solid currentColor;
   border-radius: 100%;
   display: inline-block;
@@ -887,35 +887,35 @@ main > .content {
   text-indent: -0.25ex;
 }
 
-.content .conum[data-value]::after {
+.body .article .content .conum[data-value]::after {
   content: attr(data-value);
 }
 
-.content .conum[data-value] + b {
+.body .article .content .conum[data-value] + b {
   display: none;
 }
 
-.content hr {
+.body .article .content hr {
   border: solid var(--section-divider-color);
   border-width: 2px 0 0;
   height: 0;
 }
 
-.content b.button {
+.body .article .content b.button {
   white-space: nowrap; /* effectively ignores hyphens setting */
 }
 
-.content b.button::before {
+.body .article .content b.button::before {
   content: "[";
   padding-right: 0.25em;
 }
 
-.content b.button::after {
+.body .article .content b.button::after {
   content: "]";
   padding-left: 0.25em;
 }
 
-.content kbd {
+.body .article .content kbd {
   display: inline-block;
   font-size: calc(12 / var(--rem-base) * 1rem);
   background: var(--kbd-background);
@@ -927,44 +927,44 @@ main > .content {
   white-space: nowrap; /* effectively ignores hyphens setting */
 }
 
-.content kbd,
-.content .keyseq {
+.body .article .content kbd,
+.body .article .content .keyseq {
   line-height: 1;
 }
 
-.content .keyseq {
+.body .article .content .keyseq {
   font-size: calc(16 / var(--rem-base) * 1rem);
 }
 
-.content .keyseq kbd {
+.body .article .content .keyseq kbd {
   margin: 0 0.125em;
 }
 
-.content .keyseq kbd:first-child {
+.body .article .content .keyseq kbd:first-child {
   margin-left: 0;
 }
 
-.content .keyseq kbd:last-child {
+.body .article .content .keyseq kbd:last-child {
   margin-right: 0;
 }
 
-.content .menuseq,
-.content .path {
+.body .article .content .menuseq,
+.body .article .content .path {
   hyphens: none;
 }
 
-.content .menuseq i.caret::before {
+.body .article .content .menuseq i.caret::before {
   content: "\203a";
   font-size: 1.1em;
   font-weight: var(--body-font-weight-bold);
   line-height: calc(1 / 1.1);
 }
 
-.content :not(pre).nowrap {
+.body .article .content :not(pre).nowrap {
   white-space: nowrap;
 }
 
-.content .nobreak {
+.body .article .content .nobreak {
   hyphens: none;
   word-wrap: normal;
 }
@@ -975,7 +975,7 @@ main > .content {
   margin: 2rem -0.5rem 0;
 }
 
-.content td.tableblock > .content #footnotes {
+.body .article .content td.tableblock > .body .article .content #footnotes {
   margin: 2rem 0 0;
 }
 
