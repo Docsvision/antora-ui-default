@@ -1,0 +1,30 @@
+.nav-item:hover > .nav-title .nav-icon {
+  filter: grayscale(0);
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.nav-item:active > .nav-title .nav-icon {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+a.nav-text:hover {
+  text-decoration: none;
+  color: var(--link_hover-font-color);
+}
+
+a.nav-text:active {
+  text-decoration: none;
+  color: var(--link_hover-font-color);
+}
+
+a.nav-text:focus {
+  text-decoration: none;
+  color: var(--link-font-color);
+  -webkit-text-stroke-width: 0.02em;
+}
+
+.nav-list [aria-current=page] {
+  color: var(--link-font-color) !important;
+}
