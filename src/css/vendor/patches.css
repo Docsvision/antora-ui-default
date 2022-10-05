@@ -10544,7 +10544,7 @@ body.body--dark {
 
 .side {
   position: fixed;
-  top: 150px;
+  top: 60px;
   right: 10px;
   min-width: 300px;
   padding: 1rem;
@@ -10556,14 +10556,14 @@ body.body--dark {
   margin-bottom: 1rem;
 }
 
-.side .mylist div {
+.side .list div {
   margin-bottom: 0.5rem;
   cursor: pointer;
   padding-left: 1rem;
   transform: translateX(-1rem);
 }
 
-.side .mylist div:hover {
+.side .list div:hover {
   color: #7555f9;
 }
 
@@ -10622,68 +10622,63 @@ body.body--dark {
 .text ol li {
   margin-bottom: 1rem;
   line-height: 130%;
-}svg.q-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+}svg.m-icon {
+  width: 1.5em;
+  height: 1.5em;
   vertical-align: middle;
   margin-bottom: 0.125em;
   fill: #666;
-}.smallgrid[data-v-36c8277c] {
+}.q-card[data-v-5d641874] {
+  border-top: 5px solid darkred;
+}
+.alert[data-v-5d641874] {
+  font-size: 1.9rem;
+}.smallgrid[data-v-58b1164c] {
   margin-left: 4rem;
   display: grid;
   grid-template-columns: 260px 1fr;
   column-gap: 1rem;
   font-size: 1rem;
   line-height: 120%;
-  margin-bottom: 1rem;
 }
-.smallgrid1[data-v-36c8277c] {
-  margin-left: 4rem;
-  display: grid;
-  grid-template-columns: 130px 1fr;
-  column-gap: 1rem;
-  font-size: 1rem;
-  line-height: 120%;
-  margin-bottom: 1rem;
-}
-.label[data-v-36c8277c] {
+.label[data-v-58b1164c] {
   font-weight: 500;
   font-style: italic;
 }
-.notfound[data-v-36c8277c] {
+.notfound[data-v-58b1164c] {
   margin-top: 3rem;
   padding: 1rem;
   border: 1px solid pink;
   background: #fce4ec;
   font-size: 1rem;
 }
-.more[data-v-36c8277c] {
+.more[data-v-58b1164c] {
   font-size: 1.1rem;
   margin-left: 4rem;
 }
-.more.hid[data-v-36c8277c] {
+.more.hid[data-v-58b1164c] {
   display: none;
 }
-.empt[data-v-36c8277c] {
+.empt[data-v-58b1164c] {
   border-left: 3px solid transparent;
 }
-.visib[data-v-36c8277c] {
+.visib[data-v-58b1164c] {
   border-left: 3px solid #7555f9;
 }
-.link[data-v-36c8277c] {
+.link[data-v-58b1164c] {
   cursor: pointer;
   color: #7555f9;
 }
-.link[data-v-36c8277c]:hover {
+.link[data-v-58b1164c]:hover {
   text-decoration: underline;
 }
-.myrow[data-v-36c8277c] {
+.myrow[data-v-58b1164c] {
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   background: #eee;
 }
-.magnify[data-v-36c8277c] {
+.magnify[data-v-58b1164c] {
   width: 22px;
 }

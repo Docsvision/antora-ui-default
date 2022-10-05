@@ -75,11 +75,11 @@ function includeBooleanAttr(value) {
   return !!value || value === "";
 }
 function normalizeStyle(value) {
-  if (isArray(value)) {
+  if (isArray$1(value)) {
     const res = {};
     for (let i = 0; i < value.length; i++) {
       const item = value[i];
-      const normalized = isString(item) ? parseStringStyle(item) : normalizeStyle(item);
+      const normalized = isString$1(item) ? parseStringStyle(item) : normalizeStyle(item);
       if (normalized) {
         for (const key in normalized) {
           res[key] = normalized[key];
@@ -87,9 +87,9 @@ function normalizeStyle(value) {
       }
     }
     return res;
-  } else if (isString(value)) {
+  } else if (isString$1(value)) {
     return value;
-  } else if (isObject$1(value)) {
+  } else if (isObject$2(value)) {
     return value;
   }
 }
@@ -107,16 +107,16 @@ function parseStringStyle(cssText) {
 }
 function normalizeClass(value) {
   let res = "";
-  if (isString(value)) {
+  if (isString$1(value)) {
     res = value;
-  } else if (isArray(value)) {
+  } else if (isArray$1(value)) {
     for (let i = 0; i < value.length; i++) {
       const normalized = normalizeClass(value[i]);
       if (normalized) {
         res += normalized + " ";
       }
     }
-  } else if (isObject$1(value)) {
+  } else if (isObject$2(value)) {
     for (const name in value) {
       if (value[name]) {
         res += name + " ";
@@ -126,7 +126,7 @@ function normalizeClass(value) {
   return res.trim();
 }
 const toDisplayString = (val) => {
-  return isString(val) ? val : val == null ? "" : isArray(val) || isObject$1(val) && (val.toString === objectToString || !isFunction(val.toString)) ? JSON.stringify(val, replacer, 2) : String(val);
+  return isString$1(val) ? val : val == null ? "" : isArray$1(val) || isObject$2(val) && (val.toString === objectToString || !isFunction$1(val.toString)) ? JSON.stringify(val, replacer, 2) : String(val);
 };
 const replacer = (_key, val) => {
   if (val && val.__v_isRef) {
@@ -142,7 +142,7 @@ const replacer = (_key, val) => {
     return {
       [`Set(${val.size})`]: [...val.values()]
     };
-  } else if (isObject$1(val) && !isArray(val) && !isPlainObject$1(val)) {
+  } else if (isObject$2(val) && !isArray$1(val) && !isPlainObject$2(val)) {
     return String(val);
   }
   return val;
@@ -155,32 +155,32 @@ const NO = () => false;
 const onRE = /^on[^a-z]/;
 const isOn = (key) => onRE.test(key);
 const isModelListener = (key) => key.startsWith("onUpdate:");
-const extend = Object.assign;
+const extend$1 = Object.assign;
 const remove = (arr, el) => {
   const i = arr.indexOf(el);
   if (i > -1) {
     arr.splice(i, 1);
   }
 };
-const hasOwnProperty = Object.prototype.hasOwnProperty;
-const hasOwn = (val, key) => hasOwnProperty.call(val, key);
-const isArray = Array.isArray;
+const hasOwnProperty$1 = Object.prototype.hasOwnProperty;
+const hasOwn = (val, key) => hasOwnProperty$1.call(val, key);
+const isArray$1 = Array.isArray;
 const isMap = (val) => toTypeString(val) === "[object Map]";
 const isSet = (val) => toTypeString(val) === "[object Set]";
-const isFunction = (val) => typeof val === "function";
-const isString = (val) => typeof val === "string";
+const isFunction$1 = (val) => typeof val === "function";
+const isString$1 = (val) => typeof val === "string";
 const isSymbol = (val) => typeof val === "symbol";
-const isObject$1 = (val) => val !== null && typeof val === "object";
+const isObject$2 = (val) => val !== null && typeof val === "object";
 const isPromise = (val) => {
-  return isObject$1(val) && isFunction(val.then) && isFunction(val.catch);
+  return isObject$2(val) && isFunction$1(val.then) && isFunction$1(val.catch);
 };
 const objectToString = Object.prototype.toString;
 const toTypeString = (value) => objectToString.call(value);
 const toRawType = (value) => {
   return toTypeString(value).slice(8, -1);
 };
-const isPlainObject$1 = (val) => toTypeString(val) === "[object Object]";
-const isIntegerKey = (key) => isString(key) && key !== "NaN" && key[0] !== "-" && "" + parseInt(key, 10) === key;
+const isPlainObject$2 = (val) => toTypeString(val) === "[object Object]";
+const isIntegerKey = (key) => isString$1(key) && key !== "NaN" && key[0] !== "-" && "" + parseInt(key, 10) === key;
 const isReservedProp = /* @__PURE__ */ makeMap(",key,ref,ref_for,ref_key,onVnodeBeforeMount,onVnodeMounted,onVnodeBeforeUpdate,onVnodeUpdated,onVnodeBeforeUnmount,onVnodeUnmounted");
 const cacheStringFunction = (fn) => {
   const cache = /* @__PURE__ */ Object.create(null);
@@ -422,7 +422,7 @@ function trackEffects(dep, debuggerEventExtraInfo) {
     activeEffect.deps.push(dep);
   }
 }
-function trigger(target2, type, key, newValue, oldValue, oldTarget) {
+function trigger$1(target2, type, key, newValue, oldValue, oldTarget) {
   const depsMap = targetMap.get(target2);
   if (!depsMap) {
     return;
@@ -430,7 +430,7 @@ function trigger(target2, type, key, newValue, oldValue, oldTarget) {
   let deps = [];
   if (type === "clear") {
     deps = [...depsMap.values()];
-  } else if (key === "length" && isArray(target2)) {
+  } else if (key === "length" && isArray$1(target2)) {
     depsMap.forEach((dep, key2) => {
       if (key2 === "length" || key2 >= newValue) {
         deps.push(dep);
@@ -442,7 +442,7 @@ function trigger(target2, type, key, newValue, oldValue, oldTarget) {
     }
     switch (type) {
       case "add":
-        if (!isArray(target2)) {
+        if (!isArray$1(target2)) {
           deps.push(depsMap.get(ITERATE_KEY));
           if (isMap(target2)) {
             deps.push(depsMap.get(MAP_KEY_ITERATE_KEY));
@@ -452,7 +452,7 @@ function trigger(target2, type, key, newValue, oldValue, oldTarget) {
         }
         break;
       case "delete":
-        if (!isArray(target2)) {
+        if (!isArray$1(target2)) {
           deps.push(depsMap.get(ITERATE_KEY));
           if (isMap(target2)) {
             deps.push(depsMap.get(MAP_KEY_ITERATE_KEY));
@@ -485,7 +485,7 @@ function trigger(target2, type, key, newValue, oldValue, oldTarget) {
   }
 }
 function triggerEffects(dep, debuggerEventExtraInfo) {
-  const effects = isArray(dep) ? dep : [...dep];
+  const effects = isArray$1(dep) ? dep : [...dep];
   for (const effect of effects) {
     if (effect.computed) {
       triggerEffect(effect);
@@ -549,7 +549,7 @@ function createGetter(isReadonly2 = false, shallow = false) {
     } else if (key === "__v_raw" && receiver === (isReadonly2 ? shallow ? shallowReadonlyMap : readonlyMap : shallow ? shallowReactiveMap : reactiveMap).get(target2)) {
       return target2;
     }
-    const targetIsArray = isArray(target2);
+    const targetIsArray = isArray$1(target2);
     if (!isReadonly2 && targetIsArray && hasOwn(arrayInstrumentations, key)) {
       return Reflect.get(arrayInstrumentations, key, receiver);
     }
@@ -566,7 +566,7 @@ function createGetter(isReadonly2 = false, shallow = false) {
     if (isRef(res)) {
       return targetIsArray && isIntegerKey(key) ? res : res.value;
     }
-    if (isObject$1(res)) {
+    if (isObject$2(res)) {
       return isReadonly2 ? readonly(res) : reactive(res);
     }
     return res;
@@ -585,18 +585,18 @@ function createSetter(shallow = false) {
         value = toRaw(value);
         oldValue = toRaw(oldValue);
       }
-      if (!isArray(target2) && isRef(oldValue) && !isRef(value)) {
+      if (!isArray$1(target2) && isRef(oldValue) && !isRef(value)) {
         oldValue.value = value;
         return true;
       }
     }
-    const hadKey = isArray(target2) && isIntegerKey(key) ? Number(key) < target2.length : hasOwn(target2, key);
+    const hadKey = isArray$1(target2) && isIntegerKey(key) ? Number(key) < target2.length : hasOwn(target2, key);
     const result = Reflect.set(target2, key, value, receiver);
     if (target2 === toRaw(receiver)) {
       if (!hadKey) {
-        trigger(target2, "add", key, value);
+        trigger$1(target2, "add", key, value);
       } else if (hasChanged(value, oldValue)) {
-        trigger(target2, "set", key, value);
+        trigger$1(target2, "set", key, value);
       }
     }
     return result;
@@ -607,7 +607,7 @@ function deleteProperty(target2, key) {
   target2[key];
   const result = Reflect.deleteProperty(target2, key);
   if (result && hadKey) {
-    trigger(target2, "delete", key, void 0);
+    trigger$1(target2, "delete", key, void 0);
   }
   return result;
 }
@@ -619,7 +619,7 @@ function has(target2, key) {
   return result;
 }
 function ownKeys(target2) {
-  track(target2, "iterate", isArray(target2) ? "length" : ITERATE_KEY);
+  track(target2, "iterate", isArray$1(target2) ? "length" : ITERATE_KEY);
   return Reflect.ownKeys(target2);
 }
 const mutableHandlers = {
@@ -638,7 +638,7 @@ const readonlyHandlers = {
     return true;
   }
 };
-const shallowReactiveHandlers = /* @__PURE__ */ extend({}, mutableHandlers, {
+const shallowReactiveHandlers = /* @__PURE__ */ extend$1({}, mutableHandlers, {
   get: shallowGet,
   set: shallowSet
 });
@@ -688,7 +688,7 @@ function add(value) {
   const hadKey = proto.has.call(target2, value);
   if (!hadKey) {
     target2.add(value);
-    trigger(target2, "add", value, value);
+    trigger$1(target2, "add", value, value);
   }
   return this;
 }
@@ -704,9 +704,9 @@ function set$1(key, value) {
   const oldValue = get2.call(target2, key);
   target2.set(key, value);
   if (!hadKey) {
-    trigger(target2, "add", key, value);
+    trigger$1(target2, "add", key, value);
   } else if (hasChanged(value, oldValue)) {
-    trigger(target2, "set", key, value);
+    trigger$1(target2, "set", key, value);
   }
   return this;
 }
@@ -721,7 +721,7 @@ function deleteEntry(key) {
   get2 ? get2.call(target2, key) : void 0;
   const result = target2.delete(key);
   if (hadKey) {
-    trigger(target2, "delete", key, void 0);
+    trigger$1(target2, "delete", key, void 0);
   }
   return result;
 }
@@ -730,12 +730,12 @@ function clear() {
   const hadItems = target2.size !== 0;
   const result = target2.clear();
   if (hadItems) {
-    trigger(target2, "clear", void 0, void 0);
+    trigger$1(target2, "clear", void 0, void 0);
   }
   return result;
 }
 function createForEach(isReadonly2, isShallow2) {
-  return function forEach(callback, thisArg) {
+  return function forEach2(callback, thisArg) {
     const observed = this;
     const target2 = observed["__v_raw"];
     const rawTarget = toRaw(target2);
@@ -907,7 +907,7 @@ function readonly(target2) {
   return createReactiveObject(target2, true, readonlyHandlers, readonlyCollectionHandlers, readonlyMap);
 }
 function createReactiveObject(target2, isReadonly2, baseHandlers, collectionHandlers, proxyMap) {
-  if (!isObject$1(target2)) {
+  if (!isObject$2(target2)) {
     return target2;
   }
   if (target2["__v_raw"] && !(isReadonly2 && target2["__v_isReactive"])) {
@@ -948,8 +948,8 @@ function markRaw(value) {
   def(value, "__v_skip", true);
   return value;
 }
-const toReactive = (value) => isObject$1(value) ? reactive(value) : value;
-const toReadonly = (value) => isObject$1(value) ? readonly(value) : value;
+const toReactive = (value) => isObject$2(value) ? reactive(value) : value;
+const toReadonly = (value) => isObject$2(value) ? readonly(value) : value;
 function trackRefValue(ref2) {
   if (shouldTrack && activeEffect) {
     ref2 = toRaw(ref2);
@@ -1018,7 +1018,7 @@ function proxyRefs(objectWithRefs) {
   return isReactive(objectWithRefs) ? objectWithRefs : new Proxy(objectWithRefs, shallowUnwrapHandlers);
 }
 function toRefs(object) {
-  const ret = isArray(object) ? new Array(object.length) : {};
+  const ret = isArray$1(object) ? new Array(object.length) : {};
   for (const key in object) {
     ret[key] = toRef(object, key);
   }
@@ -1075,7 +1075,7 @@ class ComputedRefImpl {
 function computed$1(getterOrOptions, debugOptions, isSSR = false) {
   let getter;
   let setter;
-  const onlyGetter = isFunction(getterOrOptions);
+  const onlyGetter = isFunction$1(getterOrOptions);
   if (onlyGetter) {
     getter = getterOrOptions;
     setter = NOOP;
@@ -1096,7 +1096,7 @@ function callWithErrorHandling(fn, instance, type, args) {
   return res;
 }
 function callWithAsyncErrorHandling(fn, instance, type, args) {
-  if (isFunction(fn)) {
+  if (isFunction$1(fn)) {
     const res = callWithErrorHandling(fn, instance, type, args);
     if (res && isPromise(res)) {
       res.catch((err) => {
@@ -1191,7 +1191,7 @@ function invalidateJob(job) {
   }
 }
 function queueCb(cb, activeQueue, pendingQueue, index2) {
-  if (!isArray(cb)) {
+  if (!isArray$1(cb)) {
     if (!activeQueue || !activeQueue.includes(cb, cb.allowRecurse ? index2 + 1 : index2)) {
       pendingQueue.push(cb);
     }
@@ -1274,8 +1274,8 @@ function emit$1(instance, event, ...rawArgs) {
   const modelArg = isModelListener2 && event.slice(7);
   if (modelArg && modelArg in props) {
     const modifiersKey = `${modelArg === "modelValue" ? "model" : modelArg}Modifiers`;
-    const { number, trim } = props[modifiersKey] || EMPTY_OBJ;
-    if (trim) {
+    const { number, trim: trim2 } = props[modifiersKey] || EMPTY_OBJ;
+    if (trim2) {
       args = rawArgs.map((a2) => a2.trim());
     }
     if (number) {
@@ -1310,12 +1310,12 @@ function normalizeEmitsOptions(comp, appContext, asMixin = false) {
   const raw = comp.emits;
   let normalized = {};
   let hasExtends = false;
-  if (!isFunction(comp)) {
+  if (!isFunction$1(comp)) {
     const extendEmits = (raw2) => {
       const normalizedFromExtend = normalizeEmitsOptions(raw2, appContext, true);
       if (normalizedFromExtend) {
         hasExtends = true;
-        extend(normalized, normalizedFromExtend);
+        extend$1(normalized, normalizedFromExtend);
       }
     };
     if (!asMixin && appContext.mixins.length) {
@@ -1332,10 +1332,10 @@ function normalizeEmitsOptions(comp, appContext, asMixin = false) {
     cache.set(comp, null);
     return null;
   }
-  if (isArray(raw)) {
+  if (isArray$1(raw)) {
     raw.forEach((key) => normalized[key] = null);
   } else {
-    extend(normalized, raw);
+    extend$1(normalized, raw);
   }
   cache.set(comp, normalized);
   return normalized;
@@ -1525,7 +1525,7 @@ function updateHOCHostEl({ vnode, parent }, el) {
 const isSuspense = (type) => type.__isSuspense;
 function queueEffectWithSuspense(fn, suspense) {
   if (suspense && suspense.pendingBranch) {
-    if (isArray(fn)) {
+    if (isArray$1(fn)) {
       suspense.effects.push(...fn);
     } else {
       suspense.effects.push(fn);
@@ -1553,7 +1553,7 @@ function inject(key, defaultValue, treatDefaultAsFactory = false) {
     if (provides && key in provides) {
       return provides[key];
     } else if (arguments.length > 1) {
-      return treatDefaultAsFactory && isFunction(defaultValue) ? defaultValue.call(instance.proxy) : defaultValue;
+      return treatDefaultAsFactory && isFunction$1(defaultValue) ? defaultValue.call(instance.proxy) : defaultValue;
     } else
       ;
   }
@@ -1576,7 +1576,7 @@ function doWatch(source, cb, { immediate, deep, flush, onTrack, onTrigger } = EM
   } else if (isReactive(source)) {
     getter = () => source;
     deep = true;
-  } else if (isArray(source)) {
+  } else if (isArray$1(source)) {
     isMultiSource = true;
     forceTrigger = source.some((s2) => isReactive(s2) || isShallow(s2));
     getter = () => source.map((s2) => {
@@ -1584,12 +1584,12 @@ function doWatch(source, cb, { immediate, deep, flush, onTrack, onTrigger } = EM
         return s2.value;
       } else if (isReactive(s2)) {
         return traverse(s2);
-      } else if (isFunction(s2)) {
+      } else if (isFunction$1(s2)) {
         return callWithErrorHandling(s2, instance, 2);
       } else
         ;
     });
-  } else if (isFunction(source)) {
+  } else if (isFunction$1(source)) {
     if (cb) {
       getter = () => callWithErrorHandling(source, instance, 2);
     } else {
@@ -1681,9 +1681,9 @@ function doWatch(source, cb, { immediate, deep, flush, onTrack, onTrigger } = EM
 }
 function instanceWatch(source, value, options) {
   const publicThis = this.proxy;
-  const getter = isString(source) ? source.includes(".") ? createPathGetter(publicThis, source) : () => publicThis[source] : source.bind(publicThis, publicThis);
+  const getter = isString$1(source) ? source.includes(".") ? createPathGetter(publicThis, source) : () => publicThis[source] : source.bind(publicThis, publicThis);
   let cb;
-  if (isFunction(value)) {
+  if (isFunction$1(value)) {
     cb = value;
   } else {
     cb = value.handler;
@@ -1710,7 +1710,7 @@ function createPathGetter(ctx, path) {
   };
 }
 function traverse(value, seen) {
-  if (!isObject$1(value) || value["__v_skip"]) {
+  if (!isObject$2(value) || value["__v_skip"]) {
     return value;
   }
   seen = seen || /* @__PURE__ */ new Set();
@@ -1720,7 +1720,7 @@ function traverse(value, seen) {
   seen.add(value);
   if (isRef(value)) {
     traverse(value.value, seen);
-  } else if (isArray(value)) {
+  } else if (isArray$1(value)) {
     for (let i = 0; i < value.length; i++) {
       traverse(value[i], seen);
     }
@@ -1728,7 +1728,7 @@ function traverse(value, seen) {
     value.forEach((v) => {
       traverse(v, seen);
     });
-  } else if (isPlainObject$1(value)) {
+  } else if (isPlainObject$2(value)) {
     for (const key in value) {
       traverse(value[key], seen);
     }
@@ -1859,7 +1859,7 @@ function resolveTransitionHooks(vnode, props, state, instance) {
   const callAsyncHook = (hook, args) => {
     const done = args[1];
     callHook2(hook, args);
-    if (isArray(hook)) {
+    if (isArray$1(hook)) {
       if (hook.every((hook2) => hook2.length <= 1))
         done();
     } else if (hook.length <= 1) {
@@ -2001,7 +2001,7 @@ function getTransitionRawChildren(children, keepComment = false, parentKey) {
   return ret;
 }
 function defineComponent(options) {
-  return isFunction(options) ? { setup: options, name: options.name } : options;
+  return isFunction$1(options) ? { setup: options, name: options.name } : options;
 }
 const isAsyncWrapper = (i) => !!i.type.__asyncLoader;
 const isKeepAlive = (vnode) => vnode.type.__isKeepAlive;
@@ -2083,7 +2083,7 @@ function withDirectives(vnode, directives) {
   const bindings = vnode.dirs || (vnode.dirs = []);
   for (let i = 0; i < directives.length; i++) {
     let [dir, value, arg, modifiers = EMPTY_OBJ] = directives[i];
-    if (isFunction(dir)) {
+    if (isFunction$1(dir)) {
       dir = {
         mounted: dir,
         updated: dir
@@ -2127,7 +2127,7 @@ function invokeDirectiveHook(vnode, prevVNode, instance, name) {
 const COMPONENTS = "components";
 const NULL_DYNAMIC_COMPONENT = Symbol();
 function resolveDynamicComponent(component) {
-  if (isString(component)) {
+  if (isString$1(component)) {
     return resolveAsset(COMPONENTS, component) || component;
   } else {
     return component || NULL_DYNAMIC_COMPONENT;
@@ -2156,7 +2156,7 @@ function resolve(registry, name) {
 function renderList(source, renderItem, cache, index2) {
   let ret;
   const cached = cache && cache[index2];
-  if (isArray(source) || isString(source)) {
+  if (isArray$1(source) || isString$1(source)) {
     ret = new Array(source.length);
     for (let i = 0, l2 = source.length; i < l2; i++) {
       ret[i] = renderItem(source[i], i, void 0, cached && cached[i]);
@@ -2166,7 +2166,7 @@ function renderList(source, renderItem, cache, index2) {
     for (let i = 0; i < source; i++) {
       ret[i] = renderItem(i + 1, i, void 0, cached && cached[i]);
     }
-  } else if (isObject$1(source)) {
+  } else if (isObject$2(source)) {
     if (source[Symbol.iterator]) {
       ret = Array.from(source, (item, i) => renderItem(item, i, void 0, cached && cached[i]));
     } else {
@@ -2192,7 +2192,7 @@ const getPublicInstance = (i) => {
     return getExposeProxy(i) || i.proxy;
   return getPublicInstance(i.parent);
 };
-const publicPropertiesMap = /* @__PURE__ */ extend(/* @__PURE__ */ Object.create(null), {
+const publicPropertiesMap = /* @__PURE__ */ extend$1(/* @__PURE__ */ Object.create(null), {
   $: (i) => i,
   $el: (i) => i.vnode.el,
   $data: (i) => i.data,
@@ -2338,7 +2338,7 @@ function applyOptions(instance) {
   if (methods) {
     for (const key in methods) {
       const methodHandler = methods[key];
-      if (isFunction(methodHandler)) {
+      if (isFunction$1(methodHandler)) {
         {
           ctx[key] = methodHandler.bind(publicThis);
         }
@@ -2347,7 +2347,7 @@ function applyOptions(instance) {
   }
   if (dataOptions) {
     const data = dataOptions.call(publicThis, publicThis);
-    if (!isObject$1(data))
+    if (!isObject$2(data))
       ;
     else {
       instance.data = reactive(data);
@@ -2357,8 +2357,8 @@ function applyOptions(instance) {
   if (computedOptions) {
     for (const key in computedOptions) {
       const opt = computedOptions[key];
-      const get2 = isFunction(opt) ? opt.bind(publicThis, publicThis) : isFunction(opt.get) ? opt.get.bind(publicThis, publicThis) : NOOP;
-      const set2 = !isFunction(opt) && isFunction(opt.set) ? opt.set.bind(publicThis) : NOOP;
+      const get2 = isFunction$1(opt) ? opt.bind(publicThis, publicThis) : isFunction$1(opt.get) ? opt.get.bind(publicThis, publicThis) : NOOP;
+      const set2 = !isFunction$1(opt) && isFunction$1(opt.set) ? opt.set.bind(publicThis) : NOOP;
       const c = computed({
         get: get2,
         set: set2
@@ -2377,7 +2377,7 @@ function applyOptions(instance) {
     }
   }
   if (provideOptions) {
-    const provides = isFunction(provideOptions) ? provideOptions.call(publicThis) : provideOptions;
+    const provides = isFunction$1(provideOptions) ? provideOptions.call(publicThis) : provideOptions;
     Reflect.ownKeys(provides).forEach((key) => {
       provide(key, provides[key]);
     });
@@ -2386,7 +2386,7 @@ function applyOptions(instance) {
     callHook$1(created, instance, "c");
   }
   function registerLifecycleHook(register, hook) {
-    if (isArray(hook)) {
+    if (isArray$1(hook)) {
       hook.forEach((_hook) => register(_hook.bind(publicThis)));
     } else if (hook) {
       register(hook.bind(publicThis));
@@ -2404,7 +2404,7 @@ function applyOptions(instance) {
   registerLifecycleHook(onBeforeUnmount, beforeUnmount);
   registerLifecycleHook(onUnmounted, unmounted);
   registerLifecycleHook(onServerPrefetch, serverPrefetch);
-  if (isArray(expose)) {
+  if (isArray$1(expose)) {
     if (expose.length) {
       const exposed = instance.exposed || (instance.exposed = {});
       expose.forEach((key) => {
@@ -2429,13 +2429,13 @@ function applyOptions(instance) {
     instance.directives = directives;
 }
 function resolveInjections(injectOptions, ctx, checkDuplicateProperties, unwrapRef = false) {
-  if (isArray(injectOptions)) {
+  if (isArray$1(injectOptions)) {
     injectOptions = normalizeInject(injectOptions);
   }
   for (const key in injectOptions) {
     const opt = injectOptions[key];
     let injected;
-    if (isObject$1(opt)) {
+    if (isObject$2(opt)) {
       if ("default" in opt) {
         injected = inject(opt.from || key, opt.default, true);
       } else {
@@ -2461,23 +2461,23 @@ function resolveInjections(injectOptions, ctx, checkDuplicateProperties, unwrapR
   }
 }
 function callHook$1(hook, instance, type) {
-  callWithAsyncErrorHandling(isArray(hook) ? hook.map((h2) => h2.bind(instance.proxy)) : hook.bind(instance.proxy), instance, type);
+  callWithAsyncErrorHandling(isArray$1(hook) ? hook.map((h2) => h2.bind(instance.proxy)) : hook.bind(instance.proxy), instance, type);
 }
 function createWatcher(raw, ctx, publicThis, key) {
   const getter = key.includes(".") ? createPathGetter(publicThis, key) : () => publicThis[key];
-  if (isString(raw)) {
+  if (isString$1(raw)) {
     const handler = ctx[raw];
-    if (isFunction(handler)) {
+    if (isFunction$1(handler)) {
       watch(getter, handler);
     }
-  } else if (isFunction(raw)) {
+  } else if (isFunction$1(raw)) {
     watch(getter, raw.bind(publicThis));
-  } else if (isObject$1(raw)) {
-    if (isArray(raw)) {
+  } else if (isObject$2(raw)) {
+    if (isArray$1(raw)) {
       raw.forEach((r) => createWatcher(r, ctx, publicThis, key));
     } else {
-      const handler = isFunction(raw.handler) ? raw.handler.bind(publicThis) : ctx[raw.handler];
-      if (isFunction(handler)) {
+      const handler = isFunction$1(raw.handler) ? raw.handler.bind(publicThis) : ctx[raw.handler];
+      if (isFunction$1(handler)) {
         watch(getter, handler, raw);
       }
     }
@@ -2558,14 +2558,14 @@ function mergeDataFn(to, from) {
     return from;
   }
   return function mergedDataFn() {
-    return extend(isFunction(to) ? to.call(this, this) : to, isFunction(from) ? from.call(this, this) : from);
+    return extend$1(isFunction$1(to) ? to.call(this, this) : to, isFunction$1(from) ? from.call(this, this) : from);
   };
 }
 function mergeInject(to, from) {
   return mergeObjectOptions(normalizeInject(to), normalizeInject(from));
 }
 function normalizeInject(raw) {
-  if (isArray(raw)) {
+  if (isArray$1(raw)) {
     const res = {};
     for (let i = 0; i < raw.length; i++) {
       res[raw[i]] = raw[i];
@@ -2578,14 +2578,14 @@ function mergeAsArray(to, from) {
   return to ? [...new Set([].concat(to, from))] : from;
 }
 function mergeObjectOptions(to, from) {
-  return to ? extend(extend(/* @__PURE__ */ Object.create(null), to), from) : from;
+  return to ? extend$1(extend$1(/* @__PURE__ */ Object.create(null), to), from) : from;
 }
 function mergeWatchOptions(to, from) {
   if (!to)
     return from;
   if (!from)
     return to;
-  const merged = extend(/* @__PURE__ */ Object.create(null), to);
+  const merged = extend$1(/* @__PURE__ */ Object.create(null), to);
   for (const key in from) {
     merged[key] = mergeAsArray(to[key], from[key]);
   }
@@ -2671,7 +2671,7 @@ function updateProps(instance, rawProps, rawPrevProps, optimized) {
     }
   }
   if (hasAttrsChanged) {
-    trigger(instance, "set", "$attrs");
+    trigger$1(instance, "set", "$attrs");
   }
 }
 function setFullProps(instance, rawProps, props, attrs) {
@@ -2715,7 +2715,7 @@ function resolvePropValue(options, props, key, value, instance, isAbsent) {
     const hasDefault = hasOwn(opt, "default");
     if (hasDefault && value === void 0) {
       const defaultValue = opt.default;
-      if (opt.type !== Function && isFunction(defaultValue)) {
+      if (opt.type !== Function && isFunction$1(defaultValue)) {
         const { propsDefaults } = instance;
         if (key in propsDefaults) {
           value = propsDefaults[key];
@@ -2748,11 +2748,11 @@ function normalizePropsOptions(comp, appContext, asMixin = false) {
   const normalized = {};
   const needCastKeys = [];
   let hasExtends = false;
-  if (!isFunction(comp)) {
+  if (!isFunction$1(comp)) {
     const extendProps = (raw2) => {
       hasExtends = true;
       const [props, keys] = normalizePropsOptions(raw2, appContext, true);
-      extend(normalized, props);
+      extend$1(normalized, props);
       if (keys)
         needCastKeys.push(...keys);
     };
@@ -2770,7 +2770,7 @@ function normalizePropsOptions(comp, appContext, asMixin = false) {
     cache.set(comp, EMPTY_ARR);
     return EMPTY_ARR;
   }
-  if (isArray(raw)) {
+  if (isArray$1(raw)) {
     for (let i = 0; i < raw.length; i++) {
       const normalizedKey = camelize(raw[i]);
       if (validatePropName(normalizedKey)) {
@@ -2782,7 +2782,7 @@ function normalizePropsOptions(comp, appContext, asMixin = false) {
       const normalizedKey = camelize(key);
       if (validatePropName(normalizedKey)) {
         const opt = raw[key];
-        const prop = normalized[normalizedKey] = isArray(opt) || isFunction(opt) ? { type: opt } : opt;
+        const prop = normalized[normalizedKey] = isArray$1(opt) || isFunction$1(opt) ? { type: opt } : opt;
         if (prop) {
           const booleanIndex = getTypeIndex(Boolean, prop.type);
           const stringIndex = getTypeIndex(String, prop.type);
@@ -2813,15 +2813,15 @@ function isSameType(a2, b) {
   return getType(a2) === getType(b);
 }
 function getTypeIndex(type, expectedTypes) {
-  if (isArray(expectedTypes)) {
+  if (isArray$1(expectedTypes)) {
     return expectedTypes.findIndex((t) => isSameType(t, type));
-  } else if (isFunction(expectedTypes)) {
+  } else if (isFunction$1(expectedTypes)) {
     return isSameType(expectedTypes, type) ? 0 : -1;
   }
   return -1;
 }
 const isInternalKey = (key) => key[0] === "_" || key === "$stable";
-const normalizeSlotValue = (value) => isArray(value) ? value.map(normalizeVNode) : [normalizeVNode(value)];
+const normalizeSlotValue = (value) => isArray$1(value) ? value.map(normalizeVNode) : [normalizeVNode(value)];
 const normalizeSlot = (key, rawSlot, ctx) => {
   if (rawSlot._n) {
     return rawSlot;
@@ -2838,7 +2838,7 @@ const normalizeObjectSlots = (rawSlots, slots, instance) => {
     if (isInternalKey(key))
       continue;
     const value = rawSlots[key];
-    if (isFunction(value)) {
+    if (isFunction$1(value)) {
       slots[key] = normalizeSlot(key, value, ctx);
     } else if (value != null) {
       const normalized = normalizeSlotValue(value);
@@ -2877,7 +2877,7 @@ const updateSlots = (instance, children, optimized) => {
       if (optimized && type === 1) {
         needDeletionCheck = false;
       } else {
-        extend(slots, children);
+        extend$1(slots, children);
         if (!optimized && type === 1) {
           delete slots._;
         }
@@ -2923,10 +2923,10 @@ function createAppContext() {
 let uid$1 = 0;
 function createAppAPI(render, hydrate) {
   return function createApp2(rootComponent, rootProps = null) {
-    if (!isFunction(rootComponent)) {
+    if (!isFunction$1(rootComponent)) {
       rootComponent = Object.assign({}, rootComponent);
     }
-    if (rootProps != null && !isObject$1(rootProps)) {
+    if (rootProps != null && !isObject$2(rootProps)) {
       rootProps = null;
     }
     const context = createAppContext();
@@ -2948,10 +2948,10 @@ function createAppAPI(render, hydrate) {
       use(plugin, ...options) {
         if (installedPlugins.has(plugin))
           ;
-        else if (plugin && isFunction(plugin.install)) {
+        else if (plugin && isFunction$1(plugin.install)) {
           installedPlugins.add(plugin);
           plugin.install(app2, ...options);
-        } else if (isFunction(plugin)) {
+        } else if (isFunction$1(plugin)) {
           installedPlugins.add(plugin);
           plugin(app2, ...options);
         } else
@@ -3010,8 +3010,8 @@ function createAppAPI(render, hydrate) {
   };
 }
 function setRef(rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) {
-  if (isArray(rawRef)) {
-    rawRef.forEach((r, i) => setRef(r, oldRawRef && (isArray(oldRawRef) ? oldRawRef[i] : oldRawRef), parentSuspense, vnode, isUnmount));
+  if (isArray$1(rawRef)) {
+    rawRef.forEach((r, i) => setRef(r, oldRawRef && (isArray$1(oldRawRef) ? oldRawRef[i] : oldRawRef), parentSuspense, vnode, isUnmount));
     return;
   }
   if (isAsyncWrapper(vnode) && !isUnmount) {
@@ -3024,7 +3024,7 @@ function setRef(rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) {
   const refs = owner.refs === EMPTY_OBJ ? owner.refs = {} : owner.refs;
   const setupState = owner.setupState;
   if (oldRef != null && oldRef !== ref2) {
-    if (isString(oldRef)) {
+    if (isString$1(oldRef)) {
       refs[oldRef] = null;
       if (hasOwn(setupState, oldRef)) {
         setupState[oldRef] = null;
@@ -3033,19 +3033,19 @@ function setRef(rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) {
       oldRef.value = null;
     }
   }
-  if (isFunction(ref2)) {
+  if (isFunction$1(ref2)) {
     callWithErrorHandling(ref2, owner, 12, [value, refs]);
   } else {
-    const _isString = isString(ref2);
+    const _isString = isString$1(ref2);
     const _isRef = isRef(ref2);
     if (_isString || _isRef) {
       const doSet = () => {
         if (rawRef.f) {
           const existing = _isString ? refs[ref2] : ref2.value;
           if (isUnmount) {
-            isArray(existing) && remove(existing, refValue);
+            isArray$1(existing) && remove(existing, refValue);
           } else {
-            if (!isArray(existing)) {
+            if (!isArray$1(existing)) {
               if (_isString) {
                 refs[ref2] = [refValue];
                 if (hasOwn(setupState, ref2)) {
@@ -3873,7 +3873,7 @@ function toggleRecurse({ effect, update: update2 }, allowed) {
 function traverseStaticChildren(n1, n2, shallow = false) {
   const ch1 = n1.children;
   const ch2 = n2.children;
-  if (isArray(ch1) && isArray(ch2)) {
+  if (isArray$1(ch1) && isArray$1(ch2)) {
     for (let i = 0; i < ch1.length; i++) {
       const c1 = ch1[i];
       let c2 = ch2[i];
@@ -3933,7 +3933,7 @@ const isTeleportDisabled = (props) => props && (props.disabled || props.disabled
 const isTargetSVG = (target2) => typeof SVGElement !== "undefined" && target2 instanceof SVGElement;
 const resolveTarget = (props, select) => {
   const targetSelector = props && props.to;
-  if (isString(targetSelector)) {
+  if (isString$1(targetSelector)) {
     if (!select) {
       return null;
     } else {
@@ -4106,7 +4106,7 @@ function isSameVNodeType(n1, n2) {
 const InternalObjectKey = `__vInternal`;
 const normalizeKey = ({ key }) => key != null ? key : null;
 const normalizeRef = ({ ref: ref2, ref_key, ref_for }) => {
-  return ref2 != null ? isString(ref2) || isRef(ref2) || isFunction(ref2) ? { i: currentRenderingInstance, r: ref2, k: ref_key, f: !!ref_for } : ref2 : null;
+  return ref2 != null ? isString$1(ref2) || isRef(ref2) || isFunction$1(ref2) ? { i: currentRenderingInstance, r: ref2, k: ref_key, f: !!ref_for } : ref2 : null;
 };
 function createBaseVNode(type, props = null, children = null, patchFlag = 0, dynamicProps = null, shapeFlag = type === Fragment ? 0 : 1, isBlockNode = false, needFullChildrenNormalization = false) {
   const vnode = {
@@ -4142,7 +4142,7 @@ function createBaseVNode(type, props = null, children = null, patchFlag = 0, dyn
       type.normalize(vnode);
     }
   } else if (children) {
-    vnode.shapeFlag |= isString(children) ? 8 : 16;
+    vnode.shapeFlag |= isString$1(children) ? 8 : 16;
   }
   if (isBlockTreeEnabled > 0 && !isBlockNode && currentBlock && (vnode.patchFlag > 0 || shapeFlag & 6) && vnode.patchFlag !== 32) {
     currentBlock.push(vnode);
@@ -4175,23 +4175,23 @@ function _createVNode(type, props = null, children = null, patchFlag = 0, dynami
   if (props) {
     props = guardReactiveProps(props);
     let { class: klass, style } = props;
-    if (klass && !isString(klass)) {
+    if (klass && !isString$1(klass)) {
       props.class = normalizeClass(klass);
     }
-    if (isObject$1(style)) {
-      if (isProxy(style) && !isArray(style)) {
-        style = extend({}, style);
+    if (isObject$2(style)) {
+      if (isProxy(style) && !isArray$1(style)) {
+        style = extend$1({}, style);
       }
       props.style = normalizeStyle(style);
     }
   }
-  const shapeFlag = isString(type) ? 1 : isSuspense(type) ? 128 : isTeleport(type) ? 64 : isObject$1(type) ? 4 : isFunction(type) ? 2 : 0;
+  const shapeFlag = isString$1(type) ? 1 : isSuspense(type) ? 128 : isTeleport(type) ? 64 : isObject$2(type) ? 4 : isFunction$1(type) ? 2 : 0;
   return createBaseVNode(type, props, children, patchFlag, dynamicProps, shapeFlag, isBlockNode, true);
 }
 function guardReactiveProps(props) {
   if (!props)
     return null;
-  return isProxy(props) || InternalObjectKey in props ? extend({}, props) : props;
+  return isProxy(props) || InternalObjectKey in props ? extend$1({}, props) : props;
 }
 function cloneVNode(vnode, extraProps, mergeRef = false) {
   const { props, ref: ref2, patchFlag, children } = vnode;
@@ -4202,7 +4202,7 @@ function cloneVNode(vnode, extraProps, mergeRef = false) {
     type: vnode.type,
     props: mergedProps,
     key: mergedProps && normalizeKey(mergedProps),
-    ref: extraProps && extraProps.ref ? mergeRef && ref2 ? isArray(ref2) ? ref2.concat(normalizeRef(extraProps)) : [ref2, normalizeRef(extraProps)] : normalizeRef(extraProps) : ref2,
+    ref: extraProps && extraProps.ref ? mergeRef && ref2 ? isArray$1(ref2) ? ref2.concat(normalizeRef(extraProps)) : [ref2, normalizeRef(extraProps)] : normalizeRef(extraProps) : ref2,
     scopeId: vnode.scopeId,
     slotScopeIds: vnode.slotScopeIds,
     children,
@@ -4234,7 +4234,7 @@ function createCommentVNode(text, asBlock) {
 function normalizeVNode(child) {
   if (child == null || typeof child === "boolean") {
     return createVNode(Comment);
-  } else if (isArray(child)) {
+  } else if (isArray$1(child)) {
     return createVNode(Fragment, null, child.slice());
   } else if (typeof child === "object") {
     return cloneIfMounted(child);
@@ -4250,7 +4250,7 @@ function normalizeChildren(vnode, children) {
   const { shapeFlag } = vnode;
   if (children == null) {
     children = null;
-  } else if (isArray(children)) {
+  } else if (isArray$1(children)) {
     type = 16;
   } else if (typeof children === "object") {
     if (shapeFlag & (1 | 64)) {
@@ -4275,7 +4275,7 @@ function normalizeChildren(vnode, children) {
         }
       }
     }
-  } else if (isFunction(children)) {
+  } else if (isFunction$1(children)) {
     children = { default: children, _ctx: currentRenderingInstance };
     type = 32;
   } else {
@@ -4304,7 +4304,7 @@ function mergeProps(...args) {
       } else if (isOn(key)) {
         const existing = ret[key];
         const incoming = toMerge[key];
-        if (incoming && existing !== incoming && !(isArray(existing) && existing.includes(incoming))) {
+        if (incoming && existing !== incoming && !(isArray$1(existing) && existing.includes(incoming))) {
           ret[key] = existing ? [].concat(existing, incoming) : incoming;
         }
       } else if (key !== "") {
@@ -4448,13 +4448,13 @@ function setupStatefulComponent(instance, isSSR) {
   }
 }
 function handleSetupResult(instance, setupResult, isSSR) {
-  if (isFunction(setupResult)) {
+  if (isFunction$1(setupResult)) {
     if (instance.type.__ssrInlineRender) {
       instance.ssrRender = setupResult;
     } else {
       instance.render = setupResult;
     }
-  } else if (isObject$1(setupResult)) {
+  } else if (isObject$2(setupResult)) {
     instance.setupState = proxyRefs(setupResult);
   } else
     ;
@@ -4469,7 +4469,7 @@ function finishComponentSetup(instance, isSSR, skipOptions) {
       if (template) {
         const { isCustomElement, compilerOptions } = instance.appContext.config;
         const { delimiters, compilerOptions: componentCompilerOptions } = Component;
-        const finalCompilerOptions = extend(extend({
+        const finalCompilerOptions = extend$1(extend$1({
           isCustomElement,
           delimiters
         }, compilerOptions), componentCompilerOptions);
@@ -4524,10 +4524,10 @@ function getExposeProxy(instance) {
   }
 }
 function getComponentName(Component) {
-  return isFunction(Component) ? Component.displayName || Component.name : Component.name;
+  return isFunction$1(Component) ? Component.displayName || Component.name : Component.name;
 }
 function isClassComponent(value) {
-  return isFunction(value) && "__vccOpts" in value;
+  return isFunction$1(value) && "__vccOpts" in value;
 }
 const computed = (getterOrOptions, debugOptions) => {
   return computed$1(getterOrOptions, debugOptions, isInSSRComponentSetup);
@@ -4535,7 +4535,7 @@ const computed = (getterOrOptions, debugOptions) => {
 function h(type, propsOrChildren, children) {
   const l2 = arguments.length;
   if (l2 === 2) {
-    if (isObject$1(propsOrChildren) && !isArray(propsOrChildren)) {
+    if (isObject$2(propsOrChildren) && !isArray$1(propsOrChildren)) {
       if (isVNode(propsOrChildren)) {
         return createVNode(type, null, [propsOrChildren]);
       }
@@ -4635,12 +4635,12 @@ function patchClass(el, value, isSVG) {
 }
 function patchStyle(el, prev, next) {
   const style = el.style;
-  const isCssString = isString(next);
+  const isCssString = isString$1(next);
   if (next && !isCssString) {
     for (const key in next) {
       setStyle(style, key, next[key]);
     }
-    if (prev && !isString(prev)) {
+    if (prev && !isString$1(prev)) {
       for (const key in prev) {
         if (next[key] == null) {
           setStyle(style, key, "");
@@ -4663,7 +4663,7 @@ function patchStyle(el, prev, next) {
 }
 const importantRE = /\s*!important$/;
 function setStyle(style, name, val) {
-  if (isArray(val)) {
+  if (isArray$1(val)) {
     val.forEach((v) => setStyle(style, name, v));
   } else {
     if (val == null)
@@ -4709,11 +4709,11 @@ function patchAttr(el, key, value, isSVG, instance) {
       el.setAttributeNS(xlinkNS, key, value);
     }
   } else {
-    const isBoolean = isSpecialBooleanAttr(key);
-    if (value == null || isBoolean && !includeBooleanAttr(value)) {
+    const isBoolean2 = isSpecialBooleanAttr(key);
+    if (value == null || isBoolean2 && !includeBooleanAttr(value)) {
       el.removeAttribute(key);
     } else {
-      el.setAttribute(key, isBoolean ? "" : value);
+      el.setAttribute(key, isBoolean2 ? "" : value);
     }
   }
 }
@@ -4820,7 +4820,7 @@ function createInvoker(initialValue, instance) {
   return invoker;
 }
 function patchStopImmediatePropagation(e, value) {
-  if (isArray(value)) {
+  if (isArray$1(value)) {
     const originalStop = e.stopImmediatePropagation;
     e.stopImmediatePropagation = () => {
       originalStop.call(e);
@@ -4857,7 +4857,7 @@ function shouldSetAsProp(el, key, value, isSVG) {
     if (key === "innerHTML" || key === "textContent") {
       return true;
     }
-    if (key in el && nativeOnRE.test(key) && isFunction(value)) {
+    if (key in el && nativeOnRE.test(key) && isFunction$1(value)) {
       return true;
     }
     return false;
@@ -4874,7 +4874,7 @@ function shouldSetAsProp(el, key, value, isSVG) {
   if (key === "type" && el.tagName === "TEXTAREA") {
     return false;
   }
-  if (nativeOnRE.test(key) && isString(value)) {
+  if (nativeOnRE.test(key) && isString$1(value)) {
     return false;
   }
   return key in el;
@@ -4901,16 +4901,16 @@ const DOMTransitionPropsValidators = {
   leaveActiveClass: String,
   leaveToClass: String
 };
-Transition.props = /* @__PURE__ */ extend({}, BaseTransition.props, DOMTransitionPropsValidators);
+Transition.props = /* @__PURE__ */ extend$1({}, BaseTransition.props, DOMTransitionPropsValidators);
 const callHook = (hook, args) => {
-  if (isArray(hook)) {
+  if (isArray$1(hook)) {
     hook.forEach((h2) => h2(...args));
   } else if (hook) {
     hook(...args);
   }
 };
 const hasExplicitCallback = (hook) => {
-  return hook ? isArray(hook) ? hook.some((h2) => h2.length > 1) : hook.length > 1 : false;
+  return hook ? isArray$1(hook) ? hook.some((h2) => h2.length > 1) : hook.length > 1 : false;
 };
 function resolveTransitionProps(rawProps) {
   const baseProps = {};
@@ -4953,7 +4953,7 @@ function resolveTransitionProps(rawProps) {
       });
     };
   };
-  return extend(baseProps, {
+  return extend$1(baseProps, {
     onBeforeEnter(el) {
       callHook(onBeforeEnter, [el]);
       addTransitionClass(el, enterFromClass);
@@ -5001,7 +5001,7 @@ function resolveTransitionProps(rawProps) {
 function normalizeDuration(duration) {
   if (duration == null) {
     return null;
-  } else if (isObject$1(duration)) {
+  } else if (isObject$2(duration)) {
     return [NumberOf(duration.enter), NumberOf(duration.leave)];
   } else {
     const n = NumberOf(duration);
@@ -5113,6 +5113,30 @@ function toMs(s2) {
 function forceReflow() {
   return document.body.offsetHeight;
 }
+const systemModifiers = ["ctrl", "shift", "alt", "meta"];
+const modifierGuards = {
+  stop: (e) => e.stopPropagation(),
+  prevent: (e) => e.preventDefault(),
+  self: (e) => e.target !== e.currentTarget,
+  ctrl: (e) => !e.ctrlKey,
+  shift: (e) => !e.shiftKey,
+  alt: (e) => !e.altKey,
+  meta: (e) => !e.metaKey,
+  left: (e) => "button" in e && e.button !== 0,
+  middle: (e) => "button" in e && e.button !== 1,
+  right: (e) => "button" in e && e.button !== 2,
+  exact: (e, modifiers) => systemModifiers.some((m) => e[`${m}Key`] && !modifiers.includes(m))
+};
+const withModifiers = (fn, modifiers) => {
+  return (event, ...args) => {
+    for (let i = 0; i < modifiers.length; i++) {
+      const guard = modifierGuards[modifiers[i]];
+      if (guard && guard(event, modifiers))
+        return;
+    }
+    return fn(event, ...args);
+  };
+};
 const vShow = {
   beforeMount(el, { value }, { transition }) {
     el._vod = el.style.display === "none" ? "" : el.style.display;
@@ -5151,7 +5175,7 @@ const vShow = {
 function setDisplay(el, value) {
   el.style.display = value ? el._vod : "none";
 }
-const rendererOptions = /* @__PURE__ */ extend({ patchProp }, nodeOps);
+const rendererOptions = /* @__PURE__ */ extend$1({ patchProp }, nodeOps);
 let renderer;
 function ensureRenderer() {
   return renderer || (renderer = createRenderer(rendererOptions));
@@ -5164,7 +5188,7 @@ const createApp = (...args) => {
     if (!container)
       return;
     const component = app2._component;
-    if (!isFunction(component) && !component.render && !component.template) {
+    if (!isFunction$1(component) && !component.render && !component.template) {
       component.template = container.innerHTML;
     }
     container.innerHTML = "";
@@ -5178,7 +5202,7 @@ const createApp = (...args) => {
   return app2;
 };
 function normalizeContainer(container) {
-  if (isString(container)) {
+  if (isString$1(container)) {
     const res = document.querySelector(container);
     return res;
   }
@@ -5210,105 +5234,105 @@ function applyIosCorrection(is) {
   iosCorrection = { is: __spreadValues({}, is) };
   delete is.mac;
   delete is.desktop;
-  const platform = Math.min(window.innerHeight, window.innerWidth) > 414 ? "ipad" : "iphone";
+  const platform2 = Math.min(window.innerHeight, window.innerWidth) > 414 ? "ipad" : "iphone";
   Object.assign(is, {
     mobile: true,
     ios: true,
-    platform,
-    [platform]: true
+    platform: platform2,
+    [platform2]: true
   });
 }
 function getPlatform(UA) {
-  const userAgent2 = UA.toLowerCase(), platformMatch = getPlatformMatch(userAgent2), matched = getMatch(userAgent2, platformMatch), browser = {};
+  const userAgent2 = UA.toLowerCase(), platformMatch = getPlatformMatch(userAgent2), matched = getMatch(userAgent2, platformMatch), browser2 = {};
   if (matched.browser) {
-    browser[matched.browser] = true;
-    browser.version = matched.version;
-    browser.versionNumber = parseInt(matched.versionNumber, 10);
+    browser2[matched.browser] = true;
+    browser2.version = matched.version;
+    browser2.versionNumber = parseInt(matched.versionNumber, 10);
   }
   if (matched.platform) {
-    browser[matched.platform] = true;
+    browser2[matched.platform] = true;
   }
-  const knownMobiles = browser.android || browser.ios || browser.bb || browser.blackberry || browser.ipad || browser.iphone || browser.ipod || browser.kindle || browser.playbook || browser.silk || browser["windows phone"];
+  const knownMobiles = browser2.android || browser2.ios || browser2.bb || browser2.blackberry || browser2.ipad || browser2.iphone || browser2.ipod || browser2.kindle || browser2.playbook || browser2.silk || browser2["windows phone"];
   if (knownMobiles === true || userAgent2.indexOf("mobile") > -1) {
-    browser.mobile = true;
-    if (browser.edga || browser.edgios) {
-      browser.edge = true;
+    browser2.mobile = true;
+    if (browser2.edga || browser2.edgios) {
+      browser2.edge = true;
       matched.browser = "edge";
-    } else if (browser.crios) {
-      browser.chrome = true;
+    } else if (browser2.crios) {
+      browser2.chrome = true;
       matched.browser = "chrome";
-    } else if (browser.fxios) {
-      browser.firefox = true;
+    } else if (browser2.fxios) {
+      browser2.firefox = true;
       matched.browser = "firefox";
     }
   } else {
-    browser.desktop = true;
+    browser2.desktop = true;
   }
-  if (browser.ipod || browser.ipad || browser.iphone) {
-    browser.ios = true;
+  if (browser2.ipod || browser2.ipad || browser2.iphone) {
+    browser2.ios = true;
   }
-  if (browser["windows phone"]) {
-    browser.winphone = true;
-    delete browser["windows phone"];
+  if (browser2["windows phone"]) {
+    browser2.winphone = true;
+    delete browser2["windows phone"];
   }
-  if (browser.chrome || browser.opr || browser.safari || browser.vivaldi || browser.mobile === true && browser.ios !== true && knownMobiles !== true) {
-    browser.webkit = true;
+  if (browser2.chrome || browser2.opr || browser2.safari || browser2.vivaldi || browser2.mobile === true && browser2.ios !== true && knownMobiles !== true) {
+    browser2.webkit = true;
   }
-  if (browser.edg) {
+  if (browser2.edg) {
     matched.browser = "edgechromium";
-    browser.edgeChromium = true;
+    browser2.edgeChromium = true;
   }
-  if (browser.safari && browser.blackberry || browser.bb) {
+  if (browser2.safari && browser2.blackberry || browser2.bb) {
     matched.browser = "blackberry";
-    browser.blackberry = true;
+    browser2.blackberry = true;
   }
-  if (browser.safari && browser.playbook) {
+  if (browser2.safari && browser2.playbook) {
     matched.browser = "playbook";
-    browser.playbook = true;
+    browser2.playbook = true;
   }
-  if (browser.opr) {
+  if (browser2.opr) {
     matched.browser = "opera";
-    browser.opera = true;
+    browser2.opera = true;
   }
-  if (browser.safari && browser.android) {
+  if (browser2.safari && browser2.android) {
     matched.browser = "android";
-    browser.android = true;
+    browser2.android = true;
   }
-  if (browser.safari && browser.kindle) {
+  if (browser2.safari && browser2.kindle) {
     matched.browser = "kindle";
-    browser.kindle = true;
+    browser2.kindle = true;
   }
-  if (browser.safari && browser.silk) {
+  if (browser2.safari && browser2.silk) {
     matched.browser = "silk";
-    browser.silk = true;
+    browser2.silk = true;
   }
-  if (browser.vivaldi) {
+  if (browser2.vivaldi) {
     matched.browser = "vivaldi";
-    browser.vivaldi = true;
+    browser2.vivaldi = true;
   }
-  browser.name = matched.browser;
-  browser.platform = matched.platform;
+  browser2.name = matched.browser;
+  browser2.platform = matched.platform;
   {
     if (userAgent2.indexOf("electron") > -1) {
-      browser.electron = true;
+      browser2.electron = true;
     } else if (document.location.href.indexOf("-extension://") > -1) {
-      browser.bex = true;
+      browser2.bex = true;
     } else {
       if (window.Capacitor !== void 0) {
-        browser.capacitor = true;
-        browser.nativeMobile = true;
-        browser.nativeMobileWrapper = "capacitor";
+        browser2.capacitor = true;
+        browser2.nativeMobile = true;
+        browser2.nativeMobileWrapper = "capacitor";
       } else if (window._cordovaNative !== void 0 || window.cordova !== void 0) {
-        browser.cordova = true;
-        browser.nativeMobile = true;
-        browser.nativeMobileWrapper = "cordova";
+        browser2.cordova = true;
+        browser2.nativeMobile = true;
+        browser2.nativeMobileWrapper = "cordova";
       }
-      if (hasTouch === true && browser.mac === true && (browser.desktop === true && browser.safari === true || browser.nativeMobile === true && browser.android !== true && browser.ios !== true && browser.ipad !== true)) {
-        applyIosCorrection(browser);
+      if (hasTouch === true && browser2.mac === true && (browser2.desktop === true && browser2.safari === true || browser2.nativeMobile === true && browser2.android !== true && browser2.ios !== true && browser2.ipad !== true)) {
+        applyIosCorrection(browser2);
       }
     }
   }
-  return browser;
+  return browser2;
 }
 const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 const ssrClient = {
@@ -5396,7 +5420,7 @@ try {
   window.removeEventListener("qtest", null, opts);
 } catch (e) {
 }
-function noop$1() {
+function noop$2() {
 }
 function position(e) {
   if (e.touches && e.touches[0]) {
@@ -5410,6 +5434,25 @@ function position(e) {
     top: e.clientY,
     left: e.clientX
   };
+}
+function getEventPath(e) {
+  if (e.path) {
+    return e.path;
+  }
+  if (e.composedPath) {
+    return e.composedPath();
+  }
+  const path = [];
+  let el = e.target;
+  while (el) {
+    path.push(el);
+    if (el.tagName === "HTML") {
+      path.push(document);
+      path.push(window);
+      return path;
+    }
+    el = el.parentElement;
+  }
 }
 function stop(e) {
   e.stopPropagation();
@@ -5488,8 +5531,8 @@ var Screen = defineReactivePlugin({
   lg: false,
   xl: false
 }, {
-  setSizes: noop$1,
-  setDebounce: noop$1,
+  setSizes: noop$2,
+  setDebounce: noop$2,
   install({ $q, onSSRHydrated }) {
     $q.screen = this;
     if (this.__installed === true) {
@@ -5669,8 +5712,8 @@ function getShouldExitFn(cfg) {
 }
 var History = {
   __history: [],
-  add: noop$1,
-  remove: noop$1,
+  add: noop$2,
+  remove: noop$2,
   install({ $q }) {
     if (this.__installed === true) {
       return;
@@ -5932,7 +5975,7 @@ var Body = {
       document.body.classList.add.apply(document.body.classList, cls);
     }
     if (client.is.ios === true) {
-      document.body.addEventListener("touchstart", noop$1);
+      document.body.addEventListener("touchstart", noop$2);
     }
     window.addEventListener("keydown", onKeyDownComposition, true);
   }
@@ -6191,7 +6234,7 @@ function isDeepEqual(a2, b) {
   }
   return a2 !== a2 && b !== b;
 }
-function isObject(v) {
+function isObject$1(v) {
   return v !== null && typeof v === "object" && Array.isArray(v) !== true;
 }
 const autoInstalledPlugins = [
@@ -6214,12 +6257,12 @@ function prepareApp(app2, uiOpts, pluginOpts) {
   app2.provide(quasarKey, pluginOpts.$q);
   installPlugins(pluginOpts, autoInstalledPlugins);
   uiOpts.components !== void 0 && Object.values(uiOpts.components).forEach((c) => {
-    if (isObject(c) === true && c.name !== void 0) {
+    if (isObject$1(c) === true && c.name !== void 0) {
       app2.component(c.name, c);
     }
   });
   uiOpts.directives !== void 0 && Object.values(uiOpts.directives).forEach((d) => {
-    if (isObject(d) === true && d.name !== void 0) {
+    if (isObject$1(d) === true && d.name !== void 0) {
       app2.directive(d.name, d);
     }
   });
@@ -6293,7 +6336,7 @@ var isVue2 = false;
 let activePinia;
 const setActivePinia = (pinia2) => activePinia = pinia2;
 const piniaSymbol = Symbol();
-function isPlainObject(o) {
+function isPlainObject$1(o) {
   return o && typeof o === "object" && Object.prototype.toString.call(o) === "[object Object]" && typeof o.toJSON !== "function";
 }
 var MutationType;
@@ -6334,9 +6377,9 @@ function createPinia() {
   });
   return pinia2;
 }
-const noop = () => {
+const noop$1 = () => {
 };
-function addSubscription(subscriptions, callback, detached, onCleanup = noop) {
+function addSubscription(subscriptions, callback, detached, onCleanup = noop$1) {
   subscriptions.push(callback);
   const removeSubscription = () => {
     const idx = subscriptions.indexOf(callback);
@@ -6361,7 +6404,7 @@ function mergeReactiveObjects(target2, patchToApply) {
       continue;
     const subPatch = patchToApply[key];
     const targetValue = target2[key];
-    if (isPlainObject(targetValue) && isPlainObject(subPatch) && target2.hasOwnProperty(key) && !isRef(subPatch) && !isReactive(subPatch)) {
+    if (isPlainObject$1(targetValue) && isPlainObject$1(subPatch) && target2.hasOwnProperty(key) && !isRef(subPatch) && !isReactive(subPatch)) {
       target2[key] = mergeReactiveObjects(targetValue, subPatch);
     } else {
       target2[key] = subPatch;
@@ -6371,7 +6414,7 @@ function mergeReactiveObjects(target2, patchToApply) {
 }
 const skipHydrateSymbol = Symbol();
 function shouldHydrate(obj) {
-  return !isPlainObject(obj) || !obj.hasOwnProperty(skipHydrateSymbol);
+  return !isPlainObject$1(obj) || !obj.hasOwnProperty(skipHydrateSymbol);
 }
 const { assign } = Object;
 function isComputed(o) {
@@ -6453,7 +6496,7 @@ function createSetupStore($id, setup, options = {}, pinia2, hot, isOptionsStore)
     isSyncListening = true;
     triggerSubscriptions(subscriptions, subscriptionMutation, pinia2.state.value[$id]);
   }
-  const $reset = noop;
+  const $reset = noop$1;
   function $dispose() {
     scope.stop();
     subscriptions = [];
@@ -6874,6 +6917,17 @@ function getElement(el) {
   if (target2) {
     return target2.$el || target2;
   }
+}
+function childHasFocus(el, focusedEl) {
+  if (el === void 0 || el === null || el.contains(focusedEl) === true) {
+    return true;
+  }
+  for (let next = el.nextElementSibling; next !== null; next = next.nextElementSibling) {
+    if (next.contains(focusedEl)) {
+      return true;
+    }
+  }
+  return false;
 }
 function throttle(fn, limit) {
   let wait = false, result;
@@ -7311,7 +7365,7 @@ var QBtn = createComponent({
       if (isActionable.value === true) {
         return {
           onClick,
-          onKeydown,
+          onKeydown: onKeydown2,
           onMousedown,
           onTouchstart
         };
@@ -7357,7 +7411,7 @@ var QBtn = createComponent({
         emit("click", e);
       }
     }
-    function onKeydown(e) {
+    function onKeydown2(e) {
       if (rootRef.value === null) {
         return;
       }
@@ -7515,1065 +7569,6 @@ var QBtn = createComponent({
     };
   }
 });
-function clearSelection() {
-  if (window.getSelection !== void 0) {
-    const selection = window.getSelection();
-    if (selection.empty !== void 0) {
-      selection.empty();
-    } else if (selection.removeAllRanges !== void 0) {
-      selection.removeAllRanges();
-      Platform.is.mobile !== true && selection.addRange(document.createRange());
-    }
-  } else if (document.selection !== void 0) {
-    document.selection.empty();
-  }
-}
-const useAnchorProps = {
-  target: {
-    default: true
-  },
-  noParentEvent: Boolean,
-  contextMenu: Boolean
-};
-function useAnchor({
-  showing,
-  avoidEmit,
-  configureAnchorEl
-}) {
-  const { props, proxy, emit } = getCurrentInstance();
-  const anchorEl = ref(null);
-  let touchTimer;
-  function canShow(evt) {
-    return anchorEl.value === null ? false : evt === void 0 || evt.touches === void 0 || evt.touches.length <= 1;
-  }
-  const anchorEvents = {};
-  if (configureAnchorEl === void 0) {
-    Object.assign(anchorEvents, {
-      hide(evt) {
-        proxy.hide(evt);
-      },
-      toggle(evt) {
-        proxy.toggle(evt);
-        evt.qAnchorHandled = true;
-      },
-      toggleKey(evt) {
-        isKeyCode(evt, 13) === true && anchorEvents.toggle(evt);
-      },
-      contextClick(evt) {
-        proxy.hide(evt);
-        prevent(evt);
-        nextTick(() => {
-          proxy.show(evt);
-          evt.qAnchorHandled = true;
-        });
-      },
-      prevent,
-      mobileTouch(evt) {
-        anchorEvents.mobileCleanup(evt);
-        if (canShow(evt) !== true) {
-          return;
-        }
-        proxy.hide(evt);
-        anchorEl.value.classList.add("non-selectable");
-        const target2 = evt.target;
-        addEvt(anchorEvents, "anchor", [
-          [target2, "touchmove", "mobileCleanup", "passive"],
-          [target2, "touchend", "mobileCleanup", "passive"],
-          [target2, "touchcancel", "mobileCleanup", "passive"],
-          [anchorEl.value, "contextmenu", "prevent", "notPassive"]
-        ]);
-        touchTimer = setTimeout(() => {
-          proxy.show(evt);
-          evt.qAnchorHandled = true;
-        }, 300);
-      },
-      mobileCleanup(evt) {
-        anchorEl.value.classList.remove("non-selectable");
-        clearTimeout(touchTimer);
-        if (showing.value === true && evt !== void 0) {
-          clearSelection();
-        }
-      }
-    });
-    configureAnchorEl = function(context = props.contextMenu) {
-      if (props.noParentEvent === true || anchorEl.value === null) {
-        return;
-      }
-      let evts;
-      if (context === true) {
-        if (proxy.$q.platform.is.mobile === true) {
-          evts = [
-            [anchorEl.value, "touchstart", "mobileTouch", "passive"]
-          ];
-        } else {
-          evts = [
-            [anchorEl.value, "mousedown", "hide", "passive"],
-            [anchorEl.value, "contextmenu", "contextClick", "notPassive"]
-          ];
-        }
-      } else {
-        evts = [
-          [anchorEl.value, "click", "toggle", "passive"],
-          [anchorEl.value, "keyup", "toggleKey", "passive"]
-        ];
-      }
-      addEvt(anchorEvents, "anchor", evts);
-    };
-  }
-  function unconfigureAnchorEl() {
-    cleanEvt(anchorEvents, "anchor");
-  }
-  function setAnchorEl(el) {
-    anchorEl.value = el;
-    while (anchorEl.value.classList.contains("q-anchor--skip")) {
-      anchorEl.value = anchorEl.value.parentNode;
-    }
-    configureAnchorEl();
-  }
-  function pickAnchorEl() {
-    if (props.target === false || props.target === "" || proxy.$el.parentNode === null) {
-      anchorEl.value = null;
-    } else if (props.target === true) {
-      setAnchorEl(proxy.$el.parentNode);
-    } else {
-      let el = props.target;
-      if (typeof props.target === "string") {
-        try {
-          el = document.querySelector(props.target);
-        } catch (err) {
-          el = void 0;
-        }
-      }
-      if (el !== void 0 && el !== null) {
-        anchorEl.value = el.$el || el;
-        configureAnchorEl();
-      } else {
-        anchorEl.value = null;
-        console.error(`Anchor: target "${props.target}" not found`);
-      }
-    }
-  }
-  watch(() => props.contextMenu, (val) => {
-    if (anchorEl.value !== null) {
-      unconfigureAnchorEl();
-      configureAnchorEl(val);
-    }
-  });
-  watch(() => props.target, () => {
-    if (anchorEl.value !== null) {
-      unconfigureAnchorEl();
-    }
-    pickAnchorEl();
-  });
-  watch(() => props.noParentEvent, (val) => {
-    if (anchorEl.value !== null) {
-      if (val === true) {
-        unconfigureAnchorEl();
-      } else {
-        configureAnchorEl();
-      }
-    }
-  });
-  onMounted(() => {
-    pickAnchorEl();
-    if (avoidEmit !== true && props.modelValue === true && anchorEl.value === null) {
-      emit("update:modelValue", false);
-    }
-  });
-  onBeforeUnmount(() => {
-    clearTimeout(touchTimer);
-    unconfigureAnchorEl();
-  });
-  return {
-    anchorEl,
-    canShow,
-    anchorEvents
-  };
-}
-function useScrollTarget(props, configureScrollTarget) {
-  const localScrollTarget = ref(null);
-  let scrollFn;
-  function changeScrollEvent(scrollTarget, fn) {
-    const fnProp = `${fn !== void 0 ? "add" : "remove"}EventListener`;
-    const fnHandler = fn !== void 0 ? fn : scrollFn;
-    if (scrollTarget !== window) {
-      scrollTarget[fnProp]("scroll", fnHandler, listenOpts.passive);
-    }
-    window[fnProp]("scroll", fnHandler, listenOpts.passive);
-    scrollFn = fn;
-  }
-  function unconfigureScrollTarget() {
-    if (localScrollTarget.value !== null) {
-      changeScrollEvent(localScrollTarget.value);
-      localScrollTarget.value = null;
-    }
-  }
-  const noParentEventWatcher = watch(() => props.noParentEvent, () => {
-    if (localScrollTarget.value !== null) {
-      unconfigureScrollTarget();
-      configureScrollTarget();
-    }
-  });
-  onBeforeUnmount(noParentEventWatcher);
-  return {
-    localScrollTarget,
-    unconfigureScrollTarget,
-    changeScrollEvent
-  };
-}
-const useModelToggleProps = {
-  modelValue: {
-    type: Boolean,
-    default: null
-  },
-  "onUpdate:modelValue": [Function, Array]
-};
-const useModelToggleEmits = [
-  "before-show",
-  "show",
-  "before-hide",
-  "hide"
-];
-function useModelToggle({
-  showing,
-  canShow,
-  hideOnRouteChange,
-  handleShow,
-  handleHide,
-  processOnMount
-}) {
-  const vm = getCurrentInstance();
-  const { props, emit, proxy } = vm;
-  let payload;
-  function toggle(evt) {
-    if (showing.value === true) {
-      hide(evt);
-    } else {
-      show(evt);
-    }
-  }
-  function show(evt) {
-    if (props.disable === true || evt !== void 0 && evt.qAnchorHandled === true || canShow !== void 0 && canShow(evt) !== true) {
-      return;
-    }
-    const listener = props["onUpdate:modelValue"] !== void 0;
-    if (listener === true && true) {
-      emit("update:modelValue", true);
-      payload = evt;
-      nextTick(() => {
-        if (payload === evt) {
-          payload = void 0;
-        }
-      });
-    }
-    if (props.modelValue === null || listener === false || false) {
-      processShow(evt);
-    }
-  }
-  function processShow(evt) {
-    if (showing.value === true) {
-      return;
-    }
-    showing.value = true;
-    emit("before-show", evt);
-    if (handleShow !== void 0) {
-      handleShow(evt);
-    } else {
-      emit("show", evt);
-    }
-  }
-  function hide(evt) {
-    if (props.disable === true) {
-      return;
-    }
-    const listener = props["onUpdate:modelValue"] !== void 0;
-    if (listener === true && true) {
-      emit("update:modelValue", false);
-      payload = evt;
-      nextTick(() => {
-        if (payload === evt) {
-          payload = void 0;
-        }
-      });
-    }
-    if (props.modelValue === null || listener === false || false) {
-      processHide(evt);
-    }
-  }
-  function processHide(evt) {
-    if (showing.value === false) {
-      return;
-    }
-    showing.value = false;
-    emit("before-hide", evt);
-    if (handleHide !== void 0) {
-      handleHide(evt);
-    } else {
-      emit("hide", evt);
-    }
-  }
-  function processModelChange(val) {
-    if (props.disable === true && val === true) {
-      if (props["onUpdate:modelValue"] !== void 0) {
-        emit("update:modelValue", false);
-      }
-    } else if (val === true !== showing.value) {
-      const fn = val === true ? processShow : processHide;
-      fn(payload);
-    }
-  }
-  watch(() => props.modelValue, processModelChange);
-  if (hideOnRouteChange !== void 0 && vmHasRouter(vm) === true) {
-    watch(() => proxy.$route.fullPath, () => {
-      if (hideOnRouteChange.value === true && showing.value === true) {
-        hide();
-      }
-    });
-  }
-  processOnMount === true && onMounted(() => {
-    processModelChange(props.modelValue);
-  });
-  const publicMethods = { show, hide, toggle };
-  Object.assign(proxy, publicMethods);
-  return publicMethods;
-}
-let queue = [];
-let waitFlags = [];
-function clearFlag(flag) {
-  waitFlags = waitFlags.filter((entry) => entry !== flag);
-}
-function addFocusWaitFlag(flag) {
-  clearFlag(flag);
-  waitFlags.push(flag);
-}
-function removeFocusWaitFlag(flag) {
-  clearFlag(flag);
-  if (waitFlags.length === 0 && queue.length > 0) {
-    queue[queue.length - 1]();
-    queue = [];
-  }
-}
-function addFocusFn(fn) {
-  if (waitFlags.length === 0) {
-    fn();
-  } else {
-    queue.push(fn);
-  }
-}
-function removeFocusFn(fn) {
-  queue = queue.filter((entry) => entry !== fn);
-}
-let target = document.body;
-function createGlobalNode(id) {
-  const el = document.createElement("div");
-  if (id !== void 0) {
-    el.id = id;
-  }
-  if (globalConfig.globalNodes !== void 0) {
-    const cls = globalConfig.globalNodes.class;
-    if (cls !== void 0) {
-      el.className = cls;
-    }
-  }
-  target.appendChild(el);
-  return el;
-}
-function removeGlobalNode(el) {
-  el.remove();
-}
-const portalList = [];
-function isOnGlobalDialog(vm) {
-  vm = vm.parent;
-  while (vm !== void 0 && vm !== null) {
-    if (vm.type.name === "QGlobalDialog") {
-      return true;
-    }
-    if (vm.type.name === "QDialog" || vm.type.name === "QMenu") {
-      return false;
-    }
-    vm = vm.parent;
-  }
-  return false;
-}
-function usePortal(vm, innerRef, renderPortalContent, checkGlobalDialog) {
-  const portalIsActive = ref(false);
-  const portalIsAccessible = ref(false);
-  let portalEl = null;
-  const focusObj = {};
-  const onGlobalDialog = checkGlobalDialog === true && isOnGlobalDialog(vm);
-  function showPortal(isReady) {
-    if (isReady === true) {
-      removeFocusWaitFlag(focusObj);
-      portalIsAccessible.value = true;
-      return;
-    }
-    portalIsAccessible.value = false;
-    if (portalIsActive.value === false) {
-      if (onGlobalDialog === false && portalEl === null) {
-        portalEl = createGlobalNode();
-      }
-      portalIsActive.value = true;
-      portalList.push(vm.proxy);
-      addFocusWaitFlag(focusObj);
-    }
-  }
-  function hidePortal(isReady) {
-    portalIsAccessible.value = false;
-    if (isReady !== true) {
-      return;
-    }
-    removeFocusWaitFlag(focusObj);
-    portalIsActive.value = false;
-    const index2 = portalList.indexOf(vm.proxy);
-    if (index2 > -1) {
-      portalList.splice(index2, 1);
-    }
-    if (portalEl !== null) {
-      removeGlobalNode(portalEl);
-      portalEl = null;
-    }
-  }
-  onUnmounted(() => {
-    hidePortal(true);
-  });
-  Object.assign(vm.proxy, { __qPortalInnerRef: innerRef });
-  return {
-    showPortal,
-    hidePortal,
-    portalIsActive,
-    portalIsAccessible,
-    renderPortal: () => onGlobalDialog === true ? renderPortalContent() : portalIsActive.value === true ? [h(Teleport, { to: portalEl }, renderPortalContent())] : void 0
-  };
-}
-const useTransitionProps = {
-  transitionShow: {
-    type: String,
-    default: "fade"
-  },
-  transitionHide: {
-    type: String,
-    default: "fade"
-  },
-  transitionDuration: {
-    type: [String, Number],
-    default: 300
-  }
-};
-function useTransition(props, showing) {
-  const transitionState = ref(showing.value);
-  watch(showing, (val) => {
-    nextTick(() => {
-      transitionState.value = val;
-    });
-  });
-  return {
-    transition: computed(() => "q-transition--" + (transitionState.value === true ? props.transitionHide : props.transitionShow)),
-    transitionStyle: computed(() => `--q-transition-duration: ${props.transitionDuration}ms`)
-  };
-}
-function useTick() {
-  let tickFn;
-  onBeforeUnmount(() => {
-    tickFn = void 0;
-  });
-  return {
-    registerTick(fn) {
-      tickFn = fn;
-      nextTick(() => {
-        if (tickFn === fn) {
-          tickFn();
-          tickFn = void 0;
-        }
-      });
-    },
-    removeTick() {
-      tickFn = void 0;
-    }
-  };
-}
-function useTimeout() {
-  let timer2;
-  onBeforeUnmount(() => {
-    clearTimeout(timer2);
-  });
-  return {
-    registerTimeout(fn, delay) {
-      clearTimeout(timer2);
-      timer2 = setTimeout(fn, delay);
-    },
-    removeTimeout() {
-      clearTimeout(timer2);
-    }
-  };
-}
-const scrollTargets = [null, document, document.body, document.scrollingElement, document.documentElement];
-function getScrollTarget(el, targetEl) {
-  let target2 = getElement(targetEl);
-  if (target2 === void 0) {
-    if (el === void 0 || el === null) {
-      return window;
-    }
-    target2 = el.closest(".scroll,.scroll-y,.overflow-auto");
-  }
-  return scrollTargets.includes(target2) ? window : target2;
-}
-function getScrollHeight(el) {
-  return (el === window ? document.body : el).scrollHeight;
-}
-function getScrollWidth(el) {
-  return (el === window ? document.body : el).scrollWidth;
-}
-function getVerticalScrollPosition(scrollTarget) {
-  return scrollTarget === window ? window.pageYOffset || window.scrollY || document.body.scrollTop || 0 : scrollTarget.scrollTop;
-}
-function getHorizontalScrollPosition(scrollTarget) {
-  return scrollTarget === window ? window.pageXOffset || window.scrollX || document.body.scrollLeft || 0 : scrollTarget.scrollLeft;
-}
-function animVerticalScrollTo(el, to, duration = 0) {
-  const prevTime = arguments[3] === void 0 ? performance.now() : arguments[3];
-  const pos = getVerticalScrollPosition(el);
-  if (duration <= 0) {
-    if (pos !== to) {
-      setScroll(el, to);
-    }
-    return;
-  }
-  requestAnimationFrame((nowTime) => {
-    const frameTime = nowTime - prevTime;
-    const newPos = pos + (to - pos) / Math.max(frameTime, duration) * frameTime;
-    setScroll(el, newPos);
-    if (newPos !== to) {
-      animVerticalScrollTo(el, to, duration - frameTime, nowTime);
-    }
-  });
-}
-function animHorizontalScrollTo(el, to, duration = 0) {
-  const prevTime = arguments[3] === void 0 ? performance.now() : arguments[3];
-  const pos = getHorizontalScrollPosition(el);
-  if (duration <= 0) {
-    if (pos !== to) {
-      setHorizontalScroll(el, to);
-    }
-    return;
-  }
-  requestAnimationFrame((nowTime) => {
-    const frameTime = nowTime - prevTime;
-    const newPos = pos + (to - pos) / Math.max(frameTime, duration) * frameTime;
-    setHorizontalScroll(el, newPos);
-    if (newPos !== to) {
-      animHorizontalScrollTo(el, to, duration - frameTime, nowTime);
-    }
-  });
-}
-function setScroll(scrollTarget, offset) {
-  if (scrollTarget === window) {
-    window.scrollTo(window.pageXOffset || window.scrollX || document.body.scrollLeft || 0, offset);
-    return;
-  }
-  scrollTarget.scrollTop = offset;
-}
-function setHorizontalScroll(scrollTarget, offset) {
-  if (scrollTarget === window) {
-    window.scrollTo(offset, window.pageYOffset || window.scrollY || document.body.scrollTop || 0);
-    return;
-  }
-  scrollTarget.scrollLeft = offset;
-}
-function setVerticalScrollPosition(scrollTarget, offset, duration) {
-  if (duration) {
-    animVerticalScrollTo(scrollTarget, offset, duration);
-    return;
-  }
-  setScroll(scrollTarget, offset);
-}
-function setHorizontalScrollPosition(scrollTarget, offset, duration) {
-  if (duration) {
-    animHorizontalScrollTo(scrollTarget, offset, duration);
-    return;
-  }
-  setHorizontalScroll(scrollTarget, offset);
-}
-let size;
-function getScrollbarWidth() {
-  if (size !== void 0) {
-    return size;
-  }
-  const inner = document.createElement("p"), outer = document.createElement("div");
-  css(inner, {
-    width: "100%",
-    height: "200px"
-  });
-  css(outer, {
-    position: "absolute",
-    top: "0px",
-    left: "0px",
-    visibility: "hidden",
-    width: "200px",
-    height: "150px",
-    overflow: "hidden"
-  });
-  outer.appendChild(inner);
-  document.body.appendChild(outer);
-  const w1 = inner.offsetWidth;
-  outer.style.overflow = "scroll";
-  let w2 = inner.offsetWidth;
-  if (w1 === w2) {
-    w2 = outer.clientWidth;
-  }
-  outer.remove();
-  size = w1 - w2;
-  return size;
-}
-function hasScrollbar(el, onY = true) {
-  if (!el || el.nodeType !== Node.ELEMENT_NODE) {
-    return false;
-  }
-  return onY ? el.scrollHeight > el.clientHeight && (el.classList.contains("scroll") || el.classList.contains("overflow-auto") || ["auto", "scroll"].includes(window.getComputedStyle(el)["overflow-y"])) : el.scrollWidth > el.clientWidth && (el.classList.contains("scroll") || el.classList.contains("overflow-auto") || ["auto", "scroll"].includes(window.getComputedStyle(el)["overflow-x"]));
-}
-var scroll = {
-  getScrollTarget,
-  getScrollHeight,
-  getScrollWidth,
-  getVerticalScrollPosition,
-  getHorizontalScrollPosition,
-  animVerticalScrollTo,
-  animHorizontalScrollTo,
-  setVerticalScrollPosition,
-  setHorizontalScrollPosition,
-  getScrollbarWidth,
-  hasScrollbar
-};
-let timer;
-const { notPassiveCapture } = listenOpts, registeredList = [];
-function globalHandler(evt) {
-  clearTimeout(timer);
-  const target2 = evt.target;
-  if (target2 === void 0 || target2.nodeType === 8 || target2.classList.contains("no-pointer-events") === true) {
-    return;
-  }
-  let portalIndex = portalList.length - 1;
-  while (portalIndex >= 0) {
-    const proxy = portalList[portalIndex].$;
-    if (proxy.type.name !== "QDialog") {
-      break;
-    }
-    if (proxy.props.seamless !== true) {
-      return;
-    }
-    portalIndex--;
-  }
-  for (let i = registeredList.length - 1; i >= 0; i--) {
-    const state = registeredList[i];
-    if ((state.anchorEl.value === null || state.anchorEl.value.contains(target2) === false) && (target2 === document.body || state.innerRef.value !== null && state.innerRef.value.contains(target2) === false)) {
-      evt.qClickOutside = true;
-      state.onClickOutside(evt);
-    } else {
-      return;
-    }
-  }
-}
-function addClickOutside(clickOutsideProps) {
-  registeredList.push(clickOutsideProps);
-  if (registeredList.length === 1) {
-    document.addEventListener("mousedown", globalHandler, notPassiveCapture);
-    document.addEventListener("touchstart", globalHandler, notPassiveCapture);
-  }
-}
-function removeClickOutside(clickOutsideProps) {
-  const index2 = registeredList.findIndex((h2) => h2 === clickOutsideProps);
-  if (index2 > -1) {
-    registeredList.splice(index2, 1);
-    if (registeredList.length === 0) {
-      clearTimeout(timer);
-      document.removeEventListener("mousedown", globalHandler, notPassiveCapture);
-      document.removeEventListener("touchstart", globalHandler, notPassiveCapture);
-    }
-  }
-}
-let vpLeft, vpTop;
-function validatePosition(pos) {
-  const parts = pos.split(" ");
-  if (parts.length !== 2) {
-    return false;
-  }
-  if (["top", "center", "bottom"].includes(parts[0]) !== true) {
-    console.error("Anchor/Self position must start with one of top/center/bottom");
-    return false;
-  }
-  if (["left", "middle", "right", "start", "end"].includes(parts[1]) !== true) {
-    console.error("Anchor/Self position must end with one of left/middle/right/start/end");
-    return false;
-  }
-  return true;
-}
-function validateOffset(val) {
-  if (!val) {
-    return true;
-  }
-  if (val.length !== 2) {
-    return false;
-  }
-  if (typeof val[0] !== "number" || typeof val[1] !== "number") {
-    return false;
-  }
-  return true;
-}
-const horizontalPos = {
-  "start#ltr": "left",
-  "start#rtl": "right",
-  "end#ltr": "right",
-  "end#rtl": "left"
-};
-["left", "middle", "right"].forEach((pos) => {
-  horizontalPos[`${pos}#ltr`] = pos;
-  horizontalPos[`${pos}#rtl`] = pos;
-});
-function parsePosition(pos, rtl) {
-  const parts = pos.split(" ");
-  return {
-    vertical: parts[0],
-    horizontal: horizontalPos[`${parts[1]}#${rtl === true ? "rtl" : "ltr"}`]
-  };
-}
-function getAnchorProps(el, offset) {
-  let { top, left, right, bottom, width, height } = el.getBoundingClientRect();
-  if (offset !== void 0) {
-    top -= offset[1];
-    left -= offset[0];
-    bottom += offset[1];
-    right += offset[0];
-    width += offset[0];
-    height += offset[1];
-  }
-  return {
-    top,
-    left,
-    right,
-    bottom,
-    width,
-    height,
-    middle: left + (right - left) / 2,
-    center: top + (bottom - top) / 2
-  };
-}
-function getTargetProps(el) {
-  return {
-    top: 0,
-    center: el.offsetHeight / 2,
-    bottom: el.offsetHeight,
-    left: 0,
-    middle: el.offsetWidth / 2,
-    right: el.offsetWidth
-  };
-}
-function setPosition(cfg) {
-  if (client.is.ios === true && window.visualViewport !== void 0) {
-    const el = document.body.style;
-    const { offsetLeft: left, offsetTop: top } = window.visualViewport;
-    if (left !== vpLeft) {
-      el.setProperty("--q-pe-left", left + "px");
-      vpLeft = left;
-    }
-    if (top !== vpTop) {
-      el.setProperty("--q-pe-top", top + "px");
-      vpTop = top;
-    }
-  }
-  let anchorProps;
-  const { scrollLeft, scrollTop } = cfg.el;
-  if (cfg.absoluteOffset === void 0) {
-    anchorProps = getAnchorProps(cfg.anchorEl, cfg.cover === true ? [0, 0] : cfg.offset);
-  } else {
-    const { top: anchorTop, left: anchorLeft } = cfg.anchorEl.getBoundingClientRect(), top = anchorTop + cfg.absoluteOffset.top, left = anchorLeft + cfg.absoluteOffset.left;
-    anchorProps = { top, left, width: 1, height: 1, right: left + 1, center: top, middle: left, bottom: top + 1 };
-  }
-  let elStyle = {
-    maxHeight: cfg.maxHeight,
-    maxWidth: cfg.maxWidth,
-    visibility: "visible"
-  };
-  if (cfg.fit === true || cfg.cover === true) {
-    elStyle.minWidth = anchorProps.width + "px";
-    if (cfg.cover === true) {
-      elStyle.minHeight = anchorProps.height + "px";
-    }
-  }
-  Object.assign(cfg.el.style, elStyle);
-  const targetProps = getTargetProps(cfg.el), props = {
-    top: anchorProps[cfg.anchorOrigin.vertical] - targetProps[cfg.selfOrigin.vertical],
-    left: anchorProps[cfg.anchorOrigin.horizontal] - targetProps[cfg.selfOrigin.horizontal]
-  };
-  applyBoundaries(props, anchorProps, targetProps, cfg.anchorOrigin, cfg.selfOrigin);
-  elStyle = {
-    top: props.top + "px",
-    left: props.left + "px"
-  };
-  if (props.maxHeight !== void 0) {
-    elStyle.maxHeight = props.maxHeight + "px";
-    if (anchorProps.height > props.maxHeight) {
-      elStyle.minHeight = elStyle.maxHeight;
-    }
-  }
-  if (props.maxWidth !== void 0) {
-    elStyle.maxWidth = props.maxWidth + "px";
-    if (anchorProps.width > props.maxWidth) {
-      elStyle.minWidth = elStyle.maxWidth;
-    }
-  }
-  Object.assign(cfg.el.style, elStyle);
-  if (cfg.el.scrollTop !== scrollTop) {
-    cfg.el.scrollTop = scrollTop;
-  }
-  if (cfg.el.scrollLeft !== scrollLeft) {
-    cfg.el.scrollLeft = scrollLeft;
-  }
-}
-function applyBoundaries(props, anchorProps, targetProps, anchorOrigin, selfOrigin) {
-  const currentHeight = targetProps.bottom, currentWidth = targetProps.right, margin = getScrollbarWidth(), innerHeight = window.innerHeight - margin, innerWidth = document.body.clientWidth;
-  if (props.top < 0 || props.top + currentHeight > innerHeight) {
-    if (selfOrigin.vertical === "center") {
-      props.top = anchorProps[anchorOrigin.vertical] > innerHeight / 2 ? Math.max(0, innerHeight - currentHeight) : 0;
-      props.maxHeight = Math.min(currentHeight, innerHeight);
-    } else if (anchorProps[anchorOrigin.vertical] > innerHeight / 2) {
-      const anchorY = Math.min(innerHeight, anchorOrigin.vertical === "center" ? anchorProps.center : anchorOrigin.vertical === selfOrigin.vertical ? anchorProps.bottom : anchorProps.top);
-      props.maxHeight = Math.min(currentHeight, anchorY);
-      props.top = Math.max(0, anchorY - currentHeight);
-    } else {
-      props.top = Math.max(0, anchorOrigin.vertical === "center" ? anchorProps.center : anchorOrigin.vertical === selfOrigin.vertical ? anchorProps.top : anchorProps.bottom);
-      props.maxHeight = Math.min(currentHeight, innerHeight - props.top);
-    }
-  }
-  if (props.left < 0 || props.left + currentWidth > innerWidth) {
-    props.maxWidth = Math.min(currentWidth, innerWidth);
-    if (selfOrigin.horizontal === "middle") {
-      props.left = anchorProps[anchorOrigin.horizontal] > innerWidth / 2 ? Math.max(0, innerWidth - currentWidth) : 0;
-    } else if (anchorProps[anchorOrigin.horizontal] > innerWidth / 2) {
-      const anchorX = Math.min(innerWidth, anchorOrigin.horizontal === "middle" ? anchorProps.middle : anchorOrigin.horizontal === selfOrigin.horizontal ? anchorProps.right : anchorProps.left);
-      props.maxWidth = Math.min(currentWidth, anchorX);
-      props.left = Math.max(0, anchorX - props.maxWidth);
-    } else {
-      props.left = Math.max(0, anchorOrigin.horizontal === "middle" ? anchorProps.middle : anchorOrigin.horizontal === selfOrigin.horizontal ? anchorProps.left : anchorProps.right);
-      props.maxWidth = Math.min(currentWidth, innerWidth - props.left);
-    }
-  }
-}
-var QTooltip = createComponent({
-  name: "QTooltip",
-  inheritAttrs: false,
-  props: __spreadProps(__spreadValues(__spreadValues(__spreadValues({}, useAnchorProps), useModelToggleProps), useTransitionProps), {
-    maxHeight: {
-      type: String,
-      default: null
-    },
-    maxWidth: {
-      type: String,
-      default: null
-    },
-    transitionShow: {
-      default: "jump-down"
-    },
-    transitionHide: {
-      default: "jump-up"
-    },
-    anchor: {
-      type: String,
-      default: "bottom middle",
-      validator: validatePosition
-    },
-    self: {
-      type: String,
-      default: "top middle",
-      validator: validatePosition
-    },
-    offset: {
-      type: Array,
-      default: () => [14, 14],
-      validator: validateOffset
-    },
-    scrollTarget: {
-      default: void 0
-    },
-    delay: {
-      type: Number,
-      default: 0
-    },
-    hideDelay: {
-      type: Number,
-      default: 0
-    }
-  }),
-  emits: [
-    ...useModelToggleEmits
-  ],
-  setup(props, { slots, emit, attrs }) {
-    let unwatchPosition, observer;
-    const vm = getCurrentInstance();
-    const { proxy: { $q } } = vm;
-    const innerRef = ref(null);
-    const showing = ref(false);
-    const anchorOrigin = computed(() => parsePosition(props.anchor, $q.lang.rtl));
-    const selfOrigin = computed(() => parsePosition(props.self, $q.lang.rtl));
-    const hideOnRouteChange = computed(() => props.persistent !== true);
-    const { registerTick, removeTick } = useTick();
-    const { registerTimeout, removeTimeout } = useTimeout();
-    const { transition, transitionStyle } = useTransition(props, showing);
-    const { localScrollTarget, changeScrollEvent, unconfigureScrollTarget } = useScrollTarget(props, configureScrollTarget);
-    const { anchorEl, canShow, anchorEvents } = useAnchor({ showing, configureAnchorEl });
-    const { show, hide } = useModelToggle({
-      showing,
-      canShow,
-      handleShow,
-      handleHide,
-      hideOnRouteChange,
-      processOnMount: true
-    });
-    Object.assign(anchorEvents, { delayShow, delayHide });
-    const { showPortal, hidePortal, renderPortal } = usePortal(vm, innerRef, renderPortalContent);
-    if ($q.platform.is.mobile === true) {
-      const clickOutsideProps = {
-        anchorEl,
-        innerRef,
-        onClickOutside(e) {
-          hide(e);
-          if (e.target.classList.contains("q-dialog__backdrop")) {
-            stopAndPrevent(e);
-          }
-          return true;
-        }
-      };
-      const hasClickOutside = computed(() => props.modelValue === null && props.persistent !== true && showing.value === true);
-      watch(hasClickOutside, (val) => {
-        const fn = val === true ? addClickOutside : removeClickOutside;
-        fn(clickOutsideProps);
-      });
-      onBeforeUnmount(() => {
-        removeClickOutside(clickOutsideProps);
-      });
-    }
-    function handleShow(evt) {
-      removeTick();
-      removeTimeout();
-      showPortal();
-      registerTick(() => {
-        observer = new MutationObserver(() => updatePosition());
-        observer.observe(innerRef.value, { attributes: false, childList: true, characterData: true, subtree: true });
-        updatePosition();
-        configureScrollTarget();
-      });
-      if (unwatchPosition === void 0) {
-        unwatchPosition = watch(() => $q.screen.width + "|" + $q.screen.height + "|" + props.self + "|" + props.anchor + "|" + $q.lang.rtl, updatePosition);
-      }
-      registerTimeout(() => {
-        showPortal(true);
-        emit("show", evt);
-      }, props.transitionDuration);
-    }
-    function handleHide(evt) {
-      removeTick();
-      removeTimeout();
-      hidePortal();
-      anchorCleanup();
-      registerTimeout(() => {
-        hidePortal(true);
-        emit("hide", evt);
-      }, props.transitionDuration);
-    }
-    function anchorCleanup() {
-      if (observer !== void 0) {
-        observer.disconnect();
-        observer = void 0;
-      }
-      if (unwatchPosition !== void 0) {
-        unwatchPosition();
-        unwatchPosition = void 0;
-      }
-      unconfigureScrollTarget();
-      cleanEvt(anchorEvents, "tooltipTemp");
-    }
-    function updatePosition() {
-      const el = innerRef.value;
-      if (anchorEl.value === null || !el) {
-        return;
-      }
-      setPosition({
-        el,
-        offset: props.offset,
-        anchorEl: anchorEl.value,
-        anchorOrigin: anchorOrigin.value,
-        selfOrigin: selfOrigin.value,
-        maxHeight: props.maxHeight,
-        maxWidth: props.maxWidth
-      });
-    }
-    function delayShow(evt) {
-      if ($q.platform.is.mobile === true) {
-        clearSelection();
-        document.body.classList.add("non-selectable");
-        const target2 = anchorEl.value;
-        const evts = ["touchmove", "touchcancel", "touchend", "click"].map((e) => [target2, e, "delayHide", "passiveCapture"]);
-        addEvt(anchorEvents, "tooltipTemp", evts);
-      }
-      registerTimeout(() => {
-        show(evt);
-      }, props.delay);
-    }
-    function delayHide(evt) {
-      removeTimeout();
-      if ($q.platform.is.mobile === true) {
-        cleanEvt(anchorEvents, "tooltipTemp");
-        clearSelection();
-        setTimeout(() => {
-          document.body.classList.remove("non-selectable");
-        }, 10);
-      }
-      registerTimeout(() => {
-        hide(evt);
-      }, props.hideDelay);
-    }
-    function configureAnchorEl() {
-      if (props.noParentEvent === true || anchorEl.value === null) {
-        return;
-      }
-      const evts = $q.platform.is.mobile === true ? [
-        [anchorEl.value, "touchstart", "delayShow", "passive"]
-      ] : [
-        [anchorEl.value, "mouseenter", "delayShow", "passive"],
-        [anchorEl.value, "mouseleave", "delayHide", "passive"]
-      ];
-      addEvt(anchorEvents, "anchor", evts);
-    }
-    function configureScrollTarget() {
-      if (anchorEl.value !== null || props.scrollTarget !== void 0) {
-        localScrollTarget.value = getScrollTarget(anchorEl.value, props.scrollTarget);
-        const fn = props.noParentEvent === true ? updatePosition : hide;
-        changeScrollEvent(localScrollTarget.value, fn);
-      }
-    }
-    function getTooltipContent() {
-      return showing.value === true ? h("div", __spreadProps(__spreadValues({}, attrs), {
-        ref: innerRef,
-        class: [
-          "q-tooltip q-tooltip--style q-position-engine no-pointer-events",
-          attrs.class
-        ],
-        style: [
-          attrs.style,
-          transitionStyle.value
-        ],
-        role: "complementary"
-      }), hSlot(slots.default)) : null;
-    }
-    function renderPortalContent() {
-      return h(Transition, {
-        name: transition.value,
-        appear: true
-      }, getTooltipContent);
-    }
-    onBeforeUnmount(anchorCleanup);
-    Object.assign(vm.proxy, { updatePosition });
-    return renderPortal;
-  }
-});
 var QCardSection = createComponent({
   name: "QCardSection",
   props: {
@@ -8647,7 +7642,7 @@ var QItem = createComponent({
         emit("click", e);
       }
     }
-    function onKeyup(e) {
+    function onKeyup2(e) {
       if (isClickable.value === true && isKeyCode(e, 13) === true) {
         stopAndPrevent(e);
         e.qKeyEvent = true;
@@ -8668,7 +7663,7 @@ var QItem = createComponent({
         class: classes.value,
         style: style.value,
         onClick,
-        onKeyup
+        onKeyup: onKeyup2
       };
       if (isClickable.value === true) {
         data.tabindex = props.tabindex || "0";
@@ -8857,6 +7852,122 @@ var QSeparator = createComponent({
     });
   }
 });
+const useModelToggleProps = {
+  modelValue: {
+    type: Boolean,
+    default: null
+  },
+  "onUpdate:modelValue": [Function, Array]
+};
+const useModelToggleEmits = [
+  "before-show",
+  "show",
+  "before-hide",
+  "hide"
+];
+function useModelToggle({
+  showing,
+  canShow,
+  hideOnRouteChange,
+  handleShow,
+  handleHide,
+  processOnMount
+}) {
+  const vm = getCurrentInstance();
+  const { props, emit, proxy } = vm;
+  let payload;
+  function toggle(evt) {
+    if (showing.value === true) {
+      hide(evt);
+    } else {
+      show(evt);
+    }
+  }
+  function show(evt) {
+    if (props.disable === true || evt !== void 0 && evt.qAnchorHandled === true || canShow !== void 0 && canShow(evt) !== true) {
+      return;
+    }
+    const listener = props["onUpdate:modelValue"] !== void 0;
+    if (listener === true && true) {
+      emit("update:modelValue", true);
+      payload = evt;
+      nextTick(() => {
+        if (payload === evt) {
+          payload = void 0;
+        }
+      });
+    }
+    if (props.modelValue === null || listener === false || false) {
+      processShow(evt);
+    }
+  }
+  function processShow(evt) {
+    if (showing.value === true) {
+      return;
+    }
+    showing.value = true;
+    emit("before-show", evt);
+    if (handleShow !== void 0) {
+      handleShow(evt);
+    } else {
+      emit("show", evt);
+    }
+  }
+  function hide(evt) {
+    if (props.disable === true) {
+      return;
+    }
+    const listener = props["onUpdate:modelValue"] !== void 0;
+    if (listener === true && true) {
+      emit("update:modelValue", false);
+      payload = evt;
+      nextTick(() => {
+        if (payload === evt) {
+          payload = void 0;
+        }
+      });
+    }
+    if (props.modelValue === null || listener === false || false) {
+      processHide(evt);
+    }
+  }
+  function processHide(evt) {
+    if (showing.value === false) {
+      return;
+    }
+    showing.value = false;
+    emit("before-hide", evt);
+    if (handleHide !== void 0) {
+      handleHide(evt);
+    } else {
+      emit("hide", evt);
+    }
+  }
+  function processModelChange(val) {
+    if (props.disable === true && val === true) {
+      if (props["onUpdate:modelValue"] !== void 0) {
+        emit("update:modelValue", false);
+      }
+    } else if (val === true !== showing.value) {
+      const fn = val === true ? processShow : processHide;
+      fn(payload);
+    }
+  }
+  watch(() => props.modelValue, processModelChange);
+  if (hideOnRouteChange !== void 0 && vmHasRouter(vm) === true) {
+    watch(() => proxy.$route.fullPath, () => {
+      if (hideOnRouteChange.value === true && showing.value === true) {
+        hide();
+      }
+    });
+  }
+  processOnMount === true && onMounted(() => {
+    processModelChange(props.modelValue);
+  });
+  const publicMethods = { show, hide, toggle };
+  Object.assign(proxy, publicMethods);
+  return publicMethods;
+}
 let buf, bufIdx = 0;
 const hexBytes = new Array(256);
 for (let i = 0; i < 256; i++) {
@@ -9299,6 +8410,143 @@ function getEmitsObject(emitsArray) {
   return emitsObject;
 }
 getEmitsObject(coreEmits);
+const scrollTargets = [null, document, document.body, document.scrollingElement, document.documentElement];
+function getScrollTarget(el, targetEl) {
+  let target2 = getElement(targetEl);
+  if (target2 === void 0) {
+    if (el === void 0 || el === null) {
+      return window;
+    }
+    target2 = el.closest(".scroll,.scroll-y,.overflow-auto");
+  }
+  return scrollTargets.includes(target2) ? window : target2;
+}
+function getScrollHeight(el) {
+  return (el === window ? document.body : el).scrollHeight;
+}
+function getScrollWidth(el) {
+  return (el === window ? document.body : el).scrollWidth;
+}
+function getVerticalScrollPosition(scrollTarget) {
+  return scrollTarget === window ? window.pageYOffset || window.scrollY || document.body.scrollTop || 0 : scrollTarget.scrollTop;
+}
+function getHorizontalScrollPosition(scrollTarget) {
+  return scrollTarget === window ? window.pageXOffset || window.scrollX || document.body.scrollLeft || 0 : scrollTarget.scrollLeft;
+}
+function animVerticalScrollTo(el, to, duration = 0) {
+  const prevTime = arguments[3] === void 0 ? performance.now() : arguments[3];
+  const pos = getVerticalScrollPosition(el);
+  if (duration <= 0) {
+    if (pos !== to) {
+      setScroll(el, to);
+    }
+    return;
+  }
+  requestAnimationFrame((nowTime) => {
+    const frameTime = nowTime - prevTime;
+    const newPos = pos + (to - pos) / Math.max(frameTime, duration) * frameTime;
+    setScroll(el, newPos);
+    if (newPos !== to) {
+      animVerticalScrollTo(el, to, duration - frameTime, nowTime);
+    }
+  });
+}
+function animHorizontalScrollTo(el, to, duration = 0) {
+  const prevTime = arguments[3] === void 0 ? performance.now() : arguments[3];
+  const pos = getHorizontalScrollPosition(el);
+  if (duration <= 0) {
+    if (pos !== to) {
+      setHorizontalScroll(el, to);
+    }
+    return;
+  }
+  requestAnimationFrame((nowTime) => {
+    const frameTime = nowTime - prevTime;
+    const newPos = pos + (to - pos) / Math.max(frameTime, duration) * frameTime;
+    setHorizontalScroll(el, newPos);
+    if (newPos !== to) {
+      animHorizontalScrollTo(el, to, duration - frameTime, nowTime);
+    }
+  });
+}
+function setScroll(scrollTarget, offset) {
+  if (scrollTarget === window) {
+    window.scrollTo(window.pageXOffset || window.scrollX || document.body.scrollLeft || 0, offset);
+    return;
+  }
+  scrollTarget.scrollTop = offset;
+}
+function setHorizontalScroll(scrollTarget, offset) {
+  if (scrollTarget === window) {
+    window.scrollTo(offset, window.pageYOffset || window.scrollY || document.body.scrollTop || 0);
+    return;
+  }
+  scrollTarget.scrollLeft = offset;
+}
+function setVerticalScrollPosition(scrollTarget, offset, duration) {
+  if (duration) {
+    animVerticalScrollTo(scrollTarget, offset, duration);
+    return;
+  }
+  setScroll(scrollTarget, offset);
+}
+function setHorizontalScrollPosition(scrollTarget, offset, duration) {
+  if (duration) {
+    animHorizontalScrollTo(scrollTarget, offset, duration);
+    return;
+  }
+  setHorizontalScroll(scrollTarget, offset);
+}
+let size;
+function getScrollbarWidth() {
+  if (size !== void 0) {
+    return size;
+  }
+  const inner = document.createElement("p"), outer = document.createElement("div");
+  css(inner, {
+    width: "100%",
+    height: "200px"
+  });
+  css(outer, {
+    position: "absolute",
+    top: "0px",
+    left: "0px",
+    visibility: "hidden",
+    width: "200px",
+    height: "150px",
+    overflow: "hidden"
+  });
+  outer.appendChild(inner);
+  document.body.appendChild(outer);
+  const w1 = inner.offsetWidth;
+  outer.style.overflow = "scroll";
+  let w2 = inner.offsetWidth;
+  if (w1 === w2) {
+    w2 = outer.clientWidth;
+  }
+  outer.remove();
+  size = w1 - w2;
+  return size;
+}
+function hasScrollbar(el, onY = true) {
+  if (!el || el.nodeType !== Node.ELEMENT_NODE) {
+    return false;
+  }
+  return onY ? el.scrollHeight > el.clientHeight && (el.classList.contains("scroll") || el.classList.contains("overflow-auto") || ["auto", "scroll"].includes(window.getComputedStyle(el)["overflow-y"])) : el.scrollWidth > el.clientWidth && (el.classList.contains("scroll") || el.classList.contains("overflow-auto") || ["auto", "scroll"].includes(window.getComputedStyle(el)["overflow-x"]));
+}
+var scroll = {
+  getScrollTarget,
+  getScrollHeight,
+  getScrollWidth,
+  getVerticalScrollPosition,
+  getHorizontalScrollPosition,
+  animVerticalScrollTo,
+  animHorizontalScrollTo,
+  setVerticalScrollPosition,
+  setHorizontalScrollPosition,
+  getScrollbarWidth,
+  hasScrollbar
+};
 const lazyRulesValues = [true, false, "ondemand"];
 const useValidateProps = {
   modelValue: {},
@@ -9462,6 +8710,32 @@ function useSplitAttrs(attrs, vnode) {
   onBeforeUpdate(update2);
   update2();
   return acc;
+}
+let queue = [];
+let waitFlags = [];
+function clearFlag(flag) {
+  waitFlags = waitFlags.filter((entry) => entry !== flag);
+}
+function addFocusWaitFlag(flag) {
+  clearFlag(flag);
+  waitFlags.push(flag);
+}
+function removeFocusWaitFlag(flag) {
+  clearFlag(flag);
+  if (waitFlags.length === 0 && queue.length > 0) {
+    queue[queue.length - 1]();
+    queue = [];
+  }
+}
+function addFocusFn(fn) {
+  if (waitFlags.length === 0) {
+    fn();
+  } else {
+    queue.push(fn);
+  }
+}
+function removeFocusFn(fn) {
+  queue = queue.filter((entry) => entry !== fn);
 }
 function getTargetUid(val) {
   return val === void 0 ? `f_${uid()}` : val;
@@ -10472,7 +9746,7 @@ const defaultCfg = {
   root: null,
   rootMargin: "0px"
 };
-function update(el, ctx, value) {
+function update$1(el, ctx, value) {
   let handler, cfg, changed;
   if (typeof value === "function") {
     handler = value;
@@ -10518,1178 +9792,15 @@ var Intersection = createDirective({
     const ctx = {
       once: modifiers.once === true
     };
-    update(el, ctx, value);
+    update$1(el, ctx, value);
     el.__qvisible = ctx;
   },
   updated(el, binding) {
     const ctx = el.__qvisible;
-    ctx !== void 0 && update(el, ctx, binding.value);
+    ctx !== void 0 && update$1(el, ctx, binding.value);
   },
   beforeUnmount: destroy
 });
-const versions = [
-  {
-    id: uid(),
-    ver: "\u0412\u043E\u0439\u0434\u0435\u0442 \u0432 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E",
-    children: [
-      {
-        id: uid(),
-        head: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438",
-        icon: "alert",
-        model: false,
-        children: [{ label: "ERR-2514", text: "\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0438 \u0412\u041A" }]
-      }
-    ]
-  },
-  {
-    id: "fuck",
-    ver: "5.5.5957.274",
-    children: [
-      {
-        id: uid(),
-        head: "\u0424\u0443\u043D\u043A\u0446\u0438\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F",
-        icon: "briefcase-outline",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "\u041B\u0438\u0441\u0442 \u043E\u0437\u043D\u0430\u043A\u043E\u043C\u043B\u0435\u043D\u0438\u044F",
-            text: "\u0422\u0435\u043F\u0435\u0440\u044C \u0432 \u0437\u0430\u0434\u0430\u043D\u0438\u044F\u0445 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u043B\u0438\u0441\u0442 \u043E\u0437\u043D\u0430\u043A\u043E\u043C\u043B\u0435\u043D\u0438\u044F \u0441 \u043F\u043E\u0434\u0447\u0438\u043D\u0451\u043D\u043D\u044B\u043C\u0438 \u0437\u0430\u0434\u0430\u043D\u0438\u044F\u043C\u0438 \u0438 \u0433\u0440\u0443\u043F\u043F\u0430\u043C\u0438 \u0437\u0430\u0434\u0430\u043D\u0438\u0439.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0420\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u0438 \u0440\u0430\u0437\u0440\u044F\u0434\u043E\u0432 \u0447\u0438\u0441\u043B\u0430",
-            text: "\u0412 \u042D\u0423 \u0427\u0438\u0441\u043B\u043E \u0442\u0435\u043F\u0435\u0440\u044C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u044E\u0442\u0441\u044F \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u0438 \u0440\u0430\u0437\u0440\u044F\u0434\u043E\u0432 \u0447\u0438\u0441\u043B\u0430.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0421\u043F\u043E\u0441\u043E\u0431 \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u0435\u043A",
-            text: "\u0422\u0435\u043F\u0435\u0440\u044C \u043F\u0440\u0438 \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u0438 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u0432\u0441\u0435\u0433\u0434\u0430 \u0443\u043A\u0430\u0437\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u0441\u043F\u043E\u0441\u043E\u0431 \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F: \u0432 \u043A\u043E\u0440\u0437\u0438\u043D\u0443 \u0438\u043B\u0438 \u0431\u0435\u0437\u0432\u043E\u0437\u0432\u0440\u0430\u0442\u043D\u043E.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u043E\u0432",
-            text: "\u041F\u0435\u0440\u0435\u0440\u0430\u0431\u043E\u0442\u0430\u043D \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441 \u043A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440\u0430 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u043E\u0432.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0435 \u043E\u0431\u043B\u0430\u0447\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438",
-            text: "\u0418\u0437\u043C\u0435\u043D\u0451\u043D \u0434\u0438\u0430\u043B\u043E\u0433 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0438\u044F \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u043E\u0432 \u0438 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u043E\u0431\u043B\u0430\u0447\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u044C\u044E.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0418\u0437\u043C\u0435\u043D\u0438\u043B\u0441\u044F \u0434\u0438\u0430\u043B\u043E\u0433 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0438\u044F",
-            text: "\u0414\u0438\u0430\u043B\u043E\u0433 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0438\u044F \u043F\u0435\u0440\u0435\u0440\u0430\u0431\u043E\u0442\u0430\u043D, \u0442\u0430\u043A\u0436\u0435 \u0438\u0437\u043C\u0435\u043D\u0438\u043B\u0441\u044F \u0430\u043B\u0433\u043E\u0440\u0438\u0442\u043C \u0432\u044B\u0431\u043E\u0440\u0430 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0432 \u0432 \u0434\u0438\u0430\u043B\u043E\u0433\u0435.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0438\u0435\u043C \u0447\u0435\u0440\u0435\u0437 API",
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0434\u0438\u0430\u043B\u043E\u0433\u043E\u043C \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0438\u044F \u0447\u0435\u0440\u0435\u0437 API.",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0432 \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430\u0445 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F",
-        icon: "bookshelf",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "\u041B\u0438\u0441\u0442 \u043E\u0437\u043D\u0430\u043A\u043E\u043C\u043B\u0435\u043D\u0438\u044F",
-            text: "\u041D\u043E\u0432\u044B\u0439 \u044D\u043B\u0435\u043C\u0435\u043D\u0442 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F, \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0439 \u0432 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430\u0445 \u0442\u0438\u043F\u0430 \u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442. \u042D\u0423 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u0440\u0430\u0431\u043E\u0442\u044B \u0441 \u043B\u0438\u0441\u0442\u043E\u043C \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u044F \u0432 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430\u0445.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u041A\u043E\u043D\u0442\u0440\u043E\u043B \u0442\u0430\u0431\u043B\u0438\u0447\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445",
-            text: "\u042D\u043B\u0435\u043C\u0435\u043D\u0442 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442 \u0434\u0430\u043D\u043D\u044B\u0435 \u0432 \u0432\u0438\u0434\u0435 \u0442\u0430\u0431\u043B\u0438\u0446\u044B \u043D\u0430 \u043E\u0441\u043D\u043E\u0432\u0435 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E \u0441\u0444\u043E\u0440\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u043E\u0439 \u043C\u043E\u0434\u0435\u043B\u0438.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: '\u041D\u043E\u0432\u044B\u0435 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u0430 \u042D\u0423 "\u0424\u0430\u0439\u043B"',
-            text: '\u0414\u043B\u044F \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F "\u0424\u0430\u0439\u043B" \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043D\u043E\u0432\u044B\u0435 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u0430: \u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u044C \u043C\u0435\u0442\u043A\u0443 \u0431\u0435\u0437 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F, \u0421\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435 \u043F\u0440\u0438 \u043F\u0443\u0441\u0442\u043E\u043C \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0438, \u0414\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0435 \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F, \u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u043A\u043E\u043D\u0442\u0435\u043A\u0441\u0442\u043D\u043E\u0435 \u043C\u0435\u043D\u044E.',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0427\u0438\u0441\u043B\u043E",
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u043D\u043E\u0432\u043E\u0435 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u0438, \u0440\u0435\u0433\u0443\u043B\u0438\u0440\u0443\u044E\u0449\u0435\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u0435\u0439 \u0447\u0438\u0441\u043B\u0430. \u0421\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u0430\u043A\u0442\u0438\u0432\u043D\u043E, \u0442.\u0435. \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u0438 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u044E\u0442\u0441\u044F.",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u041E\u043F\u0442\u0438\u043C\u0438\u0437\u0430\u0446\u0438\u0438",
-        icon: "rocket-launch",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: '\u0424\u0443\u043D\u043A\u0446\u0438\u044F "\u041E\u0431\u0449\u0438\u0435 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0438"',
-            text: "\u0422\u0435\u043F\u0435\u0440\u044C \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u044E\u0442\u0441\u044F \u0432 \u043E\u0431\u0449\u0435\u043C \u0440\u0435\u0436\u0438\u043C\u0435 \u0434\u043B\u044F \u0432\u0441\u0435\u0445 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0435\u0439, \u0431\u043B\u0430\u0433\u043E\u0434\u0430\u0440\u044F \u0447\u0435\u043C\u0443 \u0441\u0435\u0440\u0432\u0435\u0440 Docsvision \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u0442 \u043C\u0435\u043D\u044C\u0448\u0435 \u043F\u0430\u043C\u044F\u0442\u0438.",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0420\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0430",
-        icon: "application-braces-outline",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0432 API",
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D REST Web-API, \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0439 \u043D\u0430 \u0441\u0442\u043E\u0440\u043E\u043D\u0435 \u043A\u043B\u0438\u0435\u043D\u0442\u0430 Web-\u043A\u043B\u0438\u0435\u043D\u0442\u0430. \u0418\u0437\u043C\u0435\u043D\u0435\u043D\u044B \u043A\u043E\u043C\u043F\u043E\u043D\u0435\u043D\u0442\u044B FileSignCreateDialog, FileSignSelectCertificateDialog. \u0418\u0437\u043C\u0435\u043D\u0435\u043D \u0441\u0435\u0440\u0432\u0438\u0441 $DocumentCardController.",
-            show: false,
-            more: "<ul><li>\u0411\u044B\u043B \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D REST Web-API, \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0439 \u043D\u0430 \u0441\u0442\u043E\u0440\u043E\u043D\u0435 \u043A\u043B\u0438\u0435\u043D\u0442\u0430 Web-\u043A\u043B\u0438\u0435\u043D\u0442\u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043C\u043E\u0436\u0435\u0442 \u0432\u044B\u0437\u044B\u0432\u0430\u0442\u044C \u0444\u0443\u043D\u043A\u0446\u0438\u0438 Docsvision API. REST API \u043F\u0440\u0435\u0434\u043D\u0430\u0437\u043D\u0430\u0447\u0430\u0435\u0442\u0441\u044F \u0434\u043B\u044F \u0440\u0430\u0431\u043E\u0442\u044B \u0438\u0437 \u043A\u043B\u0438\u0435\u043D\u0442\u0441\u043A\u0438\u0445 \u0441\u043A\u0440\u0438\u043F\u0442\u043E\u0432.</li> <li>\u0412\u043D\u0443\u0442\u0440\u0435\u043D\u043D\u0438\u0435 \u043A\u043E\u043C\u043F\u043E\u043D\u0435\u043D\u0442\u044B FileSignCreateDialog, FileSignSelectCertificateDialog \u0438 \u0441\u0432\u044F\u0437\u0430\u043D\u043D\u044B\u0435 \u0441 \u043D\u0438\u043C\u0438 \u0437\u0430\u043C\u0435\u043D\u0435\u043D\u044B \u043D\u0430 SignatureDialog.</li> <li>\u0421\u0435\u0440\u0432\u0438\u0441 $DocumentCardController \u0437\u0430\u043C\u0435\u043D\u0451\u043D \u043D\u0430 $SignatureController.</li> <li>\u0412\u043E \u0432\u043D\u0443\u0442\u0440\u0435\u043D\u043D\u0435\u043C \u043A\u043B\u0430\u0441\u0441\u0435 FileSign \u0443\u0434\u0430\u043B\u0435\u043D\u0430 \u0447\u0430\u0441\u0442\u044C \u043C\u0435\u0442\u043E\u0434\u043E\u0432.</li></ul>",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u041D\u043E\u0432\u044B\u0435 \u043F\u0440\u0438\u043C\u0435\u0440\u044B \u0432 \u0440\u0435\u043F\u043E\u0437\u0438\u0442\u043E\u0440\u0438\u0438 \u043D\u0430 github",
-        icon: "github",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "Github",
-            text: "\u0412 \u0440\u0435\u043F\u043E\u0437\u0438\u0442\u043E\u0440\u0438\u0439 WebClient-Samples \u043D\u0430 GitHub \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043D\u043E\u0432\u044B\u0435 \u043F\u0440\u0438\u043C\u0435\u0440\u044B",
-            show: false,
-            more: "<ul><li>\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C \u0433\u0440\u0443\u043F\u043F\u0438\u0440\u043E\u0432\u043A\u0443 \u043A\u043D\u043E\u043F\u043A\u043E\u0439 \u0432 \u044F\u0447\u0435\u0439\u043A\u0435.</li> <li>\u0420\u0430\u0441\u0448\u0438\u0440\u0438\u0442\u044C \u043A\u043E\u043D\u0442\u0435\u043A\u0441\u0442\u043D\u043E\u0435 \u043C\u0435\u043D\u044E.</li> <li>\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0430 \u0432 Excel.</li> <li>\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u0441\u0435\u0440\u0432\u0435\u0440\u043D\u044B\u0445 \u0432\u044B\u0437\u043E\u0432\u043E\u0432</li></ul>",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438",
-        icon: "alert",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "ERR-2464",
-            text: "\u042D\u0423 \u0417\u0430\u043F\u0438\u0441\u0438 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430 \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u043E\u0432. \u041F\u0440\u0438 \u043F\u043E\u0438\u0441\u043A\u0435 \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0430 \u0432\u043E\u0437\u043D\u0438\u043A\u0430\u0435\u0442 \u043E\u0448\u0438\u0431\u043A\u0430 SQLFailure.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-958",
-            text: "\u0412 \u043F\u0440\u0435\u0432\u044C\u044E \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u043C\u043E\u0435 \u0444\u0430\u0439\u043B\u0430 \u0435\u0441\u043B\u0438 \u0443 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F \u0437\u0430\u043F\u0440\u0435\u0449\u0435\u043D\u043E \u0447\u0442\u0435\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u0430 \u043F\u043E \u0440\u043E\u043B\u0435\u0432\u043E\u0439.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2440",
-            text: '\u041B\u043E\u043C\u0430\u0435\u0442\u0441\u044F \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0430 \u043E\u043A\u043D\u0430 \u043F\u043E\u0438\u0441\u043A\u0430 \u0443 \u043F\u0430\u043F\u043A\u0438 "\u041F\u043E\u0438\u0441\u043A \u043A\u0432\u0430\u0440\u0442\u0430\u043B\u044C\u043D\u044B\u0445 \u0446\u0435\u043B\u0435\u0439".',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-896",
-            text: "\u041D\u0435\u0442 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u0438 \u043F\u0435\u0440\u0435\u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0438\u0442\u044C \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u0447\u0438\u043A LifeCycle \u0432 InitializeContainer \u0441\u0435\u0440\u0432\u0435\u0440\u043D\u043E\u0433\u043E \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2346",
-            text: "\u041E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435 \u0438\u043A\u043E\u043D\u043A\u0438 (\u0440\u0435\u0448\u0435\u043D\u0438\u044F) \u043F\u0440\u0438 \u0434\u0435\u043B\u0435\u0433\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0438 \u0441 \u0432\u043E\u0437\u0432\u0440\u0430\u0442\u043E\u043C.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2390",
-            text: "\u041A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u0439 \u043E\u0442 \u0434\u0435\u043B\u0435\u0433\u0430\u0442\u0430 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u043D\u0435\u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u043E \u0432 \u0445\u043E\u0434\u0435 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u044F.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2279",
-            text: "\u0418\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u0442\u0441\u044F \u043F\u0440\u043E\u043F\u0443\u0441\u043A \u044D\u0442\u0430\u043F\u043E\u0432 \u043F\u043E\u0441\u043B\u0435 \u0437\u0430\u043F\u0443\u0441\u043A\u0430 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u044F.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-0004",
-            text: "\u041E\u0448\u0438\u0431\u043A\u0430 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0430 \u0444\u0430\u0439\u043B\u0430 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u044F.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2336",
-            text: "\u041D\u0435 \u043A\u043E\u043F\u0438\u0440\u0443\u044E\u0442\u0441\u044F \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u0438 \u043F\u0440\u0438 \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0438 \u0440\u0430\u0437\u043C\u0435\u0442\u043E\u043A.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2183",
-            text: "\u0412 \u0437\u0430\u0434\u0430\u043D\u0438\u044F\u0445 \u043D\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0441\u0441\u044B\u043B\u043A\u0430 \u043D\u0430 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u0435\u0441\u043B\u0438 \u0437\u0430\u0434\u0430\u043D\u0438\u044F \u0441\u043E\u0437\u0434\u0430\u043D\u044B \u0438\u0437 \u0434\u0440\u0443\u0433\u043E\u0433\u043E \u0437\u0430\u0434\u0430\u043D\u0438\u044F \u041A\u0421.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2281",
-            text: "\u0415\u0441\u043B\u0438 \u043E\u0444\u043B\u0430\u0439\u043D \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0438 \u043D\u0435 \u0443\u0431\u0438\u0440\u0430\u044E\u0442\u0441\u044F \u0438\u0437 \u0441\u043F\u0438\u0441\u043A\u0430 \u0437\u0430\u0434\u0430\u0447 \u043D\u0430 \u043F\u0435\u0440\u0435\u0441\u0447\u0435\u0442 \u0432 childrener-e, \u0442\u043E \u0443 \u043E\u043D\u043B\u0430\u0439\u043D \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0435\u0439 \u043F\u0440\u0435\u0441\u0442\u0430\u044E\u0442 \u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C \u0441\u0447\u0435\u0442\u0447\u0438\u043A\u0438 \u0432 \u043F\u0430\u043F\u043A\u0435.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2222",
-            text: "\u0422\u0435\u043A\u0441\u0442 \u043C\u0435\u0442\u043A\u0438 \u042D\u0423 \u043F\u0435\u0440\u0435\u043D\u043E\u0441\u0438\u0442\u0441\u044F \u043D\u0430 \u043D\u043E\u0432\u0443\u044E \u0441\u0442\u0440\u043E\u043A\u0443 \u0441\u043F\u0440\u0430\u0432\u0430 \u043E\u0442 \u043C\u0435\u0442\u043A\u0438.",
-            children: []
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: uid(),
-    ver: "5.5.5957.250",
-    children: [
-      {
-        id: uid(),
-        head: "\u0424\u0443\u043D\u043A\u0446\u0438\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F",
-        icon: "briefcase-outline",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "\u0421\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442 \u042D\u041F \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0430",
-            text: "\u041F\u043E\u044F\u0432\u0438\u043B\u0430\u0441\u044C \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442 \u0434\u043B\u044F \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F \u0432 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u043E\u0432.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430 \u043F\u043E\u0434\u043F\u0438\u0441\u0435\u0439 \u0432 \u043F\u0440\u043E\u0444\u0438\u043B\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F",
-            text: "\u0412 \u043F\u0440\u043E\u0444\u0438\u043B\u044C \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u043D\u043E\u0432\u0430\u044F \u0432\u043A\u043B\u0430\u0434\u043A\u0430 \u041F\u043E\u0434\u043F\u0438\u0441\u044C.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043F\u043E \u043C\u0435\u0441\u0442\u0443",
-            text: "\u041F\u0435\u0440\u0435\u0440\u0430\u0431\u043E\u0442\u0430\u043D \u0440\u0435\u0436\u0438\u043C \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u043E \u043C\u0435\u0441\u0442\u0443. \u0422\u0435\u043F\u0435\u0440\u044C \u0432\u0441\u0435 \u042D\u0423 \u0432 \u0440\u0435\u0436\u0438\u043C\u0435 \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u043E \u043C\u0435\u0441\u0442\u0443 \u0438\u0437\u043C\u0435\u043D\u044F\u044E\u0442\u0441\u044F \u043F\u0440\u044F\u043C\u043E \u0432 \u0437\u0430\u043D\u0438\u043C\u0430\u0435\u043C\u044B\u0445 \u043E\u0431\u043B\u0430\u0441\u0442\u044F\u0445. \u041C\u0430\u043B\u0435\u043D\u044C\u043A\u043E\u0435 \u0432\u0441\u043F\u043B\u044B\u0432\u0430\u044E\u0449\u0435\u0435 \u043E\u043A\u043D\u043E \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u043E\u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0442\u043E\u043B\u044C\u043A\u043E \u0434\u043B\u044F \u042D\u0423 \u0422\u0435\u043A\u0441\u0442.",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0432 \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430\u0445 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F",
-        icon: "bookshelf",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "\u0421\u0442\u0440\u043E\u043A\u0430 \u043A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440\u0430 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u043E\u0432",
-            text: '\u0414\u043B\u044F \u042D\u0423 "\u0421\u0442\u0440\u043E\u043A\u0430 \u043A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440\u0430 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u043E\u0432" \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u043D\u043E\u0432\u043E\u0435 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u0420\u0430\u0437\u0440\u0435\u0448\u0438\u0442\u044C \u043F\u043E\u0438\u0441\u043A \u0443\u0437\u043B\u0430, \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u044E\u0449\u0435\u0435 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u043F\u043E\u0438\u0441\u043A\u0430 \u043F\u043E \u0443\u0437\u043B\u0430\u043C \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430.',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0421\u043F\u0438\u0441\u043E\u043A \u0444\u0430\u0439\u043B\u043E\u0432",
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u043D\u043E\u0432\u043E\u0435 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0435\u0435 \u0441\u043A\u0440\u044B\u0442\u044C \u043A\u043D\u043E\u043F\u043A\u0443 \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0432 \u0421\u043F\u0438\u0441\u043A\u0435 \u0444\u0430\u0439\u043B\u043E\u0432, \u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, \u0435\u0441\u043B\u0438 \u0432 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u042D\u0423 \u041A\u043D\u043E\u043F\u043A\u0430 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0438\u044F.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u041A\u043D\u043E\u043F\u043A\u0430 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0438\u044F",
-            text: '\u041D\u043E\u0432\u044B\u0439 \u044D\u043B\u0435\u043C\u0435\u043D\u0442 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043C\u043E\u0436\u0435\u0442 \u0431\u044B\u0442\u044C \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u0442\u0438\u043F\u0430 "\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442". \u042D\u0423 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u044F\u0435\u0442 \u0441\u043E\u0431\u043E\u0439 \u043A\u043D\u043E\u043F\u043A\u0443, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0443\u044E \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u0431\u0435\u0437 \u0444\u0430\u0439\u043B\u043E\u0432 (\u043F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C \u0442\u043E\u043B\u044C\u043A\u043E \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u044B \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438).',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "CertificateSettings",
-            text: "\u041D\u043E\u0432\u044B\u0439 \u044D\u043B\u0435\u043C\u0435\u043D\u0442 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F, \u043E\u0442\u0432\u0435\u0447\u0430\u044E\u0449\u0438\u0439 \u0437\u0430 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0443 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0432 \u0432 \u043F\u0440\u043E\u0444\u0438\u043B\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F.",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u041E\u043F\u0442\u0438\u043C\u0438\u0437\u0430\u0446\u0438\u0438",
-        icon: "rocket-launch",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "\u041A\u043E\u043D\u0441\u043E\u043B\u044C \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0430",
-            text: "\u0421\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u044F \u043E\u0431 \u043E\u0442\u043C\u0435\u043D\u0435 \u043E\u0431\u0435\u0449\u0430\u043D\u0438\u044F (promise) \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435 \u0432\u044B\u0432\u043E\u0434\u044F\u0442\u0441\u044F \u0432 \u043A\u043E\u043D\u0441\u043E\u043B\u044C \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0430. \u041F\u0440\u0438 \u043E\u0442\u043C\u0435\u043D\u0435 \u0441\u043E\u0431\u044B\u0442\u0438\u044F \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u0447\u0438\u043A\u043E\u043C, \u0432 \u043A\u043E\u043D\u0441\u043E\u043B\u0438 \u0432\u044B\u0432\u043E\u0434\u0438\u0442\u0441\u044F \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435 \u043E \u0442\u043E\u043C, \u043A\u0430\u043A\u043E\u0439 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u0447\u0438\u043A \u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u0435\u043D \u0437\u0430 \u043E\u0442\u043C\u0435\u043D\u0443 \u043A\u043E\u043D\u043A\u0440\u0435\u0442\u043D\u043E\u0433\u043E \u0441\u043E\u0431\u044B\u0442\u0438\u044F.",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u041D\u043E\u0432\u044B\u0435 \u043F\u0440\u0438\u043C\u0435\u0440\u044B \u0432 \u0440\u0435\u043F\u043E\u0437\u0438\u0442\u043E\u0440\u0438\u0438 \u043D\u0430 github",
-        icon: "github",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "Github",
-            text: "\u0412 \u0440\u0435\u043F\u043E\u0437\u0438\u0442\u043E\u0440\u0438\u0439 WebClient-Samples \u043D\u0430 GitHub \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043D\u043E\u0432\u044B\u0435 \u043F\u0440\u0438\u043C\u0435\u0440\u044B.",
-            show: false,
-            more: "<ul><li>\u041E\u0442\u043E\u0431\u0440\u0430\u0437\u0438\u0442\u044C \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u043D\u0435\u043F\u0440\u043E\u0447\u0438\u0442\u0430\u043D\u043D\u044B\u0445 \u043A\u0430\u0440\u0442\u043E\u0447\u0435\u043A.</li> <li>\u0418\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0446\u0432\u0435\u0442 \u0441\u0442\u0440\u043E\u043A\u0438 \u043F\u043E \u043A\u043D\u043E\u043F\u043A\u0435.</li></ul>",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438",
-        icon: "alert",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "ERR-2174",
-            text: "\u041A\u0430\u043B\u0435\u043D\u0434\u0430\u0440\u044C \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u043D\u0435 \u0443\u0447\u0438\u0442\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u043F\u0440\u0438 \u0440\u0430\u0441\u0447\u0451\u0442\u0435 \u0441\u0440\u043E\u043A\u043E\u0432.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1630",
-            text: "\u041E\u0448\u0438\u0431\u043E\u0447\u043D\u043E \u0441\u0440\u0430\u0431\u0430\u0442\u044B\u0432\u0430\u0435\u0442 \u0437\u0430\u043F\u0440\u0435\u0442 \u043D\u0430 \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u043F\u0440\u0438 \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u0438 \u0441\u0432\u044F\u0437\u0430\u043D\u043D\u043E\u0439 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1840",
-            text: '\u041D\u0435 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F xlsx \u0444\u0430\u0439\u043B \u0432 "\u0445\u043E\u0434 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u044F".',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1276",
-            text: "\u041F\u0440\u0438 \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0438 \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0438 \u0432 \u0434\u0440\u0443\u0433\u043E\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435 \u0447\u0430\u0441\u0442\u0438\u0447\u043D\u043E \u0441\u0431\u0440\u0430\u0441\u044B\u0432\u0430\u044E\u0442\u0441\u044F \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u0438 \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1757",
-            text: "\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043F\u043E\u0438\u0441\u043A\u0435 \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0430 \u0432 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0435 StaffDirectoryItems, \u0435\u0441\u043B\u0438 \u0432 \u0438\u043C\u0435\u043D\u0438 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u043F\u0440\u0438\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u0441\u0438\u043C\u0432\u043E\u043B &.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1857",
-            text: "\u041D\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u044E\u0442\u0441\u044F \u0441\u0442\u0430\u0440\u044B\u0435 \u0433\u0440\u0443\u043F\u043F\u043E\u0432\u044B\u0435 \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u0438 \u0432 \u043D\u043E\u0432\u044B\u0439 \u0433\u0440\u0438\u0434.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2094",
-            text: "\u041D\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0430\u0440\u0445\u0438\u0432\u043D\u043E\u0435 \u0437\u0430\u0434\u0430\u043D\u0438\u0435 \u0432 \u0442\u0430\u0431\u043B\u0438\u0446\u0435 \u0438\u0441\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2111",
-            text: "\u041D\u0435\u0442 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u0438 \u043F\u0440\u043E\u043F\u0443\u0441\u043A\u0430\u0442\u044C \u0432\u0441\u0435 \u0432\u043D\u0435\u0448\u043D\u0438\u0435 \u0440\u0435\u0441\u0443\u0440\u0441\u044B \u043F\u0440\u0438 \u043A\u043E\u043D\u0432\u0435\u0440\u0442\u0430\u0446\u0438\u0438 \u0444\u0430\u0439\u043B\u043E\u0432 \u043F\u0440\u0438 \u043F\u0440\u0435\u0434\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0435.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2102",
-            id: uid(),
-            text: "IFileConvertationService \u0434\u043E\u043B\u0436\u0435\u043D \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0442\u044C \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0435 \u043A\u043B\u0438\u0435\u043D\u0442\u0441\u043A\u0438\u0445 \u043A\u043E\u043D\u0432\u0435\u0440\u0442\u0435\u0440\u043E\u0432.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2060",
-            text: "\u0412 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0435 \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u043E\u0432 \u043D\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u044E\u0442\u0441\u044F \u043A\u043E\u043B\u043E\u043D\u043A\u0438 \u0424\u0418\u041E, \u0424\u0430\u043C\u0438\u043B\u0438\u044F, \u0418\u043C\u044F, \u041E\u0442\u0447\u0435\u0441\u0442\u0432\u043E.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2095",
-            text: "\u041A\u043E\u0440\u0435\u043D\u044C WebFrame. \u041D\u0435 \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442 \u0443\u0441\u043B\u043E\u0432\u0438\u0435 \u0440\u043E\u043B\u0438 \u0434\u043B\u044F \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0438.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2030",
-            text: 'Uncaught TypeError: Cannot read properties of null (reading "textContent") \u043F\u0440\u0438 \u043D\u0430\u043B\u0438\u0447\u0438\u0438 \u0444\u0430\u0439\u043B\u0430, \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E\u0433\u043E \u0434\u043B\u044F \u043F\u0440\u0435\u0434\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430 \u0441\u0440\u0435\u0434\u0438 \u043E\u0441\u043D\u043E\u0432\u043D\u044B\u0445 \u0444\u0430\u0439\u043B\u043E\u0432 \u0432 \u0437\u0430\u0434\u0430\u043D\u0438\u0438 \u043D\u0430 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u0435.',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1829",
-            text: "\u041D\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0437\u0430\u0434\u0430\u043D\u0438\u0435 \u0432 \u0442\u0430\u0431\u043B\u0438\u0446\u0435 \u0438\u0441\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u044F \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430, \u0435\u0441\u043B\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u0430\u0440\u0445\u0438\u0432.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2086",
-            text: "\u041F\u0440\u0435\u0434\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0440\u0430\u0437\u043D\u044B\u0445 \u0432\u0435\u0440\u0441\u0438\u0439 \u0444\u0430\u0439\u043B\u0430 \u0432 FileChildren \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0435\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u043F\u0435\u0440\u0432\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430.",
-            children: []
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: uid(),
-    ver: "5.5.5957.226",
-    children: [
-      {
-        id: uid(),
-        head: "\u0424\u0443\u043D\u043A\u0446\u0438\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F",
-        icon: "briefcase-outline",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "\u0418\u043A\u043E\u043D\u043A\u0438",
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0440\u044F\u0434 \u0438\u043A\u043E\u043D\u043E\u043A.",
-            show: false,
-            more: "\u0414\u043B\u044F \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0445 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u0438\u043A\u043E\u043D\u043A\u0438: <ul><li>\u0417\u0430\u043F\u0438\u0441\u0438 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430 \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u043E\u0432,</li> <li>\u041F\u0430\u0440\u0442\u043D\u0435\u0440,</li> <li>\u041F\u043E\u0434\u0440\u0430\u0437\u0434\u0435\u043B\u0435\u043D\u0438\u0435 \u043A\u043E\u043D\u0442\u0440\u0430\u0433\u0435\u043D\u0442\u0430,</li> <li>\u0414\u0430\u0442\u0430/\u0432\u0440\u0435\u043C\u044F,</li> <li>\u0421\u0442\u0440\u043E\u043A\u0430 \u043A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440\u0430 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u043E\u0432,</li> <li>\u041D\u0443\u043C\u0435\u0440\u0430\u0442\u043E\u0440,</li> <li>\u0414\u0435\u043B\u043E,</li></ul> \u041D\u0430\u043B\u0438\u0447\u0438\u0435 \u0438\u043B\u0438 \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435 \u0438\u043A\u043E\u043D\u043A\u0438 \u0443 \u044D\u0442\u0438\u0445 \u042D\u0423 \u0440\u0435\u0433\u0443\u043B\u0438\u0440\u0443\u0435\u0442\u0441\u044F \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E\u043C \u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0438\u043A\u043E\u043D\u043A\u0443. \u0418\u043A\u043E\u043D\u043A\u0438 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u044E\u0442\u0441\u044F \u0432\u043E \u0432\u0441\u0435\u0445 \u0440\u0435\u0436\u0438\u043C\u0430\u0445 \u0440\u0430\u0437\u043C\u0435\u0442\u043E\u043A.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0438 WebFrame",
-            text: "\u0422\u0435\u043F\u0435\u0440\u044C \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0438 WebFrame \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u043E \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u0438 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435 \u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u044D\u043A\u0441\u043F\u0435\u0440\u0438\u043C\u0435\u043D\u0442\u0430\u043B\u044C\u043D\u043E\u0439 \u0444\u0443\u043D\u043A\u0446\u0438\u0435\u0439.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u041E\u043F\u0440\u043E\u0441 \u043F\u043E \u0440\u0430\u0431\u043E\u0442\u0435 Web-\u043A\u043B\u0438\u0435\u043D\u0442\u0430",
-            text: "\u0422\u0435\u043F\u0435\u0440\u044C \u0447\u0435\u0440\u0435\u0437 \u0442\u0440\u0438 \u043C\u0435\u0441\u044F\u0446\u0430 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u043E\u0441\u043B\u0435 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F \u043F\u0440\u0435\u0434\u043B\u0430\u0433\u0430\u0435\u0442\u0441\u044F \u043F\u0440\u043E\u0439\u0442\u0438 \u043E\u043F\u0440\u043E\u0441 \u043F\u043E \u0440\u0430\u0431\u043E\u0442\u0435 \u0441 Web-\u043A\u043B\u0438\u0435\u043D\u0442\u043E\u043C.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0424\u0438\u043B\u044C\u0442\u0440\u0430\u0446\u0438\u044F \u043F\u043E \u0432\u044B\u0447\u0438\u0441\u043B\u044F\u0435\u043C\u044B\u043C \u0441\u0442\u043E\u043B\u0431\u0446\u0430\u043C",
-            text: "\u0424\u0438\u043B\u044C\u0442\u0440\u0430\u0446\u0438\u044F \u043F\u043E \u0432\u044B\u0447\u0438\u0441\u043B\u044F\u0435\u043C\u044B\u043C \u0441\u0442\u043E\u043B\u0431\u0446\u0430\u043C \u0442\u0435\u043F\u0435\u0440\u044C \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0430 \u0432\u043E \u0432\u0441\u0435\u0445 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u044F\u0445.",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0432 \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430\u0445 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F",
-        icon: "bookshelf",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0438 WebFrame",
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0440\u044F\u0434 \u0441\u0432\u043E\u0439\u0441\u0442\u0432 \u0434\u043B\u044F \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0438.",
-            show: false,
-            more: "<ul><li>\u0414\u043B\u044F \u042D\u0423 \u041A\u043E\u043D\u0442\u0435\u0439\u043D\u0435\u0440 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430 \u041F\u0430\u043D\u0435\u043B\u044C \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u0438 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u0412\u0438\u0434\u0438\u043C\u043E\u0441\u0442\u044C, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0435\u0435 \u0441\u043A\u0440\u044B\u0442\u044C \u042D\u0423.</li> <li>\u0414\u043B\u044F \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u041A\u043E\u043D\u0442\u0435\u0439\u043D\u0435\u0440 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430 \u0442\u0430\u043A\u0436\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u0412\u044B\u0441\u043E\u0442\u0430 \u0432 \u043F\u0438\u043A\u0441\u0435\u043B\u044F\u0445, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0435\u0435 \u0443\u043A\u0430\u0437\u0430\u0442\u044C \u0432\u044B\u0441\u043E\u0442\u0443 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F</li> <li>\u0414\u043B\u044F \u042D\u0423 layouts:page$ctrl/webFrame/webFrameContent.adoc#bg \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0435\u0435 \u0437\u0430\u0434\u0430\u0442\u044C \u0444\u043E\u043D \u0434\u043B\u044F \u0433\u043B\u0430\u0432\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u0438/\u0438\u043B\u0438 \u043F\u0430\u043F\u043E\u043A.</li> <li>\u0424\u043E\u043D \u0442\u0430\u043A\u0436\u0435 \u043C\u043E\u0436\u043D\u043E \u0437\u0430\u0434\u0430\u0442\u044C \u0432 \u043B\u043E\u043A\u0430\u0446\u0438\u044F\u0445 \u041F\u0430\u043F\u043A\u0430, \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438, \u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u044B \u043F\u043E\u0438\u0441\u043A\u0430, \u0413\u043B\u0430\u0432\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0432 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u0435 \u0424\u043E\u043D \u0434\u043B\u044F \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0438 root.</li> <li>\u0414\u043B\u044F \u042D\u0423 \u041B\u043E\u0433\u043E\u0442\u0438\u043F \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u0438 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u043D\u043E\u0432\u043E\u0435 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u0412\u0438\u0434\u0438\u043C\u043E\u0441\u0442\u044C, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0435\u0435 \u0441\u043A\u0440\u044B\u0442\u044C \u042D\u0423.</li> <li>\u0422\u0430\u043A\u0436\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u044C\u0441\u044F \u0432\u0441\u0435\u0433\u0434\u0430, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0435\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u044C \u042D\u0423 \u0432\u0441\u0435\u0433\u0434\u0430.</li></ul> \u0420\u0430\u0437\u043C\u0435\u0442\u043A\u0430 WebFrame \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0430 \u0434\u043B\u044F \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u0432\u0441\u0435\u0433\u0434\u0430 \u0441 \u043D\u0435\u043A\u043E\u0442\u043E\u0440\u044B\u043C\u0438 \u043E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u044F\u043C\u0438.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: '\u0421\u0432\u043E\u0439\u0441\u0442\u0432\u043E "\u0422\u0435\u0433" \u0434\u043B\u044F \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F',
-            text: "\u0414\u043B\u044F \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u042D\u0423 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u043D\u043E\u0432\u043E\u0435 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E Tag / \u0422\u0435\u0433. \u0422\u0435\u0433\u2009\u2014\u2009\u043F\u0440\u043E\u0441\u0442\u043E\u0435 \u0442\u0435\u043A\u0441\u0442\u043E\u0432\u043E\u0435 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0435\u0435 \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0441\u043A\u0440\u0438\u043F\u0442 \u0434\u043B\u044F \u042D\u0423 \u0432 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0435 \u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440 Web-\u0440\u0430\u0437\u043C\u0435\u0442\u043E\u043A.",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438",
-        icon: "alert",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "ERR-2085",
-            text: '\u0421\u0442\u0430\u0440\u044B\u0439 \u0433\u0440\u0438\u0434. \u041D\u0435 \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430 \u0433\u0440\u0443\u043F\u043F\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u044F "\u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0440\u0430\u0441\u043A\u0440\u044B\u0442\u043E\u0439".',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2028",
-            text: "\u0422\u0435\u043A\u0441\u0442 \u043E\u0434\u043D\u043E\u0433\u043E \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0430 \u043D\u0430\u043A\u043B\u0430\u0434\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u043D\u0430 \u0442\u0435\u043A\u0441\u0442 \u0434\u0440\u0443\u0433\u043E\u0433\u043E \u043F\u0440\u0438 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0435 \u044D\u0442\u0430\u043F\u0430 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u0435, \u0435\u0441\u043B\u0438 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D\u043E \u0441\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u043E\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u043E\u0432.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2073",
-            text: "\u041D\u0435\u0432\u0435\u0440\u043D\u0430\u044F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0430 \u043F\u0430\u043F\u043E\u043A \u0432 \u0431\u043E\u043A\u043E\u0432\u043E\u043C \u043C\u0435\u043D\u044E. \u041F\u0430\u043F\u043A\u0438 \u0441 \u0432\u043B\u043E\u0436\u0435\u043D\u0438\u044F\u043C\u0438 \u0438\u043C\u0435\u044E\u0442 \u043F\u0440\u0438\u043E\u0440\u0438\u0442\u0435\u0442 \u043F\u0440\u0438 \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0435.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2036",
-            text: "\u041D\u0435 \u043F\u0440\u043E\u0438\u0441\u0445\u043E\u0434\u0438\u0442 \u0432\u044B\u0440\u0430\u0432\u043D\u0438\u0432\u0430\u043D\u0438\u0435 \u0442\u0435\u043A\u0441\u0442\u0430 \u043F\u043E \u043F\u0440\u0430\u0432\u043E\u043C\u0443 \u043A\u0440\u0430\u044E.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-2003",
-            text: "\u0412 \u044D\u0442\u0430\u043F\u0435 \u043D\u0435\u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E \u0438\u0437\u043C\u0435\u043D\u044F\u0442\u044C \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B \u0435\u0441\u043B\u0438 \u0441\u043E\u0433\u043B\u0430\u0441\u0443\u044E\u0449\u0438\u0435 \u0432\u044B\u0447\u0438\u0441\u043B\u044F\u044E\u0442\u0441\u044F \u0447\u0435\u0440\u0435\u0437 \u0431\u0438\u0437\u043D\u0435\u0441-\u043F\u0440\u043E\u0446\u0435\u0441\u0441..",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1997",
-            text: "\u0412 \u0441\u043E\u0437\u0434\u0430\u043D\u043D\u044B\u0445 \u0432\u0440\u0443\u0447\u043D\u0443\u044E \u044D\u0442\u0430\u043F\u0430\u0445 \u043D\u0435\u0442 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u0438 \u0432\u044B\u043F\u043E\u043B\u043D\u044F\u0442\u044C \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0438\u0435 \u043F\u0440\u043E\u0441\u0442\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u044C\u044E.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1829",
-            text: '\u041D\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u043C\u043E\u0435 \u0432\u043A\u043B\u0430\u0434\u043A\u0438 "\u0418\u0441\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u0435" \u0432 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0435 \u0440\u0435\u0437\u043E\u043B\u044E\u0446\u0438\u0438 \u043F\u043E\u0441\u043B\u0435 \u0430\u0440\u0445\u0438\u0432\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438.',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1842",
-            text: "\u041D\u0435 \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442 \u0433\u0440\u0443\u043F\u043F\u0438\u0440\u043E\u0432\u043A\u0430 \u0432 \u043D\u043E\u0432\u043E\u043C \u0433\u0440\u0438\u0434\u0435 \u0434\u043B\u044F \u0447\u0438\u0441\u043B\u043E\u0432\u044B\u0445 \u043A\u043E\u043B\u043E\u043D\u043E\u043A.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1880",
-            text: "\u0412 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0435 StaffDirectoryItems \u043D\u0435 \u043E\u0447\u0438\u0449\u0430\u0435\u0442\u0441\u044F \u043F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0435\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1863",
-            text: "\u041D\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u044E\u0442\u0441\u044F \u0434\u0430\u043D\u043D\u044B\u0435 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0417\u0430\u043F\u0438\u0441\u0438 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430 \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u043E\u0432, \u0435\u0441\u043B\u0438 \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0434\u0430\u043D\u043D\u043E\u0433\u043E \u0442\u0438\u043F\u0430 \u0431\u044B\u043B\u0438 \u0441\u0432\u044F\u0437\u0430\u043D\u044B \u0441 \u043E\u0434\u043D\u043E\u0439 \u0441\u0435\u043A\u0446\u0438\u0435\u0439 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1804",
-            text: "\u0421\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0430 \u0444\u0430\u0439\u043B\u043E\u0432 \u0438\u0437 \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u0438\u0445 \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u043E\u0432 \u0432 \u043F\u0440\u0435\u0434\u0435\u043B\u0430\u0445 \u043E\u0434\u043D\u043E\u0439 \u0432\u0435\u0431-\u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1808",
-            text: "\u0412 \u0441\u043E\u0431\u044B\u0442\u0438\u0438 cardSaved \u043D\u0435 \u043F\u0435\u0440\u0435\u0434\u0430\u044E\u0442\u0441\u044F bindings.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1630",
-            text: "\u0417\u0430\u043F\u0440\u0435\u0442 \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1572",
-            text: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u0444\u043E\u0440\u043C\u0430\u0442\u0430 \u0434\u0430\u0442\u044B \u0432 \u0432\u0438\u0434\u0436\u0435\u0442\u0435 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0445 \u043A\u0430\u0440\u0442\u043E\u0447\u0435\u043A.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1566",
-            id: uid(),
-            text: "\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438 \u043D\u043E\u043C\u0435\u0440\u0430 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 : Internal Server Error.",
-            children: []
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: uid(),
-    ver: "5.5.5957.195",
-    children: [
-      {
-        id: uid(),
-        head: "\u0424\u0443\u043D\u043A\u0446\u0438\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F",
-        icon: "briefcase-outline",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "\u0421\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u043F\u0440\u043E\u0437\u0440\u0430\u0447\u043D\u043E\u0441\u0442\u044C",
-            text: "\u0414\u043B\u044F \u0440\u044F\u0434\u0430 \u042D\u0423 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u043F\u0440\u043E\u0437\u0440\u0430\u0447\u043D\u043E\u0441\u0442\u044C",
-            show: false,
-            more: "\u0414\u043B\u044F \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0445 \u042D\u0423 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u043F\u0440\u043E\u0437\u0440\u0430\u0447\u043D\u043E\u0441\u0442\u044C: <ul> <li>\u0412\u0438\u0434\u0436\u0435\u0442 / \u041A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u043F\u0430\u043F\u043A\u0438</li> <li>\u0412\u0438\u0434\u0436\u0435\u0442 / \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438</li> <li>\u0412\u0438\u0434\u0436\u0435\u0442 / \u0413\u0440\u0443\u043F\u043F\u0430 \u043F\u0430\u043F\u043E\u043A</li> <li>\u0412\u0438\u0434\u0436\u0435\u0442 / \u0418\u0437\u0432\u0435\u0441\u0442\u043D\u0430\u044F \u043F\u0430\u043F\u043A\u0430</li></ul> \u0412\u044B\u0441\u043E\u0442\u0430 \u0432\u0438\u0434\u0436\u0435\u0442\u043E\u0432 \u0440\u0435\u0433\u0443\u043B\u0438\u0440\u0443\u0435\u0442\u0441\u044F \u0432\u044B\u0441\u043E\u0442\u043E\u0439 \u042D\u0423 \u0411\u043B\u043E\u043A.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C REST \u0432\u0441\u0435\u0433\u0434\u0430",
-            text: "\u0423\u043F\u0440\u0430\u0437\u0434\u043D\u0435\u043D\u0430 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u043F\u0435\u0440\u0435\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F \u0442\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442\u0430 \u0441 REST \u043D\u0430 COM. \u0422\u0435\u043F\u0435\u0440\u044C \u0432\u0441\u0435\u0433\u0434\u0430 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u0442\u0441\u044F REST.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0410\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u043E\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u043E\u0435 \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435",
-            id: uid(),
-            text: "\u0422\u0435\u043F\u0435\u0440\u044C \u043F\u0440\u0438 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0438 \u043F\u0440\u043E\u0438\u0441\u0445\u043E\u0434\u0438\u0442 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u043E\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u043E\u0435 \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u043E\u0432 WebClient.xml WebClientServerExtension.xml, \u0435\u0441\u043B\u0438 \u043F\u0440\u0438 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0438 \u0432\u043A\u043B\u044E\u0447\u0435\u043D \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0439 \u0444\u043B\u0430\u0433.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u043E\u0432 \u043F\u043E\u043B\u043D\u043E\u0442\u0435\u043A\u0441\u0442\u043E\u0432\u043E\u0433\u043E \u043F\u043E\u0438\u0441\u043A\u0430",
-            text: "\u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u044B \u043F\u043E\u043B\u043D\u043E\u0442\u0435\u043A\u0441\u0442\u043E\u0432\u043E\u0433\u043E \u043F\u043E\u0438\u0441\u043A\u0430 \u0442\u0435\u043F\u0435\u0440\u044C \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u044E\u0442\u0441\u044F \u043F\u0440\u0438 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0438 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u044F.",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438",
-        icon: "alert",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "ERR-1795",
-            text: "\u041F\u0440\u0438 \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0438 \u0447\u0435\u0440\u0435\u0437 WebDav \u0432\u0440\u0435\u043C\u0435\u043D\u043D\u044B\u0439 \u0444\u0430\u0439\u043B \u043F\u0438\u0448\u0435\u0442\u0441\u044F \u043F\u0440\u044F\u043C\u043E \u043D\u0430 \u0434\u0438\u0441\u043A C..",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1694",
-            text: 'FilePicker. \u0415\u0441\u0442\u044C \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u0444\u0430\u0439\u043B \u0434\u0430\u0436\u0435 \u0435\u0441\u043B\u0438 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D \u0440\u0435\u0436\u0438\u043C \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F "\u0411\u0435\u0437 \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F".',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1639",
-            id: uid(),
-            text: "\u041E\u0448\u0438\u0431\u043A\u0430 internal Server Error \u043F\u0440\u0438 \u043E\u0442\u043C\u0435\u043D\u0435 \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F \u0437\u0430\u0434\u0430\u043D\u0438\u044F \u043D\u0430 \u0438\u0441\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u0435.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1673",
-            text: "\u0412 \u043E\u043A\u043D\u0435 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u043E\u0432 \u043F\u043E\u0438\u0441\u043A\u0430 \u0432 \u043F\u043E\u043B\u0435 \u0442\u0435\u043A\u0443\u0449\u0435\u0435 \u0432\u0440\u0435\u043C\u044F \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0432\u0440\u0435\u043C\u044F \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0438 \u0438\u0437 \u043A\u044D\u0448\u0430.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1682",
-            text: "\u0412 \u0438\u0441\u0442\u043E\u0440\u0438\u044E \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0437\u0430\u043F\u0438\u0441\u044C \u043E\u0431 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0438 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F \u0432 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0435 Dropdown \u043F\u0440\u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0438 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438, \u0442\u043E\u0433\u0434\u0430 \u043A\u0430\u043A \u0444\u0430\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u043D\u0435 \u043C\u0435\u043D\u044F\u043B\u043E\u0441\u044C..",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1746",
-            text: "\u0424\u043E\u0440\u043C\u0430 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430. \u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u0444\u043B\u0430\u0433\u043E\u0432 \u043D\u0435 \u043E\u0442\u0446\u0435\u043D\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u043E \u043F\u043E \u043C\u0435\u0442\u043A\u0435..",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1050",
-            text: "\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u0438 \u043C\u043E\u0434\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u043E\u043A\u043D\u0430 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u043F\u0440\u0430\u0432 \u0434\u043E\u0441\u0442\u0443\u043F\u0430 \u0432 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0435 \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u043E\u0432.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "WebC-10823",
-            text: '"\u0420\u0435\u0436\u0438\u043C \u043E\u0442\u043B\u043E\u0436\u0435\u043D\u043D\u044B\u0445 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0439 \u0443\u0436\u0435 \u0432\u043A\u043B\u044E\u0447\u0435\u043D." \u043F\u0440\u0438 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0435 \u0444\u043B\u0430\u0433\u0430.',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1669",
-            text: "\u041D\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0441\u0441\u044B\u043B\u043A\u0430 \u043D\u0430 \u0444\u0430\u0439\u043B \u0432 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0435 PartnersDepartment.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1360",
-            text: '\u043F\u043E\u0441\u043B\u0435 \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F \u0441\u0441\u044B\u043B\u043A\u0438 \u0438 \u043F\u043E\u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u043C \u0432\u044B\u0431\u043E\u0440\u0435 "\u043F\u0443\u0441\u0442\u043E\u0439 \u0441\u0441\u044B\u043B\u043A\u0438" \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u0443\u0434\u0430\u043B\u0435\u043D\u043D\u043E\u0439 \u0441\u0441\u044B\u043B\u043A\u0438.',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1532",
-            text: "\u041E\u0442\u043A\u043B\u044E\u0447\u0435\u043D\u043D\u044B\u0435 \u043F\u0430\u043F\u043A\u0438 \u0438\u0437 \u0431\u043E\u043A\u043E\u0432\u043E\u0439 \u043F\u0430\u043D\u0435\u043B\u0438 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u044E\u0442 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0442\u044C\u0441\u044F \u0432 \u043F\u0430\u043D\u0435\u043B\u0438 \u043F\u043E\u0441\u043B\u0435 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1352",
-            text: "\u042D\u041F \u043D\u0430\u043A\u043B\u0430\u0434\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u0432\u0435\u0440\u0442\u0438\u043A\u0430\u043B\u044C\u043D\u043E.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1051",
-            text: "\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u0438 \u043C\u043E\u0434\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u043E\u043A\u043D\u0430 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u043F\u0440\u0430\u0432 \u0434\u043E\u0441\u0442\u0443\u043F\u0430 \u0432 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0435 \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u043E\u0432.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1529",
-            text: "\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043F\u043E\u043F\u044B\u0442\u043A\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0444\u0430\u0439\u043B\u0430 \u0447\u0435\u0440\u0435\u0437 \u043A\u043E\u043D\u0442\u0440\u043E\u043B FilePicker.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1260",
-            text: "\u041D\u0435\u043B\u044C\u0437\u044F \u0441\u043E\u0437\u0434\u0430\u0442\u044C \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0430 \u0438\u043B\u0438 \u043E\u0442\u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u043E\u043B\u044F \u0443 \u0443\u0436\u0435 \u0441\u043E\u0437\u0434\u0430\u043D\u043D\u043E\u0433\u043E \u0432 \u0421\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0435 \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u043E\u0432.",
-            children: []
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: uid(),
-    ver: "5.5.5957.174",
-    children: [
-      {
-        id: uid(),
-        head: "\u0424\u0443\u043D\u043A\u0446\u0438\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F",
-        icon: "briefcase-outline",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "\u0412\u044B\u0432\u043E\u0434 \u043A\u0440\u0430\u0442\u043A\u043E\u0439 \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u0438 \u043E \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0435",
-            text: "\u0422\u0435\u043F\u0435\u0440\u044C \u043F\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u043A\u0440\u0430\u0442\u043A\u0443\u044E \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044E \u043E \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0435 \u043C\u043E\u0436\u043D\u043E \u043F\u0440\u044F\u043C\u043E \u0438\u0437 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F, \u0441\u043C. \u043F\u043E\u0434\u0440\u043E\u0431\u043D\u0435\u0435.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u041D\u043E\u0432\u044B\u0439 \u0433\u0440\u0438\u0434",
-            text: "\u041D\u043E\u0432\u044B\u0439 \u0433\u0440\u0438\u0434, \u0440\u0430\u043D\u0435\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0439 \u043A\u0430\u043A \u044D\u043A\u0441\u043F\u0435\u0440\u0438\u043C\u0435\u043D\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u0444\u0443\u043D\u043A\u0446\u0438\u044F \u0442\u0435\u043F\u0435\u0440\u044C \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D \u0434\u043B\u044F \u0432\u0441\u0435\u0445 \u043D\u0430 \u043A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440\u0430\u0445 \u0438 \u043F\u043B\u0430\u043D\u0448\u0435\u0442\u0430\u0445.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0410\u0433\u0440\u0435\u0433\u0430\u0446\u0438\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u0435\u043A \u0432 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u044F\u0445",
-            text: "\u041F\u0440\u0438 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u043E\u043C \u0438 \u0441\u043A\u043E\u043D\u0444\u0438\u0433\u0443\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u043E\u043C \u043F\u043E\u043B\u043D\u043E\u0442\u0435\u043A\u0441\u0442\u043E\u0432\u043E\u043C \u043F\u043E\u0438\u0441\u043A\u0435 Elasticsearch, \u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0441\u044F \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E\u0439 \u0444\u0443\u043D\u043A\u0446\u0438\u044F \u0430\u0433\u0440\u0435\u0433\u0430\u0446\u0438\u0438 \u043A\u0430\u0440\u0442\u043E\u0447\u0435\u043A \u0432 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u0438.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0420\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C \u043E\u043A\u043D\u043E \u043D\u0430 \u0432\u0435\u0441\u044C \u044D\u043A\u0440\u0430\u043D",
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u0440\u0430\u0437\u0432\u043E\u0440\u0430\u0447\u0438\u0432\u0430\u0442\u044C \u043E\u043A\u043D\u0430 \u043D\u0430 \u0432\u0435\u0441\u044C \u044D\u043A\u0440\u0430\u043D.",
-            show: false,
-            more: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u0440\u0430\u0437\u0432\u043E\u0440\u0430\u0447\u0438\u0432\u0430\u0442\u044C \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0435 \u043E\u043A\u043D\u0430 \u043D\u0430 \u0432\u0435\u0441\u044C \u044D\u043A\u0440\u0430\u043D: <ul><li>\u041E\u043A\u043D\u043E \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0441\u0441\u044B\u043B\u043E\u043A.</li> <li>\u041E\u043A\u043D\u043E \u0432\u044B\u0431\u043E\u0440\u0430 \u043F\u0430\u043F\u043A\u0438.</li> <li>\u041E\u043A\u043D\u043E \u043A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440\u0430 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u043E\u0432.</li> <li>\u0421\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A \u043A\u043E\u043D\u0442\u0440\u0430\u0433\u0435\u043D\u0442\u043E\u0432.</li> <li>\u0421\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u043E\u0432.</li> <li>\u0421\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A \u043D\u043E\u043C\u0435\u043D\u043A\u043B\u0430\u0442\u0443\u0440\u044B \u0434\u0435\u043B.</li> <li>\u041B\u0438\u0441\u0442 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u044F.</li> <li>\u0414\u0435\u0440\u0435\u0432\u043E \u0438\u0441\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u044F.</li> <li>\u041E\u043A\u043D\u043E \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u0432\u043D\u043E\u0433\u043E \u043F\u043E\u0438\u0441\u043A\u0430.</li> <li>\u0425\u043E\u0434 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u044F.</li></ul> \u0427\u0442\u043E\u0431\u044B \u0440\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C \u043E\u043A\u043D\u043E \u043D\u0430 \u0432\u0435\u0441\u044C \u044D\u043A\u0440\u0430\u043D, \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \u0432 \u043F\u0440\u0430\u0432\u043E\u043C \u0432\u0435\u0440\u0445\u043D\u0435\u043C \u0443\u0433\u043B\u0443 \u043E\u043A\u043D\u0430.",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0432 \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430\u0445 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F",
-        icon: "bookshelf",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "\u042D\u043B\u0435\u043C\u0435\u043D\u0442\u044B \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043D\u043E\u0432\u043E\u0433\u043E \u0433\u0440\u0438\u0434\u0430",
-            text: "\u0412 \u043B\u043E\u043A\u0430\u0446\u0438\u0438 \u041A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u043F\u0430\u043F\u043A\u0438 \u0438\u0437\u043C\u0435\u043D\u0451\u043D \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u044D\u043B\u0435\u043C\u0435\u043D\u0442 \u043D\u043E\u0432\u043E\u0433\u043E \u0433\u0440\u0438\u0434\u0430\u2009\u2014\u2009\u041A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u043F\u0430\u043F\u043A\u0438. \u042D\u0423 \u041A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u043F\u0430\u043F\u043A\u0438 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u0434\u0432\u0430 \u0432\u0441\u0442\u0440\u043E\u0435\u043D\u043D\u044B\u0445 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430: \u0422\u0443\u043B\u0431\u0430\u0440 \u043F\u0430\u043F\u043A\u0438 \u0438 \u0423\u0437\u0435\u043B \u0434\u043B\u044F \u0433\u0440\u0443\u043F\u043F\u043E\u0432\u044B\u0445 \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u0439.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u041D\u043E\u0432\u044B\u0435 \u0433\u0440\u0443\u043F\u043F\u043E\u0432\u044B\u0435 \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u0438",
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043D\u043E\u0432\u044B\u0435 \u0433\u0440\u0443\u043F\u043F\u043E\u0432\u044B\u0435 \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u0438.",
-            show: false,
-            more: "<ul><li>\u041F\u0440\u043E\u0447\u0438\u0442\u0430\u0442\u044C\u2009\u2014\u2009\u043F\u043E\u0437\u0432\u043E\u043B\u044F\u0435\u0442 \u043F\u0440\u043E\u0447\u0438\u0442\u0430\u0442\u044C \u0441\u0440\u0430\u0437\u0443 \u0433\u0440\u0443\u043F\u043F\u0443 \u043A\u0430\u0440\u0442\u043E\u0447\u0435\u043A.</li> <li>\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443\u2009\u2014\u2009\u043F\u043E\u0437\u0432\u043E\u043B\u044F\u0435\u0442 \u043E\u043A\u043E\u043D\u0447\u0430\u0442\u0435\u043B\u044C\u043D\u043E \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443.</li> <li>\u0421\u043A\u0430\u0447\u0430\u0442\u044C \u0444\u0430\u0439\u043B\u044B \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438\u2009\u2014\u2009\u043F\u043E\u0437\u0432\u043E\u043B\u044F\u0435\u0442 \u0441\u043A\u0430\u0447\u0430\u0442\u044C \u043E\u0441\u043D\u043E\u0432\u043D\u044B\u0435 \u0438\u043B\u0438 \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0444\u0430\u0439\u043B\u044B, \u0430 \u0442\u0430\u043A\u0436\u0435 \u0444\u0430\u0439\u043B\u044B \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0438\u0437 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438.</li></ul>",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0422\u0430\u0431\u043B\u0438\u0446\u0430 \u0438\u0441\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u044F \u0437\u0430\u0434\u0430\u043D\u0438\u0439",
-            text: "\u0412 \u044D\u043B\u0435\u043C\u0435\u043D\u0442 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u043D\u043E\u0432\u043E\u0435 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u0421\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0430, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0435\u0435 \u0437\u0430\u0434\u0430\u0442\u044C \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0443 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "\u0418\u0437\u0431\u0440\u0430\u043D\u043D\u043E\u0435",
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u043D\u043E\u0432\u044B\u0439 \u044D\u043B\u0435\u043C\u0435\u043D\u0442 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0418\u0437\u0431\u0440\u0430\u043D\u043D\u043E\u0435, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0438\u0439 \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u0432 \u043F\u0430\u043F\u043A\u0443 \u0418\u0437\u0431\u0440\u0430\u043D\u043D\u043E\u0435.",
-            children: []
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438",
-        icon: "alert",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "ERR-1356",
-            text: "TextArea HtmlEditor \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439 Scroll.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1421",
-            text: '\u041E\u0448\u0438\u0431\u043A\u0430 "NullReferenceException" \u0432 StaffDirectoryItems.',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1286",
-            text: "\u041F\u0440\u0438 \u043E\u0442\u043C\u0435\u043D\u0435 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u044F \u0432 \u0438\u0441\u0442\u043E\u0440\u0438\u0438 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u043D\u0435\u0442 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0435\u0439 \u0437\u0430\u043F\u0438\u0441\u0438.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "WebC-11062",
-            text: "\u0411\u043B\u043E\u043A \u0441 \u0444\u0430\u0439\u043B\u043E\u043C \u043E\u0442\u0447\u0435\u0442\u0430 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0441\u0432\u0451\u0440\u043D\u0443\u0442\u044B\u043C.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1218",
-            text: "\u041F\u043E\u0441\u043B\u0435 \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F \u043D\u043E\u0432\u043E\u0439 \u0432\u0435\u0440\u0441\u0438\u0438 \u0444\u0430\u0439\u043B\u0430 \u0434\u043E \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0441\u0442\u0430\u0440\u0430\u044F \u0432\u0435\u0440\u0441\u0438\u044F \u0444\u0430\u0439\u043B\u0430.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1230",
-            text: "\u041D\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u044E\u0442\u0441\u044F \u0434\u0430\u043D\u043D\u044B\u0435 \u0432 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0435 \u043F\u043E\u0441\u043B\u0435 \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0430 \u0441 Web-\u043A\u043B\u0438\u0435\u043D\u0442\u0430 14 \u043D\u0430 Web-\u043A\u043B\u0438\u0435\u043D\u0442 16.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1314",
-            text: "\u041D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0430\u044F \u0434\u043B\u044F \u0432\u044B\u0431\u043E\u0440\u0430 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F, \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0430 \u0432 StaffDirectoryItems.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1261",
-            text: '\u0412 \u0438\u0441\u0442\u043E\u0440\u0438\u0438 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u043D\u0435 \u0444\u0438\u043A\u0441\u0438\u0440\u0443\u0435\u0442\u0441\u044F \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u044F "\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u0435".',
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1290",
-            text: "\u0412 \u043F\u043E\u043B\u0435 \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u0432\u043D\u043E\u0433\u043E \u043F\u043E\u0438\u0441\u043A\u0430 \u0410\u0432\u0442\u043E\u0440 = \u042F \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u043D\u0435 \u0442\u0435\u043A\u0443\u0449\u0438\u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C, \u0430 \u043F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0438\u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C \u043F\u043E\u0434 \u043A\u043E\u0442\u043E\u0440\u044B\u043C \u0431\u044B\u043B \u043B\u043E\u0433\u0438\u043D \u0432 Web-\u043A\u043B\u0438\u0435\u043D\u0442\u0435.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1070",
-            text: "\u0421\u043E\u0437\u0434\u0430\u0435\u0442\u0441\u044F \u043B\u0438\u0448\u043D\u044F\u044F \u0441\u0435\u0441\u0441\u0438\u044F \u0443\u0447\u0451\u0442\u043D\u043E\u0439 \u0437\u0430\u043F\u0438\u0441\u0438 \u043F\u0443\u043B\u0430 \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0439 Web-\u043A\u043B\u0438\u0435\u043D\u0442\u0430 \u043F\u0440\u0438 \u0430\u0443\u0442\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F \u0438 \u043F\u0440\u0438 \u0437\u0430\u043F\u0443\u0441\u043A\u0435 \u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440\u0430 Web-\u0440\u0430\u0437\u043C\u0435\u0442\u043E\u043A.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1069",
-            text: "\u041F\u0440\u0438 \u0437\u0430\u043A\u0440\u044B\u0442\u0438\u0438 \u043A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440\u0430 Web-\u0440\u0430\u0437\u043C\u0435\u0442\u043E\u043A \u043D\u0435 \u043E\u0441\u0432\u043E\u0431\u043E\u0436\u0434\u0430\u0435\u0442\u0441\u044F \u043B\u0438\u0446\u0435\u043D\u0437\u0438\u044F.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1259",
-            text: "\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u043F\u043E\u0438\u0441\u043A. \u041D\u0435 \u0432\u043E\u0437\u0432\u0440\u0430\u0449\u0430\u044E\u0442\u0441\u044F \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u044B \u043F\u043E\u0438\u0441\u043A\u0430 \u043F\u043E\u0441\u043B\u0435 \u0432\u043E\u0437\u0432\u0440\u0430\u0442\u0430 \u043D\u0430\u0437\u0430\u0434 \u0438\u0437 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-0001",
-            text: "\u0412 \u043E\u043A\u043D\u0435 \u043F\u043E\u0438\u0441\u043A\u0430 \u043D\u0435\u043B\u044C\u0437\u044F \u0431\u044B\u043B\u043E \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0430 \u0441 \u0444\u043B\u0430\u0433\u043E\u043C \u041D\u0435 \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u043F\u0440\u0438 \u0432\u044B\u0431\u043E\u0440\u0435.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1217",
-            text: "\u041F\u043E\u0441\u043B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0444\u0430\u0439\u043B\u0430 \u043D\u0435 \u043E\u0431\u043D\u043E\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0432\u0435\u0440\u0441\u0438\u044F.",
-            children: []
-          },
-          {
-            id: uid(),
-            label: "ERR-1216",
-            text: "\u041F\u043E\u0441\u043B\u0435 \u0440\u0430\u0437\u0432\u043E\u0440\u0430\u0447\u0438\u0432\u0430\u043D\u0438\u044F \u0441\u0432\u043E\u0440\u0430\u0447\u0438\u0432\u0430\u043D\u0438\u044F \u043F\u0430\u043F\u043A\u0438 \u0432 \u0431\u043E\u043A\u043E\u0432\u043E\u043C \u043C\u0435\u043D\u044E \u0441\u0447\u0435\u0442\u0447\u0438\u043A \u043D\u0435\u043F\u0440\u043E\u0447\u0438\u0442\u0430\u043D\u043D\u044B\u0445 \u0441\u0431\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u043D\u0430 \u043F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0435\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435.",
-            children: []
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: uid(),
-    ver: "5.5.5957.141",
-    children: [
-      {
-        id: uid(),
-        head: "\u0424\u0443\u043D\u043A\u0446\u0438\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F",
-        icon: "briefcase-outline",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: '\u0414\u043E\u0440\u0430\u0431\u043E\u0442\u0430\u043D \u044D\u043B\u0435\u043C\u0435\u043D\u0442 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F "\u0422\u0435\u043A\u0441\u0442"',
-            text: "\u042D\u043B\u0435\u043C\u0435\u043D\u0442 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0422\u0435\u043A\u0441\u0442 \u0434\u043E\u0440\u0430\u0431\u043E\u0442\u0430\u043D: \u043F\u043E\u044F\u0432\u0438\u043B\u0430\u0441\u044C \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u0432\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0442\u0435\u043A\u0441\u0442 \u0431\u0435\u0437 \u0444\u043E\u0440\u043C\u0430\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u0438 \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0440\u0430\u0437\u043C\u0435\u0440 \u0448\u0440\u0438\u0444\u0442\u0430. \u0422\u0430\u043A\u0436\u0435 \u0443\u043B\u0443\u0447\u0448\u0435\u043D\u0430 \u0440\u0430\u0431\u043E\u0442\u0430 \u0441 \u0432\u0441\u0442\u0430\u0432\u043B\u044F\u0435\u043C\u044B\u043C\u0438 \u0432 \u042D\u0423 \u0442\u0430\u0431\u043B\u0438\u0446\u0430\u043C\u0438 \u0438 \u0432\u0441\u0442\u0430\u0432\u043B\u044F\u0435\u043C\u044B\u043C \u0442\u0435\u043A\u0441\u0442\u043E\u043C."
-          },
-          {
-            id: uid(),
-            label: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0430 \u0441\u0442\u0440\u043E\u043A\u0430 \u043F\u043E\u0438\u0441\u043A\u0430",
-            text: '\u0412\u043D\u0435\u0448\u043D\u0438\u0439 \u0432\u0438\u0434 \u0441\u0442\u0440\u043E\u043A\u0438 \u043F\u043E\u0438\u0441\u043A\u0430 \u0431\u044B\u043B \u043F\u0435\u0440\u0435\u0440\u0430\u0431\u043E\u0442\u0430\u043D. \u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0430 "\u041D\u0430\u0439\u0442\u0438", \u0438\u043D\u0430\u0447\u0435 \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D \u0432\u044B\u0431\u043E\u0440 \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u043F\u043E\u0438\u0441\u043A\u0430.'
-          },
-          {
-            id: uid(),
-            label: "\u0421\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0430 \u0432 \u0422\u0430\u0431\u043B\u0438\u0446\u0435 \u0438\u0441\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u044F \u0437\u0430\u0434\u0430\u043D\u0438\u0439",
-            text: "\u0412 \u0442\u0430\u0431\u043B\u0438\u0446\u0435 \u0438\u0441\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u044F \u0437\u0430\u0434\u0430\u043D\u0438\u0439 \u0442\u0435\u043F\u0435\u0440\u044C \u043C\u043E\u0436\u043D\u043E \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0437\u0430\u0434\u0430\u043D\u0438\u044F \u043D\u0430\u0436\u0430\u0442\u0438\u0435\u043C \u043D\u0430 \u0441\u0442\u043E\u043B\u0431\u0435\u0446."
-          },
-          {
-            id: uid(),
-            label: "\u0418\u0437\u0431\u0440\u0430\u043D\u043D\u044B\u0435 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438",
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u0432 \u0438\u0437\u0431\u0440\u0430\u043D\u043D\u043E\u0435."
-          },
-          {
-            id: uid(),
-            label: "\u041D\u043E\u0432\u044B\u0439 \u0444\u043E\u0440\u043C\u0430\u0442 \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0430 \u0440\u0435\u0448\u0435\u043D\u0438\u044F",
-            text: "\u0420\u0435\u0448\u0435\u043D\u0438\u044F \u0445\u0440\u0430\u043D\u044F\u0442\u0441\u044F \u0432 \u043D\u043E\u0432\u043E\u043C \u0432\u0438\u0434\u0435. \u041F\u043E\u044F\u0432\u0438\u043B\u0441\u044F \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u0444\u043E\u0440\u043C\u0430\u0442 \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0438 \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0430 \u0440\u0435\u0448\u0435\u043D\u0438\u0439. \u0422\u0435\u043F\u0435\u0440\u044C \u0440\u0435\u0448\u0435\u043D\u0438\u0435 \u043C\u043E\u0436\u043D\u043E \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043D\u0435 \u043E\u0434\u043D\u0438\u043C \u0444\u0430\u0439\u043B\u043E\u043C, \u0430 \u043F\u0430\u043A\u0435\u0442\u043E\u043C (\u043F\u0430\u043F\u043A\u043E\u0439). \u041F\u043E\u0434\u0440\u043E\u0431\u043D\u0435\u0435 \u0441\u043C. \u042D\u043A\u0441\u043F\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0420\u0435\u0448\u0435\u043D\u0438\u0435 \u0438 \u0418\u043C\u043F\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0420\u0435\u0448\u0435\u043D\u0438\u0435."
-          },
-          {
-            id: uid(),
-            label: "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u043E\u0432 \u043F\u043E\u0438\u0441\u043A\u0430",
-            text: "\u0422\u0435\u043F\u0435\u0440\u044C \u043F\u043E\u043B\u043D\u043E\u0442\u0435\u043A\u0441\u0442\u043E\u0432\u043E\u0433\u043E \u043F\u043E\u0438\u0441\u043A\u0430 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u044E\u0442\u0441\u044F \u043A\u0430\u043A \u043E\u0442\u0434\u0435\u043B\u044C\u043D\u0430\u044F \u043F\u0430\u043F\u043A\u0430 \u0441 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u0435\u043C \u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u044B \u043F\u043E\u0438\u0441\u043A\u0430 \u0438 \u0444\u0443\u043D\u043A\u0446\u0438\u044F\u043C\u0438 \u043D\u043E\u0432\u043E\u0433\u043E \u0433\u0440\u0438\u0434\u0430."
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438",
-        icon: "alert",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "ERR-1229",
-            text: "\u0421\u0435\u0441\u0441\u0438\u044F \u0441\u043E \u0441\u0447\u0451\u0442\u0447\u0438\u043A\u0430\u043C\u0438 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u0435\u0442 \u0431\u044B\u0442\u044C \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0439 \u043F\u043E\u0441\u043B\u0435 \u0437\u0430\u043A\u0440\u044B\u0442\u0438\u044F \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u0441\u0435\u0441\u0441\u0438\u0438 \u043F\u043E \u0442\u0430\u0439\u043C\u0430\u0443\u0442\u0443 \u0435\u0449\u0435 \u043A\u0430\u043A\u043E\u0435-\u0442\u043E \u0432\u0440\u0435\u043C\u044F."
-          },
-          {
-            id: uid(),
-            label: "ERR-1208",
-            text: "\u0417\u0430\u0432\u0438\u0441\u0430\u043D\u0438\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u043F\u0440\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0438 args.cancel() \u0432 \u0441\u043A\u0440\u0438\u043F\u0442\u0435 \u0441\u043E\u0431\u044B\u0442\u0438\u044F \xABOn preparing card save\xBB."
-          },
-          {
-            id: uid(),
-            label: "ERR-1222",
-            text: '\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u043F\u0443\u0441\u0442\u0430\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043F\u0440\u0438 \u043D\u0430\u0436\u0430\u0442\u0438\u0438 \u043A\u043D\u043E\u043F\u043A\u0438 "\u041D\u0430\u0437\u0430\u0434" \u0438\u0437 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438, \u0435\u0441\u043B\u0438 \u043F\u0435\u0440\u0435\u0434 \u044D\u0442\u0438\u043C \u043F\u0435\u0440\u0435\u043A\u043B\u044E\u0447\u0430\u0442\u044C \u0444\u0430\u0439\u043B\u044B \u0432 filePreview.'
-          },
-          {
-            id: uid(),
-            label: "ERR-0002",
-            text: "\u041D\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u0435\u0442\u0441\u044F \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u043D\u0443\u043C\u0435\u0440\u0430\u0442\u043E\u0440\u0430."
-          },
-          {
-            id: uid(),
-            label: "ERR-1206",
-            text: "\u041E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u043B\u0435\u0440 EmployeesController, \u0431\u0435\u0437 \u043A\u043E\u0442\u043E\u0440\u043E\u0433\u043E \u043D\u0435\u0432\u043E\u0437\u043C\u043E\u0436\u043D\u0430 \u0440\u0430\u0431\u043E\u0442\u0430 EmployeesAutoComplete."
-          },
-          {
-            id: uid(),
-            label: "ERR-1184",
-            text: "\u041F\u0440\u0438 \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u0438 \u0437\u0430\u0434\u0430\u043D\u0438\u044F \u043F\u043E \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0435 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u0432 \u043F\u0440\u0435\u0434\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u0444\u0430\u0439\u043B, \u0430 \u043D\u0435 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439."
-          },
-          {
-            id: uid(),
-            label: "ERR-1184",
-            text: "\u041F\u0440\u0438 \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u0438 \u0437\u0430\u0434\u0430\u043D\u0438\u044F \u043F\u043E \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0435 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u0432 \u043F\u0440\u0435\u0434\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u0444\u0430\u0439\u043B, \u0430 \u043D\u0435 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439."
-          },
-          {
-            id: uid(),
-            label: "ERR-1159",
-            text: "\u041D\u043E\u0432\u044B\u0439 \u0433\u0440\u0438\u0434. \u041F\u0440\u0438 \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u0438 \u043D\u0435\u043F\u0440\u043E\u0447\u0438\u0442\u0430\u043D\u043D\u043E\u0439 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u0441\u0447\u0435\u0442\u0447\u0438\u043A \u0432 \u043F\u0430\u043F\u043A\u0435 \u043D\u0435 \u0443\u043C\u0435\u043D\u044C\u0448\u0430\u0435\u0442\u0441\u044F."
-          },
-          {
-            id: uid(),
-            label: "ERR-0003",
-            text: "\u041F\u0440\u0430\u0432\u043A\u0430 \u0434\u043B\u044F \u0441\u0446\u0435\u043D\u0430\u0440\u0438\u044F \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u043E\u0433\u043E \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u044F \u0432\u0435\u0440\u0441\u0438\u0439."
-          },
-          {
-            id: uid(),
-            label: "ERR-283",
-            text: "\u041D\u0435 \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442 \u043F\u0440\u043E\u043A\u0440\u0443\u0442\u043A\u0430 \u0432 \u0431\u043E\u043A\u043E\u0432\u043E\u043C \u043C\u0435\u043D\u044E \u043D\u0430 ios."
-          },
-          {
-            id: uid(),
-            label: "ERR-1001",
-            text: "\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u043A\u043E\u0434\u0438\u0440\u043E\u0432\u043A\u0438 \u0444\u0430\u0439\u043B\u0430 \u043F\u0440\u0438 \u043F\u0440\u0435\u0434\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0435."
-          },
-          {
-            id: uid(),
-            label: "ERR-947",
-            text: "\u0415\u0441\u043B\u0438 \u0432 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0435 \u043D\u0435\u0442 \u0444\u0430\u0439\u043B\u0430, \u0442\u043E \u0432 \u043F\u0440\u0435\u0432\u044C\u044E \u0444\u0430\u0439\u043B\u0430 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0444\u0430\u0439\u043B \u0438\u0437 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0439 \u043E\u0442\u043A\u0440\u044B\u0442\u043E\u0439 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438."
-          },
-          {
-            id: uid(),
-            label: "ERR-1055",
-            text: "\u0412\u043C\u0435\u0441\u0442\u043E \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u043E\u0432 \u043F\u043E\u0438\u0441\u043A\u0430 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u043F\u0443\u0441\u0442\u0430\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430."
-          },
-          {
-            id: uid(),
-            label: "ERR-961",
-            text: "\u041D\u0435 \u0432\u0441\u043F\u043B\u044B\u0432\u0430\u0435\u0442 \u043E\u043A\u043D\u043E \u0441 \u0438\u0437\u0431\u0440\u0430\u043D\u043D\u044B\u043C\u0438 \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0430\u043C\u0438 \u043F\u0440\u0438 \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0438\u0438 \u0444\u043E\u043A\u0443\u0441\u0430 StaffDirectoryItems."
-          },
-          {
-            id: uid(),
-            label: "ERR-909",
-            text: "\u041D\u0435\u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u044B\u0439 \u043F\u043E\u0440\u044F\u0434\u043E\u043A \u044D\u0442\u0430\u043F\u043E\u0432 \u0432 \u0445\u043E\u0434\u0435 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u044F."
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: uid(),
-    ver: "5.5.5957.117",
-    children: [
-      {
-        id: uid(),
-        head: "\u0424\u0443\u043D\u043A\u0446\u0438\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F",
-        icon: "briefcase-outline",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "\u041D\u043E\u0432\u044B\u0435 \u0433\u0440\u0443\u043F\u043F\u043E\u0432\u044B\u0435 \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u0438",
-            text: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044E \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0430 \u0440\u0430\u0431\u043E\u0442\u0430 \u0441 \u043D\u043E\u0432\u044B\u043C\u0438 \u0433\u0440\u0443\u043F\u043F\u043E\u0432\u044B\u043C\u0438 \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u044F\u043C\u0438.",
-            show: false,
-            more: "<ul><li>\u041F\u0440\u043E\u0447\u0438\u0442\u0430\u0442\u044C\u2009\u2014\u2009\u043F\u043E\u0437\u0432\u043E\u043B\u044F\u0435\u0442 \u043F\u0440\u043E\u0447\u0438\u0442\u0430\u0442\u044C \u0441\u0440\u0430\u0437\u0443 \u0433\u0440\u0443\u043F\u043F\u0443 \u043A\u0430\u0440\u0442\u043E\u0447\u0435\u043A.</li> <li>\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443\u2009\u2014\u2009\u043F\u043E\u0437\u0432\u043E\u043B\u044F\u0435\u0442 \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u0432 \u043A\u043E\u0440\u0437\u0438\u043D\u0443 \u0438\u043B\u0438 \u043F\u0435\u0440\u043C\u0430\u043D\u0435\u043D\u0442\u043D\u043E.</li> <li>\u0421\u043A\u0430\u0447\u0430\u0442\u044C \u0444\u0430\u0439\u043B\u044B \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438\u2009\u2014\u2009\u043F\u043E\u0437\u0432\u043E\u043B\u044F\u0435\u0442 \u0441\u043A\u0430\u0447\u0430\u0442\u044C \u043E\u0441\u043D\u043E\u0432\u043D\u044B\u0435 \u0438\u043B\u0438 \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0444\u0430\u0439\u043B\u044B, \u0430 \u0442\u0430\u043A\u0436\u0435 \u0444\u0430\u0439\u043B\u044B \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0438\u0437 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438.</li></ul>"
-          },
-          {
-            id: uid(),
-            label: "\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u043F\u043E email",
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u043F\u043E \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u043E\u0439 \u043F\u043E\u0447\u0442\u0435."
-          },
-          {
-            id: uid(),
-            label: "\u041F\u043E\u043B\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u0441 \u0440\u0435\u0436\u0438\u043C\u043E\u043C \u043F\u0440\u0435\u0434\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430",
-            text: "\u0422\u0435\u043F\u0435\u0440\u044C, \u0435\u0441\u043B\u0438 \u0432 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u043F\u0440\u0435\u0434\u0432\u0430\u0440\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0444\u0430\u0439\u043B\u0430, \u043F\u043E\u043B\u044F \u043B\u044E\u0431\u043E\u0439 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430\u043C\u0438 (\u043F\u0443\u0441\u0442\u043E\u0435 \u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0441\u0442\u0432\u043E \u043F\u043E \u043E\u0431\u0435 \u0441\u0442\u043E\u0440\u043E\u043D\u044B \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438) \u0441\u043E\u0441\u0442\u0430\u0432\u043B\u044F\u044E\u0442 5 px."
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0432 \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430\u0445 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F",
-        icon: "bookshelf",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: '\u041D\u043E\u0432\u043E\u0435 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u042D\u0423 "\u0414\u0430\u043D\u043D\u044B\u0435 \u043F\u0430\u043F\u043A\u0438"',
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u043D\u043E\u0432\u043E\u0435 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u0412\u044B\u0431\u043E\u0440 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u0440\u0435\u0436\u0438\u043C\u0430 \u0421\u0438\u0441\u0442\u0435\u043C\u043D\u0430\u044F \u043F\u0430\u043F\u043A\u0430, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0435\u0435 \u043E\u0433\u0440\u0430\u043D\u0438\u0447\u0438\u0442\u044C \u0432\u044B\u0431\u043E\u0440 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0445 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u0439 \u0432 \u043F\u0430\u043F\u043A\u0435. \u041F\u043E\u0434\u0440\u043E\u0431\u043D\u0435\u0435 \u0441\u043C. \u0414\u0430\u043D\u043D\u044B\u0435 \u043F\u0430\u043F\u043A\u0438."
-          },
-          {
-            id: uid(),
-            label: "\u042D\u043B\u0435\u043C\u0435\u043D\u0442 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F SignatureButton",
-            text: "\u0414\u043B\u044F \u0440\u0430\u0431\u043E\u0442\u044B \u0441 \u043F\u043E\u0434\u043F\u0438\u0441\u044C\u044E."
-          },
-          {
-            id: uid(),
-            label: '\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0432\u044B\u0441\u043E\u0442\u0430 \u0434\u043B\u044F \u042D\u0423 "\u0411\u043B\u043E\u043A"',
-            text: "\u0414\u043B\u044F \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0411\u043B\u043E\u043A \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u043E \u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0432\u044B\u0441\u043E\u0442\u0430, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0435\u0435 \u043E\u0433\u0440\u0430\u043D\u0438\u0447\u0438\u0442\u044C \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0443\u044E \u0432\u044B\u0441\u043E\u0442\u0443 \u0431\u043B\u043E\u043A\u0430. \u041F\u0440\u0438 \u043F\u0440\u0435\u0432\u044B\u0448\u0435\u043D\u0438\u0438 \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0439 \u0432\u044B\u0441\u043E\u0442\u044B, \u0443 \u0431\u043B\u043E\u043A\u0430 \u043F\u043E\u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u043F\u043E\u043B\u043E\u0441\u0430 \u043F\u0440\u043E\u043A\u0440\u0443\u0442\u043A\u0438 \u043D\u043E\u0432\u043E\u0433\u043E \u0433\u0440\u0438\u0434\u0430."
-          },
-          {
-            id: uid(),
-            label: "\u042D\u043B\u0435\u043C\u0435\u043D\u0442 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F emailButton",
-            text: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u044D\u043B\u0435\u043C\u0435\u043D\u0442 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u041A\u043D\u043E\u043F\u043A\u0430 \u043E\u0442\u043F\u0440\u0430\u0432\u043A\u0438 \u043F\u0438\u0441\u044C\u043C\u043E\u043C, \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0449\u0438\u0439 \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u043F\u043E \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u043E\u0439 \u043F\u043E\u0447\u0442\u0435."
-          },
-          {
-            id: uid(),
-            label: "\u0423\u0441\u0442\u0430\u0440\u0435\u0432\u0448\u0438\u0435 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u044B \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F",
-            text: '\u042D\u043B\u0435\u043C\u0435\u043D\u0442\u044B \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F "\u0421\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0438" \u0438 "\u0421\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A" \u0442\u0435\u043F\u0435\u0440\u044C \u0441\u0447\u0438\u0442\u0430\u044E\u0442\u0441\u044F \u0443\u0441\u0442\u0430\u0440\u0435\u0432\u0448\u0438\u043C\u0438 \u0438 \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B \u0434\u043B\u044F \u0432\u044B\u0431\u043E\u0440\u0430 \u0432 \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0435 \u042D\u0423 \u043F\u0440\u0438 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0435 \u0440\u0430\u0437\u043C\u0435\u0442\u043E\u043A. \u0423\u0436\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0435 \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0438 \u0441 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0435\u043C \u044D\u0442\u0438\u0445 \u042D\u0423 \u0440\u0430\u0431\u043E\u0442\u0430\u044E\u0442 \u043A\u0430\u043A \u0440\u0430\u043D\u044C\u0448\u0435.'
-          }
-        ]
-      },
-      {
-        id: uid(),
-        head: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438",
-        icon: "alert",
-        model: false,
-        children: [
-          {
-            id: uid(),
-            label: "ERR-1022",
-            text: '\u041A\u043E\u043D\u0442\u0440\u043E\u043B\u044B Employee \u0438 MultipleEmployees. \u041F\u0440\u0438 \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u043E\u043C \u043A\u043B\u0438\u043A\u0435 \u043F\u043E "\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435" \u0441\u043F\u0438\u0441\u043E\u043A \u043D\u0435 \u0440\u0430\u0441\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F.'
-          },
-          {
-            id: uid(),
-            label: "ERR-1026",
-            text: "\u041E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0430 FilePicker \u0432 \u0442\u0430\u0431\u043B\u0438\u0446\u0435 - \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u043A\u043D\u043E\u043F\u043A\u0430 \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F \u0444\u0430\u0439\u043B\u0430."
-          },
-          {
-            id: uid(),
-            label: "ERR-906",
-            text: "\u041F\u0440\u0438 \u043E\u0442\u043C\u0435\u043D\u0435 \u043F\u043E\u0438\u0441\u043A\u0430 \u043F\u043E \u0430\u0442\u0440\u0438\u0431\u0443\u0442\u0430\u043C \u043F\u0440\u043E\u0438\u0441\u0445\u043E\u0434\u0438\u0442 \u0434\u043E\u043B\u0433\u0430\u044F \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u0438 \u043F\u0435\u0440\u0435\u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043D\u0430 \u043F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0443\u044E \u043F\u0430\u043F\u043A\u0443."
-          },
-          {
-            id: uid(),
-            label: "ERR-901",
-            text: "\u041D\u0435 \u043F\u0440\u0438\u043C\u0435\u043D\u044F\u0435\u0442\u0441\u044F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0430 \u0432 \u043F\u043E\u0438\u0441\u043A\u043E\u0432\u044B\u0445 \u043F\u0430\u043F\u043A\u0430\u0445 \u0432 \u0441\u0442\u0430\u0440\u043E\u043C \u0433\u0440\u0438\u0434\u0435."
-          },
-          {
-            id: uid(),
-            label: "ERR-988",
-            text: "\u041F\u0440\u043E\u0431\u043B\u0435\u043C\u044B \u0441 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435\u043C \u043A\u0430\u0440\u0442\u043E\u0447\u0435\u043A \u0437\u0430\u0434\u0430\u043D\u0438\u044F \u0432 \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0435 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430."
-          },
-          {
-            id: uid(),
-            label: "ERR-921",
-            text: "\u041F\u043E\u0441\u043B\u0435 \u0443\u0445\u043E\u0434\u0430 \u0441\u0435\u0441\u0441\u0438\u0438 \u0432 \u043E\u0444\u043B\u0430\u0439\u043D, \u0432\u0442\u043E\u0440\u0430\u044F \u0441\u0435\u0441\u0441\u0438\u044F Web-\u043A\u043B\u0438\u0435\u043D\u0442\u0430 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u0435\u0442 \u043E\u0441\u0442\u0430\u0432\u0430\u0442\u044C\u0441\u044F \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0439 \u0438 \u0432\u044B\u043F\u043E\u043B\u043D\u044F\u0435\u0442 \u0440\u0430\u0441\u0447\u0451\u0442 \u0441\u0447\u0435\u0442\u0447\u0438\u043A\u043E\u0432."
-          },
-          {
-            id: uid(),
-            label: "ERR-919",
-            text: "\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u0430 \u0440\u0430\u0431\u043E\u0442\u0430 \u0438\u043D\u0441\u0442\u0430\u043B\u043B\u044F\u0442\u043E\u0440\u0430 \u043F\u0440\u0438 \u043E\u0442\u0434\u0435\u043B\u044C\u043D\u043E\u0439 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0435 \u043A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440\u0430 Web-\u0440\u0430\u0437\u043C\u0435\u0442\u043E\u043A \u043E\u0442 \u0441\u0435\u0440\u0432\u0435\u0440\u0430 Web-\u043A\u043B\u0438\u0435\u043D\u0442\u0430."
-          },
-          {
-            id: uid(),
-            label: "WebC-10940",
-            text: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0430 \u0432\u0432\u043E\u0434\u0430 \u043A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u044F \u043F\u0440\u0438 \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u0438\u0438 \u0437\u0430\u0434\u0430\u043D\u0438\u044F \u043D\u0430 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u0435 \u0441 TextBox \u043D\u0430 TextArea."
-          },
-          {
-            id: uid(),
-            label: "ERR-804",
-            text: "\u041F\u043E\u0441\u043B\u0435 \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0430 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0438\u0437 Web-\u043A\u043B\u0438\u0435\u043D\u0442\u0430 \u0432 Excel \u0432 \u043A\u043E\u043D\u0435\u0446 \u0441\u0442\u0440\u043E\u043A \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u043E\u0433\u043E \u0444\u0430\u0439\u043B\u0430 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u043F\u0440\u043E\u0431\u0435\u043B."
-          },
-          {
-            id: uid(),
-            label: "WebC-11191",
-            text: "\u041D\u0435 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u043A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u0439 \u043A \u0440\u0435\u0448\u0435\u043D\u0438\u044E \u0432 \u0437\u0430\u0434\u0430\u043D\u0438\u0438 \u0438 \u0432 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0435 \u0425\u043E\u0434 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u044F \u0441\u0432\u044F\u0437\u0430\u043D\u043D\u043E\u0433\u043E \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430."
-          },
-          {
-            id: uid(),
-            label: "WebC-11132",
-            text: '\u041D\u0435 \u0437\u0430\u043F\u043E\u043B\u043D\u044F\u0435\u0442\u0441\u044F \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u0432 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0435 "\u0417\u0430\u043F\u0438\u0441\u0438 \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430 \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u043E\u0432" \u0441 \u0440\u0435\u0436\u0438\u043C\u043E\u043C \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u043E \u043C\u0435\u0441\u0442\u0443.'
-          },
-          {
-            id: uid(),
-            label: "WebC-11130",
-            text: "\u041D\u0435 \u0440\u0430\u0431\u043E\u0442\u0430\u044E\u0442 \u0443\u0441\u043B\u043E\u0432\u0438\u044F \u0432\u044B\u0431\u043E\u0440\u0430 \u043F\u043E \u0432\u0438\u0434\u0443 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u0432 \u0434\u0438\u0430\u043B\u043E\u0433\u0435 \u0434\u0435\u043B\u0435\u0433\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F."
-          },
-          {
-            id: uid(),
-            label: "WebC-11022",
-            text: "\u041A\u043E\u043D\u0442\u0440\u043E\u043B \u0412\u044B\u0431\u043E\u0440 \u043F\u0430\u043F\u043A\u0438. \u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0430."
-          },
-          {
-            id: uid(),
-            label: "WebC-11046",
-            text: '\u0415\u0441\u043B\u0438 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C \u043F\u0440\u043E\u0441\u0442\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u044C\u044E, \u0442\u043E \u0443 \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u043B\u0438\u0448\u043D\u0435\u0435 \u043F\u043E\u043B\u0435 "\u0417\u0430 \u043A\u043E\u0433\u043E" \u0438 \u0444\u0430\u043C\u0438\u043B\u0438\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0442\u0430.'
-          },
-          {
-            id: uid(),
-            label: "WebC-10974",
-            text: "\u0421\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u043E\u0432. \u0412 \u0434\u043E\u043B\u0436\u043D\u043E\u0441\u0442\u0438 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u044E\u0442\u0441\u044F \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0438 \u0438\u0437 \u0440\u0430\u043D\u0435\u0435 \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0439 \u0434\u043E\u043B\u0436\u043D\u043E\u0441\u0442\u0438."
-          }
-        ]
-      }
-    ]
-  }
-];
 const s = (e) => e.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&"), a = (e, i) => {
   if (!i.query || i.query instanceof String && !i.query.trim())
     return e;
@@ -11738,42 +9849,43 @@ const useItems = defineStore({
     toggleModel(item) {
       item.model = !item.model;
     },
+    toggleMore(item) {
+      item.show = !item.show;
+    },
     expandAll() {
       this.versions = this.versions.map((item) => {
         var _a;
         return {
           id: item.id,
-          ver: item.ver,
+          fileVersion: item.fileVersion,
+          metadata: item.metadata,
           children: (_a = item.children) == null ? void 0 : _a.map((el) => {
             return {
               id: el.id,
               head: el.head,
-              label: el.label,
               icon: el.icon,
               model: true,
+              type: el.type,
               children: el.children
             };
           })
         };
       });
     },
-    toggleMore(item) {
-      item.show = !item.show;
-      console.log(item);
-    },
     toggleAll() {
       this.versions = this.versions.map((item) => {
         var _a;
         return {
           id: item.id,
-          ver: item.ver,
+          fileVersion: item.fileVersion,
+          metadata: item.metadata,
           children: (_a = item.children) == null ? void 0 : _a.map((el) => {
             return {
               id: el.id,
               head: el.head,
-              label: el.label,
               icon: el.icon,
               model: !el.model,
+              type: el.type,
               children: el.children
             };
           })
@@ -11790,7 +9902,7 @@ var _export_sfc = (sfc, props) => {
   }
   return target2;
 };
-const _sfc_main$2 = defineComponent({
+const _sfc_main$4 = defineComponent({
   name: "SvgIcon",
   props: {
     prefix: {
@@ -11815,22 +9927,3093 @@ const _sfc_main$2 = defineComponent({
     return { symbolId };
   }
 });
-const _hoisted_1$1 = {
+const _hoisted_1$3 = {
   "aria-hidden": "true",
-  class: "q-icon"
+  class: "m-icon"
 };
-const _hoisted_2$1 = ["href", "fill"];
+const _hoisted_2$2 = ["href", "fill"];
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return openBlock(), createElementBlock("svg", _hoisted_1$1, [
+  return openBlock(), createElementBlock("svg", _hoisted_1$3, [
     createBaseVNode("use", {
       href: _ctx.symbolId,
       fill: _ctx.color
-    }, null, 8, _hoisted_2$1)
+    }, null, 8, _hoisted_2$2)
   ]);
 }
-var SvgIcon = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render]]);
+var SvgIcon = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render]]);
+function clearSelection() {
+  if (window.getSelection !== void 0) {
+    const selection = window.getSelection();
+    if (selection.empty !== void 0) {
+      selection.empty();
+    } else if (selection.removeAllRanges !== void 0) {
+      selection.removeAllRanges();
+      Platform.is.mobile !== true && selection.addRange(document.createRange());
+    }
+  } else if (document.selection !== void 0) {
+    document.selection.empty();
+  }
+}
+const useAnchorProps = {
+  target: {
+    default: true
+  },
+  noParentEvent: Boolean,
+  contextMenu: Boolean
+};
+function useAnchor({
+  showing,
+  avoidEmit,
+  configureAnchorEl
+}) {
+  const { props, proxy, emit } = getCurrentInstance();
+  const anchorEl = ref(null);
+  let touchTimer;
+  function canShow(evt) {
+    return anchorEl.value === null ? false : evt === void 0 || evt.touches === void 0 || evt.touches.length <= 1;
+  }
+  const anchorEvents = {};
+  if (configureAnchorEl === void 0) {
+    Object.assign(anchorEvents, {
+      hide(evt) {
+        proxy.hide(evt);
+      },
+      toggle(evt) {
+        proxy.toggle(evt);
+        evt.qAnchorHandled = true;
+      },
+      toggleKey(evt) {
+        isKeyCode(evt, 13) === true && anchorEvents.toggle(evt);
+      },
+      contextClick(evt) {
+        proxy.hide(evt);
+        prevent(evt);
+        nextTick(() => {
+          proxy.show(evt);
+          evt.qAnchorHandled = true;
+        });
+      },
+      prevent,
+      mobileTouch(evt) {
+        anchorEvents.mobileCleanup(evt);
+        if (canShow(evt) !== true) {
+          return;
+        }
+        proxy.hide(evt);
+        anchorEl.value.classList.add("non-selectable");
+        const target2 = evt.target;
+        addEvt(anchorEvents, "anchor", [
+          [target2, "touchmove", "mobileCleanup", "passive"],
+          [target2, "touchend", "mobileCleanup", "passive"],
+          [target2, "touchcancel", "mobileCleanup", "passive"],
+          [anchorEl.value, "contextmenu", "prevent", "notPassive"]
+        ]);
+        touchTimer = setTimeout(() => {
+          proxy.show(evt);
+          evt.qAnchorHandled = true;
+        }, 300);
+      },
+      mobileCleanup(evt) {
+        anchorEl.value.classList.remove("non-selectable");
+        clearTimeout(touchTimer);
+        if (showing.value === true && evt !== void 0) {
+          clearSelection();
+        }
+      }
+    });
+    configureAnchorEl = function(context = props.contextMenu) {
+      if (props.noParentEvent === true || anchorEl.value === null) {
+        return;
+      }
+      let evts;
+      if (context === true) {
+        if (proxy.$q.platform.is.mobile === true) {
+          evts = [
+            [anchorEl.value, "touchstart", "mobileTouch", "passive"]
+          ];
+        } else {
+          evts = [
+            [anchorEl.value, "mousedown", "hide", "passive"],
+            [anchorEl.value, "contextmenu", "contextClick", "notPassive"]
+          ];
+        }
+      } else {
+        evts = [
+          [anchorEl.value, "click", "toggle", "passive"],
+          [anchorEl.value, "keyup", "toggleKey", "passive"]
+        ];
+      }
+      addEvt(anchorEvents, "anchor", evts);
+    };
+  }
+  function unconfigureAnchorEl() {
+    cleanEvt(anchorEvents, "anchor");
+  }
+  function setAnchorEl(el) {
+    anchorEl.value = el;
+    while (anchorEl.value.classList.contains("q-anchor--skip")) {
+      anchorEl.value = anchorEl.value.parentNode;
+    }
+    configureAnchorEl();
+  }
+  function pickAnchorEl() {
+    if (props.target === false || props.target === "" || proxy.$el.parentNode === null) {
+      anchorEl.value = null;
+    } else if (props.target === true) {
+      setAnchorEl(proxy.$el.parentNode);
+    } else {
+      let el = props.target;
+      if (typeof props.target === "string") {
+        try {
+          el = document.querySelector(props.target);
+        } catch (err) {
+          el = void 0;
+        }
+      }
+      if (el !== void 0 && el !== null) {
+        anchorEl.value = el.$el || el;
+        configureAnchorEl();
+      } else {
+        anchorEl.value = null;
+        console.error(`Anchor: target "${props.target}" not found`);
+      }
+    }
+  }
+  watch(() => props.contextMenu, (val) => {
+    if (anchorEl.value !== null) {
+      unconfigureAnchorEl();
+      configureAnchorEl(val);
+    }
+  });
+  watch(() => props.target, () => {
+    if (anchorEl.value !== null) {
+      unconfigureAnchorEl();
+    }
+    pickAnchorEl();
+  });
+  watch(() => props.noParentEvent, (val) => {
+    if (anchorEl.value !== null) {
+      if (val === true) {
+        unconfigureAnchorEl();
+      } else {
+        configureAnchorEl();
+      }
+    }
+  });
+  onMounted(() => {
+    pickAnchorEl();
+    if (avoidEmit !== true && props.modelValue === true && anchorEl.value === null) {
+      emit("update:modelValue", false);
+    }
+  });
+  onBeforeUnmount(() => {
+    clearTimeout(touchTimer);
+    unconfigureAnchorEl();
+  });
+  return {
+    anchorEl,
+    canShow,
+    anchorEvents
+  };
+}
+function useScrollTarget(props, configureScrollTarget) {
+  const localScrollTarget = ref(null);
+  let scrollFn;
+  function changeScrollEvent(scrollTarget, fn) {
+    const fnProp = `${fn !== void 0 ? "add" : "remove"}EventListener`;
+    const fnHandler = fn !== void 0 ? fn : scrollFn;
+    if (scrollTarget !== window) {
+      scrollTarget[fnProp]("scroll", fnHandler, listenOpts.passive);
+    }
+    window[fnProp]("scroll", fnHandler, listenOpts.passive);
+    scrollFn = fn;
+  }
+  function unconfigureScrollTarget() {
+    if (localScrollTarget.value !== null) {
+      changeScrollEvent(localScrollTarget.value);
+      localScrollTarget.value = null;
+    }
+  }
+  const noParentEventWatcher = watch(() => props.noParentEvent, () => {
+    if (localScrollTarget.value !== null) {
+      unconfigureScrollTarget();
+      configureScrollTarget();
+    }
+  });
+  onBeforeUnmount(noParentEventWatcher);
+  return {
+    localScrollTarget,
+    unconfigureScrollTarget,
+    changeScrollEvent
+  };
+}
+let target = document.body;
+function createGlobalNode(id) {
+  const el = document.createElement("div");
+  if (id !== void 0) {
+    el.id = id;
+  }
+  if (globalConfig.globalNodes !== void 0) {
+    const cls = globalConfig.globalNodes.class;
+    if (cls !== void 0) {
+      el.className = cls;
+    }
+  }
+  target.appendChild(el);
+  return el;
+}
+function removeGlobalNode(el) {
+  el.remove();
+}
+const portalList = [];
+function isOnGlobalDialog(vm) {
+  vm = vm.parent;
+  while (vm !== void 0 && vm !== null) {
+    if (vm.type.name === "QGlobalDialog") {
+      return true;
+    }
+    if (vm.type.name === "QDialog" || vm.type.name === "QMenu") {
+      return false;
+    }
+    vm = vm.parent;
+  }
+  return false;
+}
+function usePortal(vm, innerRef, renderPortalContent, checkGlobalDialog) {
+  const portalIsActive = ref(false);
+  const portalIsAccessible = ref(false);
+  let portalEl = null;
+  const focusObj = {};
+  const onGlobalDialog = checkGlobalDialog === true && isOnGlobalDialog(vm);
+  function showPortal(isReady) {
+    if (isReady === true) {
+      removeFocusWaitFlag(focusObj);
+      portalIsAccessible.value = true;
+      return;
+    }
+    portalIsAccessible.value = false;
+    if (portalIsActive.value === false) {
+      if (onGlobalDialog === false && portalEl === null) {
+        portalEl = createGlobalNode();
+      }
+      portalIsActive.value = true;
+      portalList.push(vm.proxy);
+      addFocusWaitFlag(focusObj);
+    }
+  }
+  function hidePortal(isReady) {
+    portalIsAccessible.value = false;
+    if (isReady !== true) {
+      return;
+    }
+    removeFocusWaitFlag(focusObj);
+    portalIsActive.value = false;
+    const index2 = portalList.indexOf(vm.proxy);
+    if (index2 > -1) {
+      portalList.splice(index2, 1);
+    }
+    if (portalEl !== null) {
+      removeGlobalNode(portalEl);
+      portalEl = null;
+    }
+  }
+  onUnmounted(() => {
+    hidePortal(true);
+  });
+  Object.assign(vm.proxy, { __qPortalInnerRef: innerRef });
+  return {
+    showPortal,
+    hidePortal,
+    portalIsActive,
+    portalIsAccessible,
+    renderPortal: () => onGlobalDialog === true ? renderPortalContent() : portalIsActive.value === true ? [h(Teleport, { to: portalEl }, renderPortalContent())] : void 0
+  };
+}
+const useTransitionProps = {
+  transitionShow: {
+    type: String,
+    default: "fade"
+  },
+  transitionHide: {
+    type: String,
+    default: "fade"
+  },
+  transitionDuration: {
+    type: [String, Number],
+    default: 300
+  }
+};
+function useTransition(props, showing) {
+  const transitionState = ref(showing.value);
+  watch(showing, (val) => {
+    nextTick(() => {
+      transitionState.value = val;
+    });
+  });
+  return {
+    transition: computed(() => "q-transition--" + (transitionState.value === true ? props.transitionHide : props.transitionShow)),
+    transitionStyle: computed(() => `--q-transition-duration: ${props.transitionDuration}ms`)
+  };
+}
+function useTick() {
+  let tickFn;
+  onBeforeUnmount(() => {
+    tickFn = void 0;
+  });
+  return {
+    registerTick(fn) {
+      tickFn = fn;
+      nextTick(() => {
+        if (tickFn === fn) {
+          tickFn();
+          tickFn = void 0;
+        }
+      });
+    },
+    removeTick() {
+      tickFn = void 0;
+    }
+  };
+}
+function useTimeout() {
+  let timer2;
+  onBeforeUnmount(() => {
+    clearTimeout(timer2);
+  });
+  return {
+    registerTimeout(fn, delay) {
+      clearTimeout(timer2);
+      timer2 = setTimeout(fn, delay);
+    },
+    removeTimeout() {
+      clearTimeout(timer2);
+    }
+  };
+}
+let timer;
+const { notPassiveCapture } = listenOpts, registeredList = [];
+function globalHandler(evt) {
+  clearTimeout(timer);
+  const target2 = evt.target;
+  if (target2 === void 0 || target2.nodeType === 8 || target2.classList.contains("no-pointer-events") === true) {
+    return;
+  }
+  let portalIndex = portalList.length - 1;
+  while (portalIndex >= 0) {
+    const proxy = portalList[portalIndex].$;
+    if (proxy.type.name !== "QDialog") {
+      break;
+    }
+    if (proxy.props.seamless !== true) {
+      return;
+    }
+    portalIndex--;
+  }
+  for (let i = registeredList.length - 1; i >= 0; i--) {
+    const state = registeredList[i];
+    if ((state.anchorEl.value === null || state.anchorEl.value.contains(target2) === false) && (target2 === document.body || state.innerRef.value !== null && state.innerRef.value.contains(target2) === false)) {
+      evt.qClickOutside = true;
+      state.onClickOutside(evt);
+    } else {
+      return;
+    }
+  }
+}
+function addClickOutside(clickOutsideProps) {
+  registeredList.push(clickOutsideProps);
+  if (registeredList.length === 1) {
+    document.addEventListener("mousedown", globalHandler, notPassiveCapture);
+    document.addEventListener("touchstart", globalHandler, notPassiveCapture);
+  }
+}
+function removeClickOutside(clickOutsideProps) {
+  const index2 = registeredList.findIndex((h2) => h2 === clickOutsideProps);
+  if (index2 > -1) {
+    registeredList.splice(index2, 1);
+    if (registeredList.length === 0) {
+      clearTimeout(timer);
+      document.removeEventListener("mousedown", globalHandler, notPassiveCapture);
+      document.removeEventListener("touchstart", globalHandler, notPassiveCapture);
+    }
+  }
+}
+let vpLeft, vpTop;
+function validatePosition(pos) {
+  const parts = pos.split(" ");
+  if (parts.length !== 2) {
+    return false;
+  }
+  if (["top", "center", "bottom"].includes(parts[0]) !== true) {
+    console.error("Anchor/Self position must start with one of top/center/bottom");
+    return false;
+  }
+  if (["left", "middle", "right", "start", "end"].includes(parts[1]) !== true) {
+    console.error("Anchor/Self position must end with one of left/middle/right/start/end");
+    return false;
+  }
+  return true;
+}
+function validateOffset(val) {
+  if (!val) {
+    return true;
+  }
+  if (val.length !== 2) {
+    return false;
+  }
+  if (typeof val[0] !== "number" || typeof val[1] !== "number") {
+    return false;
+  }
+  return true;
+}
+const horizontalPos = {
+  "start#ltr": "left",
+  "start#rtl": "right",
+  "end#ltr": "right",
+  "end#rtl": "left"
+};
+["left", "middle", "right"].forEach((pos) => {
+  horizontalPos[`${pos}#ltr`] = pos;
+  horizontalPos[`${pos}#rtl`] = pos;
+});
+function parsePosition(pos, rtl) {
+  const parts = pos.split(" ");
+  return {
+    vertical: parts[0],
+    horizontal: horizontalPos[`${parts[1]}#${rtl === true ? "rtl" : "ltr"}`]
+  };
+}
+function getAnchorProps(el, offset) {
+  let { top, left, right, bottom, width, height } = el.getBoundingClientRect();
+  if (offset !== void 0) {
+    top -= offset[1];
+    left -= offset[0];
+    bottom += offset[1];
+    right += offset[0];
+    width += offset[0];
+    height += offset[1];
+  }
+  return {
+    top,
+    left,
+    right,
+    bottom,
+    width,
+    height,
+    middle: left + (right - left) / 2,
+    center: top + (bottom - top) / 2
+  };
+}
+function getTargetProps(el) {
+  return {
+    top: 0,
+    center: el.offsetHeight / 2,
+    bottom: el.offsetHeight,
+    left: 0,
+    middle: el.offsetWidth / 2,
+    right: el.offsetWidth
+  };
+}
+function setPosition(cfg) {
+  if (client.is.ios === true && window.visualViewport !== void 0) {
+    const el = document.body.style;
+    const { offsetLeft: left, offsetTop: top } = window.visualViewport;
+    if (left !== vpLeft) {
+      el.setProperty("--q-pe-left", left + "px");
+      vpLeft = left;
+    }
+    if (top !== vpTop) {
+      el.setProperty("--q-pe-top", top + "px");
+      vpTop = top;
+    }
+  }
+  let anchorProps;
+  const { scrollLeft, scrollTop } = cfg.el;
+  if (cfg.absoluteOffset === void 0) {
+    anchorProps = getAnchorProps(cfg.anchorEl, cfg.cover === true ? [0, 0] : cfg.offset);
+  } else {
+    const { top: anchorTop, left: anchorLeft } = cfg.anchorEl.getBoundingClientRect(), top = anchorTop + cfg.absoluteOffset.top, left = anchorLeft + cfg.absoluteOffset.left;
+    anchorProps = { top, left, width: 1, height: 1, right: left + 1, center: top, middle: left, bottom: top + 1 };
+  }
+  let elStyle = {
+    maxHeight: cfg.maxHeight,
+    maxWidth: cfg.maxWidth,
+    visibility: "visible"
+  };
+  if (cfg.fit === true || cfg.cover === true) {
+    elStyle.minWidth = anchorProps.width + "px";
+    if (cfg.cover === true) {
+      elStyle.minHeight = anchorProps.height + "px";
+    }
+  }
+  Object.assign(cfg.el.style, elStyle);
+  const targetProps = getTargetProps(cfg.el), props = {
+    top: anchorProps[cfg.anchorOrigin.vertical] - targetProps[cfg.selfOrigin.vertical],
+    left: anchorProps[cfg.anchorOrigin.horizontal] - targetProps[cfg.selfOrigin.horizontal]
+  };
+  applyBoundaries(props, anchorProps, targetProps, cfg.anchorOrigin, cfg.selfOrigin);
+  elStyle = {
+    top: props.top + "px",
+    left: props.left + "px"
+  };
+  if (props.maxHeight !== void 0) {
+    elStyle.maxHeight = props.maxHeight + "px";
+    if (anchorProps.height > props.maxHeight) {
+      elStyle.minHeight = elStyle.maxHeight;
+    }
+  }
+  if (props.maxWidth !== void 0) {
+    elStyle.maxWidth = props.maxWidth + "px";
+    if (anchorProps.width > props.maxWidth) {
+      elStyle.minWidth = elStyle.maxWidth;
+    }
+  }
+  Object.assign(cfg.el.style, elStyle);
+  if (cfg.el.scrollTop !== scrollTop) {
+    cfg.el.scrollTop = scrollTop;
+  }
+  if (cfg.el.scrollLeft !== scrollLeft) {
+    cfg.el.scrollLeft = scrollLeft;
+  }
+}
+function applyBoundaries(props, anchorProps, targetProps, anchorOrigin, selfOrigin) {
+  const currentHeight = targetProps.bottom, currentWidth = targetProps.right, margin = getScrollbarWidth(), innerHeight = window.innerHeight - margin, innerWidth = document.body.clientWidth;
+  if (props.top < 0 || props.top + currentHeight > innerHeight) {
+    if (selfOrigin.vertical === "center") {
+      props.top = anchorProps[anchorOrigin.vertical] > innerHeight / 2 ? Math.max(0, innerHeight - currentHeight) : 0;
+      props.maxHeight = Math.min(currentHeight, innerHeight);
+    } else if (anchorProps[anchorOrigin.vertical] > innerHeight / 2) {
+      const anchorY = Math.min(innerHeight, anchorOrigin.vertical === "center" ? anchorProps.center : anchorOrigin.vertical === selfOrigin.vertical ? anchorProps.bottom : anchorProps.top);
+      props.maxHeight = Math.min(currentHeight, anchorY);
+      props.top = Math.max(0, anchorY - currentHeight);
+    } else {
+      props.top = Math.max(0, anchorOrigin.vertical === "center" ? anchorProps.center : anchorOrigin.vertical === selfOrigin.vertical ? anchorProps.top : anchorProps.bottom);
+      props.maxHeight = Math.min(currentHeight, innerHeight - props.top);
+    }
+  }
+  if (props.left < 0 || props.left + currentWidth > innerWidth) {
+    props.maxWidth = Math.min(currentWidth, innerWidth);
+    if (selfOrigin.horizontal === "middle") {
+      props.left = anchorProps[anchorOrigin.horizontal] > innerWidth / 2 ? Math.max(0, innerWidth - currentWidth) : 0;
+    } else if (anchorProps[anchorOrigin.horizontal] > innerWidth / 2) {
+      const anchorX = Math.min(innerWidth, anchorOrigin.horizontal === "middle" ? anchorProps.middle : anchorOrigin.horizontal === selfOrigin.horizontal ? anchorProps.right : anchorProps.left);
+      props.maxWidth = Math.min(currentWidth, anchorX);
+      props.left = Math.max(0, anchorX - props.maxWidth);
+    } else {
+      props.left = Math.max(0, anchorOrigin.horizontal === "middle" ? anchorProps.middle : anchorOrigin.horizontal === selfOrigin.horizontal ? anchorProps.left : anchorProps.right);
+      props.maxWidth = Math.min(currentWidth, innerWidth - props.left);
+    }
+  }
+}
+var QTooltip = createComponent({
+  name: "QTooltip",
+  inheritAttrs: false,
+  props: __spreadProps(__spreadValues(__spreadValues(__spreadValues({}, useAnchorProps), useModelToggleProps), useTransitionProps), {
+    maxHeight: {
+      type: String,
+      default: null
+    },
+    maxWidth: {
+      type: String,
+      default: null
+    },
+    transitionShow: {
+      default: "jump-down"
+    },
+    transitionHide: {
+      default: "jump-up"
+    },
+    anchor: {
+      type: String,
+      default: "bottom middle",
+      validator: validatePosition
+    },
+    self: {
+      type: String,
+      default: "top middle",
+      validator: validatePosition
+    },
+    offset: {
+      type: Array,
+      default: () => [14, 14],
+      validator: validateOffset
+    },
+    scrollTarget: {
+      default: void 0
+    },
+    delay: {
+      type: Number,
+      default: 0
+    },
+    hideDelay: {
+      type: Number,
+      default: 0
+    }
+  }),
+  emits: [
+    ...useModelToggleEmits
+  ],
+  setup(props, { slots, emit, attrs }) {
+    let unwatchPosition, observer;
+    const vm = getCurrentInstance();
+    const { proxy: { $q } } = vm;
+    const innerRef = ref(null);
+    const showing = ref(false);
+    const anchorOrigin = computed(() => parsePosition(props.anchor, $q.lang.rtl));
+    const selfOrigin = computed(() => parsePosition(props.self, $q.lang.rtl));
+    const hideOnRouteChange = computed(() => props.persistent !== true);
+    const { registerTick, removeTick } = useTick();
+    const { registerTimeout, removeTimeout } = useTimeout();
+    const { transition, transitionStyle } = useTransition(props, showing);
+    const { localScrollTarget, changeScrollEvent, unconfigureScrollTarget } = useScrollTarget(props, configureScrollTarget);
+    const { anchorEl, canShow, anchorEvents } = useAnchor({ showing, configureAnchorEl });
+    const { show, hide } = useModelToggle({
+      showing,
+      canShow,
+      handleShow,
+      handleHide,
+      hideOnRouteChange,
+      processOnMount: true
+    });
+    Object.assign(anchorEvents, { delayShow, delayHide });
+    const { showPortal, hidePortal, renderPortal } = usePortal(vm, innerRef, renderPortalContent);
+    if ($q.platform.is.mobile === true) {
+      const clickOutsideProps = {
+        anchorEl,
+        innerRef,
+        onClickOutside(e) {
+          hide(e);
+          if (e.target.classList.contains("q-dialog__backdrop")) {
+            stopAndPrevent(e);
+          }
+          return true;
+        }
+      };
+      const hasClickOutside = computed(() => props.modelValue === null && props.persistent !== true && showing.value === true);
+      watch(hasClickOutside, (val) => {
+        const fn = val === true ? addClickOutside : removeClickOutside;
+        fn(clickOutsideProps);
+      });
+      onBeforeUnmount(() => {
+        removeClickOutside(clickOutsideProps);
+      });
+    }
+    function handleShow(evt) {
+      removeTick();
+      removeTimeout();
+      showPortal();
+      registerTick(() => {
+        observer = new MutationObserver(() => updatePosition());
+        observer.observe(innerRef.value, { attributes: false, childList: true, characterData: true, subtree: true });
+        updatePosition();
+        configureScrollTarget();
+      });
+      if (unwatchPosition === void 0) {
+        unwatchPosition = watch(() => $q.screen.width + "|" + $q.screen.height + "|" + props.self + "|" + props.anchor + "|" + $q.lang.rtl, updatePosition);
+      }
+      registerTimeout(() => {
+        showPortal(true);
+        emit("show", evt);
+      }, props.transitionDuration);
+    }
+    function handleHide(evt) {
+      removeTick();
+      removeTimeout();
+      hidePortal();
+      anchorCleanup();
+      registerTimeout(() => {
+        hidePortal(true);
+        emit("hide", evt);
+      }, props.transitionDuration);
+    }
+    function anchorCleanup() {
+      if (observer !== void 0) {
+        observer.disconnect();
+        observer = void 0;
+      }
+      if (unwatchPosition !== void 0) {
+        unwatchPosition();
+        unwatchPosition = void 0;
+      }
+      unconfigureScrollTarget();
+      cleanEvt(anchorEvents, "tooltipTemp");
+    }
+    function updatePosition() {
+      const el = innerRef.value;
+      if (anchorEl.value === null || !el) {
+        return;
+      }
+      setPosition({
+        el,
+        offset: props.offset,
+        anchorEl: anchorEl.value,
+        anchorOrigin: anchorOrigin.value,
+        selfOrigin: selfOrigin.value,
+        maxHeight: props.maxHeight,
+        maxWidth: props.maxWidth
+      });
+    }
+    function delayShow(evt) {
+      if ($q.platform.is.mobile === true) {
+        clearSelection();
+        document.body.classList.add("non-selectable");
+        const target2 = anchorEl.value;
+        const evts = ["touchmove", "touchcancel", "touchend", "click"].map((e) => [target2, e, "delayHide", "passiveCapture"]);
+        addEvt(anchorEvents, "tooltipTemp", evts);
+      }
+      registerTimeout(() => {
+        show(evt);
+      }, props.delay);
+    }
+    function delayHide(evt) {
+      removeTimeout();
+      if ($q.platform.is.mobile === true) {
+        cleanEvt(anchorEvents, "tooltipTemp");
+        clearSelection();
+        setTimeout(() => {
+          document.body.classList.remove("non-selectable");
+        }, 10);
+      }
+      registerTimeout(() => {
+        hide(evt);
+      }, props.hideDelay);
+    }
+    function configureAnchorEl() {
+      if (props.noParentEvent === true || anchorEl.value === null) {
+        return;
+      }
+      const evts = $q.platform.is.mobile === true ? [
+        [anchorEl.value, "touchstart", "delayShow", "passive"]
+      ] : [
+        [anchorEl.value, "mouseenter", "delayShow", "passive"],
+        [anchorEl.value, "mouseleave", "delayHide", "passive"]
+      ];
+      addEvt(anchorEvents, "anchor", evts);
+    }
+    function configureScrollTarget() {
+      if (anchorEl.value !== null || props.scrollTarget !== void 0) {
+        localScrollTarget.value = getScrollTarget(anchorEl.value, props.scrollTarget);
+        const fn = props.noParentEvent === true ? updatePosition : hide;
+        changeScrollEvent(localScrollTarget.value, fn);
+      }
+    }
+    function getTooltipContent() {
+      return showing.value === true ? h("div", __spreadProps(__spreadValues({}, attrs), {
+        ref: innerRef,
+        class: [
+          "q-tooltip q-tooltip--style q-position-engine no-pointer-events",
+          attrs.class
+        ],
+        style: [
+          attrs.style,
+          transitionStyle.value
+        ],
+        role: "complementary"
+      }), hSlot(slots.default)) : null;
+    }
+    function renderPortalContent() {
+      return h(Transition, {
+        name: transition.value,
+        appear: true
+      }, getTooltipContent);
+    }
+    onBeforeUnmount(anchorCleanup);
+    Object.assign(vm.proxy, { updatePosition });
+    return renderPortal;
+  }
+});
+var Dateblock_vue_vue_type_style_index_0_scoped_true_lang = "";
+const _hoisted_1$2 = { class: "row items-center q-pr-sm" };
+const _hoisted_2$1 = { class: "date q-mr-lg" };
+const _hoisted_3$1 = { key: 0 };
+const _hoisted_4$1 = { key: 1 };
+const _hoisted_5$1 = /* @__PURE__ */ createTextVNode("Shif-Click - \u0440\u0430\u0441\u043F\u0430\u0445\u043D\u0443\u0442\u044C \u0432\u0441\u0435");
+const _sfc_main$3 = /* @__PURE__ */ defineComponent({
+  name: "Dateblock",
+  props: {
+    filter: null,
+    version: null
+  },
+  setup(__props) {
+    const props = __props;
+    const myitems = useItems();
+    const handleClick = (e, version2) => {
+      if (e.shiftKey) {
+        myitems.toggleAll();
+      } else
+        myitems.expandBlock(version2);
+    };
+    return (_ctx, _cache) => {
+      return openBlock(), createElementBlock("div", _hoisted_1$2, [
+        createBaseVNode("div", _hoisted_2$1, [
+          props.version.metadata.publishDate ? (openBlock(), createElementBlock("span", _hoisted_3$1, toDisplayString(props.version.metadata.publishDate.split("T")[0]), 1)) : (openBlock(), createElementBlock("span", _hoisted_4$1, "-- | --"))
+        ]),
+        __props.filter.length < 1 ? (openBlock(), createBlock(QBtn, {
+          key: 0,
+          dense: "",
+          flat: "",
+          round: "",
+          color: "accent",
+          onClick: _cache[0] || (_cache[0] = ($event) => handleClick($event, props.version))
+        }, {
+          default: withCtx(() => [
+            createVNode(QTooltip, {
+              anchor: "top middle",
+              self: "bottom middle"
+            }, {
+              default: withCtx(() => [
+                _hoisted_5$1
+              ]),
+              _: 1
+            }),
+            (openBlock(), createBlock(resolveDynamicComponent(SvgIcon), { name: "unfold-more-horizontal" }))
+          ]),
+          _: 1
+        })) : createCommentVNode("", true)
+      ]);
+    };
+  }
+});
+var Dateblock = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-ccc51068"]]);
+function bind(fn, thisArg) {
+  return function wrap() {
+    return fn.apply(thisArg, arguments);
+  };
+}
+const { toString } = Object.prototype;
+const { getPrototypeOf } = Object;
+const kindOf = ((cache) => (thing) => {
+  const str = toString.call(thing);
+  return cache[str] || (cache[str] = str.slice(8, -1).toLowerCase());
+})(/* @__PURE__ */ Object.create(null));
+const kindOfTest = (type) => {
+  type = type.toLowerCase();
+  return (thing) => kindOf(thing) === type;
+};
+const typeOfTest = (type) => (thing) => typeof thing === type;
+const { isArray } = Array;
+const isUndefined = typeOfTest("undefined");
+function isBuffer(val) {
+  return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor) && isFunction(val.constructor.isBuffer) && val.constructor.isBuffer(val);
+}
+const isArrayBuffer = kindOfTest("ArrayBuffer");
+function isArrayBufferView(val) {
+  let result;
+  if (typeof ArrayBuffer !== "undefined" && ArrayBuffer.isView) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = val && val.buffer && isArrayBuffer(val.buffer);
+  }
+  return result;
+}
+const isString = typeOfTest("string");
+const isFunction = typeOfTest("function");
+const isNumber = typeOfTest("number");
+const isObject = (thing) => thing !== null && typeof thing === "object";
+const isBoolean = (thing) => thing === true || thing === false;
+const isPlainObject = (val) => {
+  if (kindOf(val) !== "object") {
+    return false;
+  }
+  const prototype2 = getPrototypeOf(val);
+  return prototype2 === null || prototype2 === Object.prototype;
+};
+const isDate = kindOfTest("Date");
+const isFile = kindOfTest("File");
+const isBlob = kindOfTest("Blob");
+const isFileList = kindOfTest("FileList");
+const isStream = (val) => isObject(val) && isFunction(val.pipe);
+const isFormData = (thing) => {
+  const pattern = "[object FormData]";
+  return thing && (typeof FormData === "function" && thing instanceof FormData || toString.call(thing) === pattern || isFunction(thing.toString) && thing.toString() === pattern);
+};
+const isURLSearchParams = kindOfTest("URLSearchParams");
+const trim = (str) => str.trim ? str.trim() : str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "");
+function forEach(obj, fn, { allOwnKeys = false } = {}) {
+  if (obj === null || typeof obj === "undefined") {
+    return;
+  }
+  let i;
+  let l2;
+  if (typeof obj !== "object") {
+    obj = [obj];
+  }
+  if (isArray(obj)) {
+    for (i = 0, l2 = obj.length; i < l2; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    const keys = allOwnKeys ? Object.getOwnPropertyNames(obj) : Object.keys(obj);
+    const len = keys.length;
+    let key;
+    for (i = 0; i < len; i++) {
+      key = keys[i];
+      fn.call(null, obj[key], key, obj);
+    }
+  }
+}
+function merge() {
+  const result = {};
+  const assignValue = (val, key) => {
+    if (isPlainObject(result[key]) && isPlainObject(val)) {
+      result[key] = merge(result[key], val);
+    } else if (isPlainObject(val)) {
+      result[key] = merge({}, val);
+    } else if (isArray(val)) {
+      result[key] = val.slice();
+    } else {
+      result[key] = val;
+    }
+  };
+  for (let i = 0, l2 = arguments.length; i < l2; i++) {
+    arguments[i] && forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+const extend = (a2, b, thisArg, { allOwnKeys } = {}) => {
+  forEach(b, (val, key) => {
+    if (thisArg && isFunction(val)) {
+      a2[key] = bind(val, thisArg);
+    } else {
+      a2[key] = val;
+    }
+  }, { allOwnKeys });
+  return a2;
+};
+const stripBOM = (content) => {
+  if (content.charCodeAt(0) === 65279) {
+    content = content.slice(1);
+  }
+  return content;
+};
+const inherits = (constructor, superConstructor, props, descriptors2) => {
+  constructor.prototype = Object.create(superConstructor.prototype, descriptors2);
+  constructor.prototype.constructor = constructor;
+  Object.defineProperty(constructor, "super", {
+    value: superConstructor.prototype
+  });
+  props && Object.assign(constructor.prototype, props);
+};
+const toFlatObject = (sourceObj, destObj, filter2, propFilter) => {
+  let props;
+  let i;
+  let prop;
+  const merged = {};
+  destObj = destObj || {};
+  if (sourceObj == null)
+    return destObj;
+  do {
+    props = Object.getOwnPropertyNames(sourceObj);
+    i = props.length;
+    while (i-- > 0) {
+      prop = props[i];
+      if ((!propFilter || propFilter(prop, sourceObj, destObj)) && !merged[prop]) {
+        destObj[prop] = sourceObj[prop];
+        merged[prop] = true;
+      }
+    }
+    sourceObj = filter2 !== false && getPrototypeOf(sourceObj);
+  } while (sourceObj && (!filter2 || filter2(sourceObj, destObj)) && sourceObj !== Object.prototype);
+  return destObj;
+};
+const endsWith = (str, searchString, position2) => {
+  str = String(str);
+  if (position2 === void 0 || position2 > str.length) {
+    position2 = str.length;
+  }
+  position2 -= searchString.length;
+  const lastIndex = str.indexOf(searchString, position2);
+  return lastIndex !== -1 && lastIndex === position2;
+};
+const toArray = (thing) => {
+  if (!thing)
+    return null;
+  if (isArray(thing))
+    return thing;
+  let i = thing.length;
+  if (!isNumber(i))
+    return null;
+  const arr = new Array(i);
+  while (i-- > 0) {
+    arr[i] = thing[i];
+  }
+  return arr;
+};
+const isTypedArray = ((TypedArray) => {
+  return (thing) => {
+    return TypedArray && thing instanceof TypedArray;
+  };
+})(typeof Uint8Array !== "undefined" && getPrototypeOf(Uint8Array));
+const forEachEntry = (obj, fn) => {
+  const generator = obj && obj[Symbol.iterator];
+  const iterator = generator.call(obj);
+  let result;
+  while ((result = iterator.next()) && !result.done) {
+    const pair = result.value;
+    fn.call(obj, pair[0], pair[1]);
+  }
+};
+const matchAll = (regExp, str) => {
+  let matches;
+  const arr = [];
+  while ((matches = regExp.exec(str)) !== null) {
+    arr.push(matches);
+  }
+  return arr;
+};
+const isHTMLForm = kindOfTest("HTMLFormElement");
+const toCamelCase = (str) => {
+  return str.toLowerCase().replace(/[_-\s]([a-z\d])(\w*)/g, function replacer2(m, p1, p2) {
+    return p1.toUpperCase() + p2;
+  });
+};
+const hasOwnProperty = (({ hasOwnProperty: hasOwnProperty2 }) => (obj, prop) => hasOwnProperty2.call(obj, prop))(Object.prototype);
+const isRegExp = kindOfTest("RegExp");
+const reduceDescriptors = (obj, reducer) => {
+  const descriptors2 = Object.getOwnPropertyDescriptors(obj);
+  const reducedDescriptors = {};
+  forEach(descriptors2, (descriptor, name) => {
+    if (reducer(descriptor, name, obj) !== false) {
+      reducedDescriptors[name] = descriptor;
+    }
+  });
+  Object.defineProperties(obj, reducedDescriptors);
+};
+const freezeMethods = (obj) => {
+  reduceDescriptors(obj, (descriptor, name) => {
+    const value = obj[name];
+    if (!isFunction(value))
+      return;
+    descriptor.enumerable = false;
+    if ("writable" in descriptor) {
+      descriptor.writable = false;
+      return;
+    }
+    if (!descriptor.set) {
+      descriptor.set = () => {
+        throw Error("Can not read-only method '" + name + "'");
+      };
+    }
+  });
+};
+const toObjectSet = (arrayOrString, delimiter) => {
+  const obj = {};
+  const define = (arr) => {
+    arr.forEach((value) => {
+      obj[value] = true;
+    });
+  };
+  isArray(arrayOrString) ? define(arrayOrString) : define(String(arrayOrString).split(delimiter));
+  return obj;
+};
+const noop = () => {
+};
+const toFiniteNumber = (value, defaultValue) => {
+  value = +value;
+  return Number.isFinite(value) ? value : defaultValue;
+};
+var utils = {
+  isArray,
+  isArrayBuffer,
+  isBuffer,
+  isFormData,
+  isArrayBufferView,
+  isString,
+  isNumber,
+  isBoolean,
+  isObject,
+  isPlainObject,
+  isUndefined,
+  isDate,
+  isFile,
+  isBlob,
+  isRegExp,
+  isFunction,
+  isStream,
+  isURLSearchParams,
+  isTypedArray,
+  isFileList,
+  forEach,
+  merge,
+  extend,
+  trim,
+  stripBOM,
+  inherits,
+  toFlatObject,
+  kindOf,
+  kindOfTest,
+  endsWith,
+  toArray,
+  forEachEntry,
+  matchAll,
+  isHTMLForm,
+  hasOwnProperty,
+  hasOwnProp: hasOwnProperty,
+  reduceDescriptors,
+  freezeMethods,
+  toObjectSet,
+  toCamelCase,
+  noop,
+  toFiniteNumber
+};
+function AxiosError(message, code, config, request, response) {
+  Error.call(this);
+  if (Error.captureStackTrace) {
+    Error.captureStackTrace(this, this.constructor);
+  } else {
+    this.stack = new Error().stack;
+  }
+  this.message = message;
+  this.name = "AxiosError";
+  code && (this.code = code);
+  config && (this.config = config);
+  request && (this.request = request);
+  response && (this.response = response);
+}
+utils.inherits(AxiosError, Error, {
+  toJSON: function toJSON() {
+    return {
+      message: this.message,
+      name: this.name,
+      description: this.description,
+      number: this.number,
+      fileName: this.fileName,
+      lineNumber: this.lineNumber,
+      columnNumber: this.columnNumber,
+      stack: this.stack,
+      config: this.config,
+      code: this.code,
+      status: this.response && this.response.status ? this.response.status : null
+    };
+  }
+});
+const prototype$1 = AxiosError.prototype;
+const descriptors = {};
+[
+  "ERR_BAD_OPTION_VALUE",
+  "ERR_BAD_OPTION",
+  "ECONNABORTED",
+  "ETIMEDOUT",
+  "ERR_NETWORK",
+  "ERR_FR_TOO_MANY_REDIRECTS",
+  "ERR_DEPRECATED",
+  "ERR_BAD_RESPONSE",
+  "ERR_BAD_REQUEST",
+  "ERR_CANCELED",
+  "ERR_NOT_SUPPORT",
+  "ERR_INVALID_URL"
+].forEach((code) => {
+  descriptors[code] = { value: code };
+});
+Object.defineProperties(AxiosError, descriptors);
+Object.defineProperty(prototype$1, "isAxiosError", { value: true });
+AxiosError.from = (error, code, config, request, response, customProps) => {
+  const axiosError = Object.create(prototype$1);
+  utils.toFlatObject(error, axiosError, function filter2(obj) {
+    return obj !== Error.prototype;
+  }, (prop) => {
+    return prop !== "isAxiosError";
+  });
+  AxiosError.call(axiosError, error.message, code, config, request, response);
+  axiosError.cause = error;
+  axiosError.name = error.name;
+  customProps && Object.assign(axiosError, customProps);
+  return axiosError;
+};
+var browser = typeof self == "object" ? self.FormData : window.FormData;
+function isVisitable(thing) {
+  return utils.isPlainObject(thing) || utils.isArray(thing);
+}
+function removeBrackets(key) {
+  return utils.endsWith(key, "[]") ? key.slice(0, -2) : key;
+}
+function renderKey(path, key, dots) {
+  if (!path)
+    return key;
+  return path.concat(key).map(function each(token, i) {
+    token = removeBrackets(token);
+    return !dots && i ? "[" + token + "]" : token;
+  }).join(dots ? "." : "");
+}
+function isFlatArray(arr) {
+  return utils.isArray(arr) && !arr.some(isVisitable);
+}
+const predicates = utils.toFlatObject(utils, {}, null, function filter(prop) {
+  return /^is[A-Z]/.test(prop);
+});
+function isSpecCompliant(thing) {
+  return thing && utils.isFunction(thing.append) && thing[Symbol.toStringTag] === "FormData" && thing[Symbol.iterator];
+}
+function toFormData(obj, formData, options) {
+  if (!utils.isObject(obj)) {
+    throw new TypeError("target must be an object");
+  }
+  formData = formData || new (browser || FormData)();
+  options = utils.toFlatObject(options, {
+    metaTokens: true,
+    dots: false,
+    indexes: false
+  }, false, function defined(option, source) {
+    return !utils.isUndefined(source[option]);
+  });
+  const metaTokens = options.metaTokens;
+  const visitor = options.visitor || defaultVisitor;
+  const dots = options.dots;
+  const indexes = options.indexes;
+  const _Blob = options.Blob || typeof Blob !== "undefined" && Blob;
+  const useBlob = _Blob && isSpecCompliant(formData);
+  if (!utils.isFunction(visitor)) {
+    throw new TypeError("visitor must be a function");
+  }
+  function convertValue(value) {
+    if (value === null)
+      return "";
+    if (utils.isDate(value)) {
+      return value.toISOString();
+    }
+    if (!useBlob && utils.isBlob(value)) {
+      throw new AxiosError("Blob is not supported. Use a Buffer instead.");
+    }
+    if (utils.isArrayBuffer(value) || utils.isTypedArray(value)) {
+      return useBlob && typeof Blob === "function" ? new Blob([value]) : Buffer.from(value);
+    }
+    return value;
+  }
+  function defaultVisitor(value, key, path) {
+    let arr = value;
+    if (value && !path && typeof value === "object") {
+      if (utils.endsWith(key, "{}")) {
+        key = metaTokens ? key : key.slice(0, -2);
+        value = JSON.stringify(value);
+      } else if (utils.isArray(value) && isFlatArray(value) || (utils.isFileList(value) || utils.endsWith(key, "[]") && (arr = utils.toArray(value)))) {
+        key = removeBrackets(key);
+        arr.forEach(function each(el, index2) {
+          !utils.isUndefined(el) && formData.append(indexes === true ? renderKey([key], index2, dots) : indexes === null ? key : key + "[]", convertValue(el));
+        });
+        return false;
+      }
+    }
+    if (isVisitable(value)) {
+      return true;
+    }
+    formData.append(renderKey(path, key, dots), convertValue(value));
+    return false;
+  }
+  const stack = [];
+  const exposedHelpers = Object.assign(predicates, {
+    defaultVisitor,
+    convertValue,
+    isVisitable
+  });
+  function build(value, path) {
+    if (utils.isUndefined(value))
+      return;
+    if (stack.indexOf(value) !== -1) {
+      throw Error("Circular reference detected in " + path.join("."));
+    }
+    stack.push(value);
+    utils.forEach(value, function each(el, key) {
+      const result = !utils.isUndefined(el) && visitor.call(formData, el, utils.isString(key) ? key.trim() : key, path, exposedHelpers);
+      if (result === true) {
+        build(el, path ? path.concat(key) : [key]);
+      }
+    });
+    stack.pop();
+  }
+  if (!utils.isObject(obj)) {
+    throw new TypeError("data must be an object");
+  }
+  build(obj);
+  return formData;
+}
+function encode$1(str) {
+  const charMap = {
+    "!": "%21",
+    "'": "%27",
+    "(": "%28",
+    ")": "%29",
+    "~": "%7E",
+    "%20": "+",
+    "%00": "\0"
+  };
+  return encodeURIComponent(str).replace(/[!'()~]|%20|%00/g, function replacer2(match) {
+    return charMap[match];
+  });
+}
+function AxiosURLSearchParams(params, options) {
+  this._pairs = [];
+  params && toFormData(params, this, options);
+}
+const prototype = AxiosURLSearchParams.prototype;
+prototype.append = function append(name, value) {
+  this._pairs.push([name, value]);
+};
+prototype.toString = function toString2(encoder) {
+  const _encode = encoder ? function(value) {
+    return encoder.call(this, value, encode$1);
+  } : encode$1;
+  return this._pairs.map(function each(pair) {
+    return _encode(pair[0]) + "=" + _encode(pair[1]);
+  }, "").join("&");
+};
+function encode(val) {
+  return encodeURIComponent(val).replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");
+}
+function buildURL(url, params, options) {
+  if (!params) {
+    return url;
+  }
+  const hashmarkIndex = url.indexOf("#");
+  if (hashmarkIndex !== -1) {
+    url = url.slice(0, hashmarkIndex);
+  }
+  const _encode = options && options.encode || encode;
+  const serializerParams = utils.isURLSearchParams(params) ? params.toString() : new AxiosURLSearchParams(params, options).toString(_encode);
+  if (serializerParams) {
+    url += (url.indexOf("?") === -1 ? "?" : "&") + serializerParams;
+  }
+  return url;
+}
+class InterceptorManager {
+  constructor() {
+    this.handlers = [];
+  }
+  use(fulfilled, rejected, options) {
+    this.handlers.push({
+      fulfilled,
+      rejected,
+      synchronous: options ? options.synchronous : false,
+      runWhen: options ? options.runWhen : null
+    });
+    return this.handlers.length - 1;
+  }
+  eject(id) {
+    if (this.handlers[id]) {
+      this.handlers[id] = null;
+    }
+  }
+  clear() {
+    if (this.handlers) {
+      this.handlers = [];
+    }
+  }
+  forEach(fn) {
+    utils.forEach(this.handlers, function forEachHandler(h2) {
+      if (h2 !== null) {
+        fn(h2);
+      }
+    });
+  }
+}
+var transitionalDefaults = {
+  silentJSONParsing: true,
+  forcedJSONParsing: true,
+  clarifyTimeoutError: false
+};
+var URLSearchParams$1 = typeof URLSearchParams !== "undefined" ? URLSearchParams : AxiosURLSearchParams;
+var FormData$1 = FormData;
+const isStandardBrowserEnv = (() => {
+  let product;
+  if (typeof navigator !== "undefined" && ((product = navigator.product) === "ReactNative" || product === "NativeScript" || product === "NS")) {
+    return false;
+  }
+  return typeof window !== "undefined" && typeof document !== "undefined";
+})();
+var platform = {
+  isBrowser: true,
+  classes: {
+    URLSearchParams: URLSearchParams$1,
+    FormData: FormData$1,
+    Blob
+  },
+  isStandardBrowserEnv,
+  protocols: ["http", "https", "file", "blob", "url", "data"]
+};
+function toURLEncodedForm(data, options) {
+  return toFormData(data, new platform.classes.URLSearchParams(), Object.assign({
+    visitor: function(value, key, path, helpers) {
+      if (platform.isNode && utils.isBuffer(value)) {
+        this.append(key, value.toString("base64"));
+        return false;
+      }
+      return helpers.defaultVisitor.apply(this, arguments);
+    }
+  }, options));
+}
+function parsePropPath(name) {
+  return utils.matchAll(/\w+|\[(\w*)]/g, name).map((match) => {
+    return match[0] === "[]" ? "" : match[1] || match[0];
+  });
+}
+function arrayToObject(arr) {
+  const obj = {};
+  const keys = Object.keys(arr);
+  let i;
+  const len = keys.length;
+  let key;
+  for (i = 0; i < len; i++) {
+    key = keys[i];
+    obj[key] = arr[key];
+  }
+  return obj;
+}
+function formDataToJSON(formData) {
+  function buildPath(path, value, target2, index2) {
+    let name = path[index2++];
+    const isNumericKey = Number.isFinite(+name);
+    const isLast = index2 >= path.length;
+    name = !name && utils.isArray(target2) ? target2.length : name;
+    if (isLast) {
+      if (utils.hasOwnProp(target2, name)) {
+        target2[name] = [target2[name], value];
+      } else {
+        target2[name] = value;
+      }
+      return !isNumericKey;
+    }
+    if (!target2[name] || !utils.isObject(target2[name])) {
+      target2[name] = [];
+    }
+    const result = buildPath(path, value, target2[name], index2);
+    if (result && utils.isArray(target2[name])) {
+      target2[name] = arrayToObject(target2[name]);
+    }
+    return !isNumericKey;
+  }
+  if (utils.isFormData(formData) && utils.isFunction(formData.entries)) {
+    const obj = {};
+    utils.forEachEntry(formData, (name, value) => {
+      buildPath(parsePropPath(name), value, obj, 0);
+    });
+    return obj;
+  }
+  return null;
+}
+function settle(resolve2, reject, response) {
+  const validateStatus2 = response.config.validateStatus;
+  if (!response.status || !validateStatus2 || validateStatus2(response.status)) {
+    resolve2(response);
+  } else {
+    reject(new AxiosError("Request failed with status code " + response.status, [AxiosError.ERR_BAD_REQUEST, AxiosError.ERR_BAD_RESPONSE][Math.floor(response.status / 100) - 4], response.config, response.request, response));
+  }
+}
+var cookies = platform.isStandardBrowserEnv ? function standardBrowserEnv() {
+  return {
+    write: function write(name, value, expires, path, domain, secure) {
+      const cookie = [];
+      cookie.push(name + "=" + encodeURIComponent(value));
+      if (utils.isNumber(expires)) {
+        cookie.push("expires=" + new Date(expires).toGMTString());
+      }
+      if (utils.isString(path)) {
+        cookie.push("path=" + path);
+      }
+      if (utils.isString(domain)) {
+        cookie.push("domain=" + domain);
+      }
+      if (secure === true) {
+        cookie.push("secure");
+      }
+      document.cookie = cookie.join("; ");
+    },
+    read: function read(name) {
+      const match = document.cookie.match(new RegExp("(^|;\\s*)(" + name + ")=([^;]*)"));
+      return match ? decodeURIComponent(match[3]) : null;
+    },
+    remove: function remove2(name) {
+      this.write(name, "", Date.now() - 864e5);
+    }
+  };
+}() : function nonStandardBrowserEnv() {
+  return {
+    write: function write() {
+    },
+    read: function read() {
+      return null;
+    },
+    remove: function remove2() {
+    }
+  };
+}();
+function isAbsoluteURL(url) {
+  return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url);
+}
+function combineURLs(baseURL, relativeURL) {
+  return relativeURL ? baseURL.replace(/\/+$/, "") + "/" + relativeURL.replace(/^\/+/, "") : baseURL;
+}
+function buildFullPath(baseURL, requestedURL) {
+  if (baseURL && !isAbsoluteURL(requestedURL)) {
+    return combineURLs(baseURL, requestedURL);
+  }
+  return requestedURL;
+}
+var isURLSameOrigin = platform.isStandardBrowserEnv ? function standardBrowserEnv2() {
+  const msie = /(msie|trident)/i.test(navigator.userAgent);
+  const urlParsingNode = document.createElement("a");
+  let originURL;
+  function resolveURL(url) {
+    let href = url;
+    if (msie) {
+      urlParsingNode.setAttribute("href", href);
+      href = urlParsingNode.href;
+    }
+    urlParsingNode.setAttribute("href", href);
+    return {
+      href: urlParsingNode.href,
+      protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, "") : "",
+      host: urlParsingNode.host,
+      search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, "") : "",
+      hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, "") : "",
+      hostname: urlParsingNode.hostname,
+      port: urlParsingNode.port,
+      pathname: urlParsingNode.pathname.charAt(0) === "/" ? urlParsingNode.pathname : "/" + urlParsingNode.pathname
+    };
+  }
+  originURL = resolveURL(window.location.href);
+  return function isURLSameOrigin2(requestURL) {
+    const parsed = utils.isString(requestURL) ? resolveURL(requestURL) : requestURL;
+    return parsed.protocol === originURL.protocol && parsed.host === originURL.host;
+  };
+}() : function nonStandardBrowserEnv2() {
+  return function isURLSameOrigin2() {
+    return true;
+  };
+}();
+function CanceledError(message, config, request) {
+  AxiosError.call(this, message == null ? "canceled" : message, AxiosError.ERR_CANCELED, config, request);
+  this.name = "CanceledError";
+}
+utils.inherits(CanceledError, AxiosError, {
+  __CANCEL__: true
+});
+function parseProtocol(url) {
+  const match = /^([-+\w]{1,25})(:?\/\/|:)/.exec(url);
+  return match && match[1] || "";
+}
+const ignoreDuplicateOf = utils.toObjectSet([
+  "age",
+  "authorization",
+  "content-length",
+  "content-type",
+  "etag",
+  "expires",
+  "from",
+  "host",
+  "if-modified-since",
+  "if-unmodified-since",
+  "last-modified",
+  "location",
+  "max-forwards",
+  "proxy-authorization",
+  "referer",
+  "retry-after",
+  "user-agent"
+]);
+var parseHeaders = (rawHeaders) => {
+  const parsed = {};
+  let key;
+  let val;
+  let i;
+  rawHeaders && rawHeaders.split("\n").forEach(function parser(line) {
+    i = line.indexOf(":");
+    key = line.substring(0, i).trim().toLowerCase();
+    val = line.substring(i + 1).trim();
+    if (!key || parsed[key] && ignoreDuplicateOf[key]) {
+      return;
+    }
+    if (key === "set-cookie") {
+      if (parsed[key]) {
+        parsed[key].push(val);
+      } else {
+        parsed[key] = [val];
+      }
+    } else {
+      parsed[key] = parsed[key] ? parsed[key] + ", " + val : val;
+    }
+  });
+  return parsed;
+};
+const $internals = Symbol("internals");
+const $defaults = Symbol("defaults");
+function normalizeHeader(header) {
+  return header && String(header).trim().toLowerCase();
+}
+function normalizeValue(value) {
+  if (value === false || value == null) {
+    return value;
+  }
+  return String(value);
+}
+function parseTokens(str) {
+  const tokens = /* @__PURE__ */ Object.create(null);
+  const tokensRE = /([^\s,;=]+)\s*(?:=\s*([^,;]+))?/g;
+  let match;
+  while (match = tokensRE.exec(str)) {
+    tokens[match[1]] = match[2];
+  }
+  return tokens;
+}
+function matchHeaderValue(context, value, header, filter2) {
+  if (utils.isFunction(filter2)) {
+    return filter2.call(this, value, header);
+  }
+  if (!utils.isString(value))
+    return;
+  if (utils.isString(filter2)) {
+    return value.indexOf(filter2) !== -1;
+  }
+  if (utils.isRegExp(filter2)) {
+    return filter2.test(value);
+  }
+}
+function formatHeader(header) {
+  return header.trim().toLowerCase().replace(/([a-z\d])(\w*)/g, (w, char, str) => {
+    return char.toUpperCase() + str;
+  });
+}
+function buildAccessors(obj, header) {
+  const accessorName = utils.toCamelCase(" " + header);
+  ["get", "set", "has"].forEach((methodName) => {
+    Object.defineProperty(obj, methodName + accessorName, {
+      value: function(arg1, arg2, arg3) {
+        return this[methodName].call(this, header, arg1, arg2, arg3);
+      },
+      configurable: true
+    });
+  });
+}
+function findKey(obj, key) {
+  key = key.toLowerCase();
+  const keys = Object.keys(obj);
+  let i = keys.length;
+  let _key;
+  while (i-- > 0) {
+    _key = keys[i];
+    if (key === _key.toLowerCase()) {
+      return _key;
+    }
+  }
+  return null;
+}
+function AxiosHeaders(headers, defaults2) {
+  headers && this.set(headers);
+  this[$defaults] = defaults2 || null;
+}
+Object.assign(AxiosHeaders.prototype, {
+  set: function(header, valueOrRewrite, rewrite) {
+    const self2 = this;
+    function setHeader(_value, _header, _rewrite) {
+      const lHeader = normalizeHeader(_header);
+      if (!lHeader) {
+        throw new Error("header name must be a non-empty string");
+      }
+      const key = findKey(self2, lHeader);
+      if (key && _rewrite !== true && (self2[key] === false || _rewrite === false)) {
+        return;
+      }
+      if (utils.isArray(_value)) {
+        _value = _value.map(normalizeValue);
+      } else {
+        _value = normalizeValue(_value);
+      }
+      self2[key || _header] = _value;
+    }
+    if (utils.isPlainObject(header)) {
+      utils.forEach(header, (_value, _header) => {
+        setHeader(_value, _header, valueOrRewrite);
+      });
+    } else {
+      setHeader(valueOrRewrite, header, rewrite);
+    }
+    return this;
+  },
+  get: function(header, parser) {
+    header = normalizeHeader(header);
+    if (!header)
+      return void 0;
+    const key = findKey(this, header);
+    if (key) {
+      const value = this[key];
+      if (!parser) {
+        return value;
+      }
+      if (parser === true) {
+        return parseTokens(value);
+      }
+      if (utils.isFunction(parser)) {
+        return parser.call(this, value, key);
+      }
+      if (utils.isRegExp(parser)) {
+        return parser.exec(value);
+      }
+      throw new TypeError("parser must be boolean|regexp|function");
+    }
+  },
+  has: function(header, matcher) {
+    header = normalizeHeader(header);
+    if (header) {
+      const key = findKey(this, header);
+      return !!(key && (!matcher || matchHeaderValue(this, this[key], key, matcher)));
+    }
+    return false;
+  },
+  delete: function(header, matcher) {
+    const self2 = this;
+    let deleted = false;
+    function deleteHeader(_header) {
+      _header = normalizeHeader(_header);
+      if (_header) {
+        const key = findKey(self2, _header);
+        if (key && (!matcher || matchHeaderValue(self2, self2[key], key, matcher))) {
+          delete self2[key];
+          deleted = true;
+        }
+      }
+    }
+    if (utils.isArray(header)) {
+      header.forEach(deleteHeader);
+    } else {
+      deleteHeader(header);
+    }
+    return deleted;
+  },
+  clear: function() {
+    return Object.keys(this).forEach(this.delete.bind(this));
+  },
+  normalize: function(format) {
+    const self2 = this;
+    const headers = {};
+    utils.forEach(this, (value, header) => {
+      const key = findKey(headers, header);
+      if (key) {
+        self2[key] = normalizeValue(value);
+        delete self2[header];
+        return;
+      }
+      const normalized = format ? formatHeader(header) : String(header).trim();
+      if (normalized !== header) {
+        delete self2[header];
+      }
+      self2[normalized] = normalizeValue(value);
+      headers[normalized] = true;
+    });
+    return this;
+  },
+  toJSON: function() {
+    const obj = /* @__PURE__ */ Object.create(null);
+    utils.forEach(Object.assign({}, this[$defaults] || null, this), (value, header) => {
+      if (value == null || value === false)
+        return;
+      obj[header] = utils.isArray(value) ? value.join(", ") : value;
+    });
+    return obj;
+  }
+});
+Object.assign(AxiosHeaders, {
+  from: function(thing) {
+    if (utils.isString(thing)) {
+      return new this(parseHeaders(thing));
+    }
+    return thing instanceof this ? thing : new this(thing);
+  },
+  accessor: function(header) {
+    const internals = this[$internals] = this[$internals] = {
+      accessors: {}
+    };
+    const accessors = internals.accessors;
+    const prototype2 = this.prototype;
+    function defineAccessor(_header) {
+      const lHeader = normalizeHeader(_header);
+      if (!accessors[lHeader]) {
+        buildAccessors(prototype2, _header);
+        accessors[lHeader] = true;
+      }
+    }
+    utils.isArray(header) ? header.forEach(defineAccessor) : defineAccessor(header);
+    return this;
+  }
+});
+AxiosHeaders.accessor(["Content-Type", "Content-Length", "Accept", "Accept-Encoding", "User-Agent"]);
+utils.freezeMethods(AxiosHeaders.prototype);
+utils.freezeMethods(AxiosHeaders);
+function speedometer(samplesCount, min) {
+  samplesCount = samplesCount || 10;
+  const bytes = new Array(samplesCount);
+  const timestamps = new Array(samplesCount);
+  let head = 0;
+  let tail = 0;
+  let firstSampleTS;
+  min = min !== void 0 ? min : 1e3;
+  return function push(chunkLength) {
+    const now = Date.now();
+    const startedAt = timestamps[tail];
+    if (!firstSampleTS) {
+      firstSampleTS = now;
+    }
+    bytes[head] = chunkLength;
+    timestamps[head] = now;
+    let i = tail;
+    let bytesCount = 0;
+    while (i !== head) {
+      bytesCount += bytes[i++];
+      i = i % samplesCount;
+    }
+    head = (head + 1) % samplesCount;
+    if (head === tail) {
+      tail = (tail + 1) % samplesCount;
+    }
+    if (now - firstSampleTS < min) {
+      return;
+    }
+    const passed = startedAt && now - startedAt;
+    return passed ? Math.round(bytesCount * 1e3 / passed) : void 0;
+  };
+}
+function progressEventReducer(listener, isDownloadStream) {
+  let bytesNotified = 0;
+  const _speedometer = speedometer(50, 250);
+  return (e) => {
+    const loaded = e.loaded;
+    const total = e.lengthComputable ? e.total : void 0;
+    const progressBytes = loaded - bytesNotified;
+    const rate = _speedometer(progressBytes);
+    const inRange = loaded <= total;
+    bytesNotified = loaded;
+    const data = {
+      loaded,
+      total,
+      progress: total ? loaded / total : void 0,
+      bytes: progressBytes,
+      rate: rate ? rate : void 0,
+      estimated: rate && total && inRange ? (total - loaded) / rate : void 0
+    };
+    data[isDownloadStream ? "download" : "upload"] = true;
+    listener(data);
+  };
+}
+function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve2, reject) {
+    let requestData = config.data;
+    const requestHeaders = AxiosHeaders.from(config.headers).normalize();
+    const responseType = config.responseType;
+    let onCanceled;
+    function done() {
+      if (config.cancelToken) {
+        config.cancelToken.unsubscribe(onCanceled);
+      }
+      if (config.signal) {
+        config.signal.removeEventListener("abort", onCanceled);
+      }
+    }
+    if (utils.isFormData(requestData) && platform.isStandardBrowserEnv) {
+      requestHeaders.setContentType(false);
+    }
+    let request = new XMLHttpRequest();
+    if (config.auth) {
+      const username = config.auth.username || "";
+      const password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : "";
+      requestHeaders.set("Authorization", "Basic " + btoa(username + ":" + password));
+    }
+    const fullPath = buildFullPath(config.baseURL, config.url);
+    request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
+    request.timeout = config.timeout;
+    function onloadend() {
+      if (!request) {
+        return;
+      }
+      const responseHeaders = AxiosHeaders.from("getAllResponseHeaders" in request && request.getAllResponseHeaders());
+      const responseData = !responseType || responseType === "text" || responseType === "json" ? request.responseText : request.response;
+      const response = {
+        data: responseData,
+        status: request.status,
+        statusText: request.statusText,
+        headers: responseHeaders,
+        config,
+        request
+      };
+      settle(function _resolve(value) {
+        resolve2(value);
+        done();
+      }, function _reject(err) {
+        reject(err);
+        done();
+      }, response);
+      request = null;
+    }
+    if ("onloadend" in request) {
+      request.onloadend = onloadend;
+    } else {
+      request.onreadystatechange = function handleLoad() {
+        if (!request || request.readyState !== 4) {
+          return;
+        }
+        if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf("file:") === 0)) {
+          return;
+        }
+        setTimeout(onloadend);
+      };
+    }
+    request.onabort = function handleAbort() {
+      if (!request) {
+        return;
+      }
+      reject(new AxiosError("Request aborted", AxiosError.ECONNABORTED, config, request));
+      request = null;
+    };
+    request.onerror = function handleError2() {
+      reject(new AxiosError("Network Error", AxiosError.ERR_NETWORK, config, request));
+      request = null;
+    };
+    request.ontimeout = function handleTimeout() {
+      let timeoutErrorMessage = config.timeout ? "timeout of " + config.timeout + "ms exceeded" : "timeout exceeded";
+      const transitional2 = config.transitional || transitionalDefaults;
+      if (config.timeoutErrorMessage) {
+        timeoutErrorMessage = config.timeoutErrorMessage;
+      }
+      reject(new AxiosError(timeoutErrorMessage, transitional2.clarifyTimeoutError ? AxiosError.ETIMEDOUT : AxiosError.ECONNABORTED, config, request));
+      request = null;
+    };
+    if (platform.isStandardBrowserEnv) {
+      const xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName && cookies.read(config.xsrfCookieName);
+      if (xsrfValue) {
+        requestHeaders.set(config.xsrfHeaderName, xsrfValue);
+      }
+    }
+    requestData === void 0 && requestHeaders.setContentType(null);
+    if ("setRequestHeader" in request) {
+      utils.forEach(requestHeaders.toJSON(), function setRequestHeader(val, key) {
+        request.setRequestHeader(key, val);
+      });
+    }
+    if (!utils.isUndefined(config.withCredentials)) {
+      request.withCredentials = !!config.withCredentials;
+    }
+    if (responseType && responseType !== "json") {
+      request.responseType = config.responseType;
+    }
+    if (typeof config.onDownloadProgress === "function") {
+      request.addEventListener("progress", progressEventReducer(config.onDownloadProgress, true));
+    }
+    if (typeof config.onUploadProgress === "function" && request.upload) {
+      request.upload.addEventListener("progress", progressEventReducer(config.onUploadProgress));
+    }
+    if (config.cancelToken || config.signal) {
+      onCanceled = (cancel) => {
+        if (!request) {
+          return;
+        }
+        reject(!cancel || cancel.type ? new CanceledError(null, config, request) : cancel);
+        request.abort();
+        request = null;
+      };
+      config.cancelToken && config.cancelToken.subscribe(onCanceled);
+      if (config.signal) {
+        config.signal.aborted ? onCanceled() : config.signal.addEventListener("abort", onCanceled);
+      }
+    }
+    const protocol = parseProtocol(fullPath);
+    if (protocol && platform.protocols.indexOf(protocol) === -1) {
+      reject(new AxiosError("Unsupported protocol " + protocol + ":", AxiosError.ERR_BAD_REQUEST, config));
+      return;
+    }
+    request.send(requestData || null);
+  });
+}
+const adapters = {
+  http: xhrAdapter,
+  xhr: xhrAdapter
+};
+var adapters$1 = {
+  getAdapter: (nameOrAdapter) => {
+    if (utils.isString(nameOrAdapter)) {
+      const adapter = adapters[nameOrAdapter];
+      if (!nameOrAdapter) {
+        throw Error(utils.hasOwnProp(nameOrAdapter) ? `Adapter '${nameOrAdapter}' is not available in the build` : `Can not resolve adapter '${nameOrAdapter}'`);
+      }
+      return adapter;
+    }
+    if (!utils.isFunction(nameOrAdapter)) {
+      throw new TypeError("adapter is not a function");
+    }
+    return nameOrAdapter;
+  },
+  adapters
+};
+const DEFAULT_CONTENT_TYPE = {
+  "Content-Type": "application/x-www-form-urlencoded"
+};
+function getDefaultAdapter() {
+  let adapter;
+  if (typeof XMLHttpRequest !== "undefined") {
+    adapter = adapters$1.getAdapter("xhr");
+  } else if (typeof process !== "undefined" && utils.kindOf(process) === "process") {
+    adapter = adapters$1.getAdapter("http");
+  }
+  return adapter;
+}
+function stringifySafely(rawValue, parser, encoder) {
+  if (utils.isString(rawValue)) {
+    try {
+      (parser || JSON.parse)(rawValue);
+      return utils.trim(rawValue);
+    } catch (e) {
+      if (e.name !== "SyntaxError") {
+        throw e;
+      }
+    }
+  }
+  return (encoder || JSON.stringify)(rawValue);
+}
+const defaults = {
+  transitional: transitionalDefaults,
+  adapter: getDefaultAdapter(),
+  transformRequest: [function transformRequest(data, headers) {
+    const contentType = headers.getContentType() || "";
+    const hasJSONContentType = contentType.indexOf("application/json") > -1;
+    const isObjectPayload = utils.isObject(data);
+    if (isObjectPayload && utils.isHTMLForm(data)) {
+      data = new FormData(data);
+    }
+    const isFormData2 = utils.isFormData(data);
+    if (isFormData2) {
+      if (!hasJSONContentType) {
+        return data;
+      }
+      return hasJSONContentType ? JSON.stringify(formDataToJSON(data)) : data;
+    }
+    if (utils.isArrayBuffer(data) || utils.isBuffer(data) || utils.isStream(data) || utils.isFile(data) || utils.isBlob(data)) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      headers.setContentType("application/x-www-form-urlencoded;charset=utf-8", false);
+      return data.toString();
+    }
+    let isFileList2;
+    if (isObjectPayload) {
+      if (contentType.indexOf("application/x-www-form-urlencoded") > -1) {
+        return toURLEncodedForm(data, this.formSerializer).toString();
+      }
+      if ((isFileList2 = utils.isFileList(data)) || contentType.indexOf("multipart/form-data") > -1) {
+        const _FormData = this.env && this.env.FormData;
+        return toFormData(isFileList2 ? { "files[]": data } : data, _FormData && new _FormData(), this.formSerializer);
+      }
+    }
+    if (isObjectPayload || hasJSONContentType) {
+      headers.setContentType("application/json", false);
+      return stringifySafely(data);
+    }
+    return data;
+  }],
+  transformResponse: [function transformResponse(data) {
+    const transitional2 = this.transitional || defaults.transitional;
+    const forcedJSONParsing = transitional2 && transitional2.forcedJSONParsing;
+    const JSONRequested = this.responseType === "json";
+    if (data && utils.isString(data) && (forcedJSONParsing && !this.responseType || JSONRequested)) {
+      const silentJSONParsing = transitional2 && transitional2.silentJSONParsing;
+      const strictJSONParsing = !silentJSONParsing && JSONRequested;
+      try {
+        return JSON.parse(data);
+      } catch (e) {
+        if (strictJSONParsing) {
+          if (e.name === "SyntaxError") {
+            throw AxiosError.from(e, AxiosError.ERR_BAD_RESPONSE, this, null, this.response);
+          }
+          throw e;
+        }
+      }
+    }
+    return data;
+  }],
+  timeout: 0,
+  xsrfCookieName: "XSRF-TOKEN",
+  xsrfHeaderName: "X-XSRF-TOKEN",
+  maxContentLength: -1,
+  maxBodyLength: -1,
+  env: {
+    FormData: platform.classes.FormData,
+    Blob: platform.classes.Blob
+  },
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  },
+  headers: {
+    common: {
+      "Accept": "application/json, text/plain, */*"
+    }
+  }
+};
+utils.forEach(["delete", "get", "head"], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+utils.forEach(["post", "put", "patch"], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+function transformData(fns, response) {
+  const config = this || defaults;
+  const context = response || config;
+  const headers = AxiosHeaders.from(context.headers);
+  let data = context.data;
+  utils.forEach(fns, function transform(fn) {
+    data = fn.call(config, data, headers.normalize(), response ? response.status : void 0);
+  });
+  headers.normalize();
+  return data;
+}
+function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+}
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+  if (config.signal && config.signal.aborted) {
+    throw new CanceledError();
+  }
+}
+function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+  config.headers = AxiosHeaders.from(config.headers);
+  config.data = transformData.call(config, config.transformRequest);
+  const adapter = config.adapter || defaults.adapter;
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+    response.data = transformData.call(config, config.transformResponse, response);
+    response.headers = AxiosHeaders.from(response.headers);
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+      if (reason && reason.response) {
+        reason.response.data = transformData.call(config, config.transformResponse, reason.response);
+        reason.response.headers = AxiosHeaders.from(reason.response.headers);
+      }
+    }
+    return Promise.reject(reason);
+  });
+}
+function mergeConfig(config1, config2) {
+  config2 = config2 || {};
+  const config = {};
+  function getMergedValue(target2, source) {
+    if (utils.isPlainObject(target2) && utils.isPlainObject(source)) {
+      return utils.merge(target2, source);
+    } else if (utils.isPlainObject(source)) {
+      return utils.merge({}, source);
+    } else if (utils.isArray(source)) {
+      return source.slice();
+    }
+    return source;
+  }
+  function mergeDeepProperties(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      return getMergedValue(config1[prop], config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      return getMergedValue(void 0, config1[prop]);
+    }
+  }
+  function valueFromConfig2(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      return getMergedValue(void 0, config2[prop]);
+    }
+  }
+  function defaultToConfig2(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      return getMergedValue(void 0, config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      return getMergedValue(void 0, config1[prop]);
+    }
+  }
+  function mergeDirectKeys(prop) {
+    if (prop in config2) {
+      return getMergedValue(config1[prop], config2[prop]);
+    } else if (prop in config1) {
+      return getMergedValue(void 0, config1[prop]);
+    }
+  }
+  const mergeMap = {
+    "url": valueFromConfig2,
+    "method": valueFromConfig2,
+    "data": valueFromConfig2,
+    "baseURL": defaultToConfig2,
+    "transformRequest": defaultToConfig2,
+    "transformResponse": defaultToConfig2,
+    "paramsSerializer": defaultToConfig2,
+    "timeout": defaultToConfig2,
+    "timeoutMessage": defaultToConfig2,
+    "withCredentials": defaultToConfig2,
+    "adapter": defaultToConfig2,
+    "responseType": defaultToConfig2,
+    "xsrfCookieName": defaultToConfig2,
+    "xsrfHeaderName": defaultToConfig2,
+    "onUploadProgress": defaultToConfig2,
+    "onDownloadProgress": defaultToConfig2,
+    "decompress": defaultToConfig2,
+    "maxContentLength": defaultToConfig2,
+    "maxBodyLength": defaultToConfig2,
+    "beforeRedirect": defaultToConfig2,
+    "transport": defaultToConfig2,
+    "httpAgent": defaultToConfig2,
+    "httpsAgent": defaultToConfig2,
+    "cancelToken": defaultToConfig2,
+    "socketPath": defaultToConfig2,
+    "responseEncoding": defaultToConfig2,
+    "validateStatus": mergeDirectKeys
+  };
+  utils.forEach(Object.keys(config1).concat(Object.keys(config2)), function computeConfigValue(prop) {
+    const merge2 = mergeMap[prop] || mergeDeepProperties;
+    const configValue = merge2(prop);
+    utils.isUndefined(configValue) && merge2 !== mergeDirectKeys || (config[prop] = configValue);
+  });
+  return config;
+}
+const VERSION = "1.0.0";
+const validators$1 = {};
+["object", "boolean", "number", "function", "string", "symbol"].forEach((type, i) => {
+  validators$1[type] = function validator2(thing) {
+    return typeof thing === type || "a" + (i < 1 ? "n " : " ") + type;
+  };
+});
+const deprecatedWarnings = {};
+validators$1.transitional = function transitional(validator2, version2, message) {
+  function formatMessage(opt, desc) {
+    return "[Axios v" + VERSION + "] Transitional option '" + opt + "'" + desc + (message ? ". " + message : "");
+  }
+  return (value, opt, opts) => {
+    if (validator2 === false) {
+      throw new AxiosError(formatMessage(opt, " has been removed" + (version2 ? " in " + version2 : "")), AxiosError.ERR_DEPRECATED);
+    }
+    if (version2 && !deprecatedWarnings[opt]) {
+      deprecatedWarnings[opt] = true;
+      console.warn(formatMessage(opt, " has been deprecated since v" + version2 + " and will be removed in the near future"));
+    }
+    return validator2 ? validator2(value, opt, opts) : true;
+  };
+};
+function assertOptions(options, schema, allowUnknown) {
+  if (typeof options !== "object") {
+    throw new AxiosError("options must be an object", AxiosError.ERR_BAD_OPTION_VALUE);
+  }
+  const keys = Object.keys(options);
+  let i = keys.length;
+  while (i-- > 0) {
+    const opt = keys[i];
+    const validator2 = schema[opt];
+    if (validator2) {
+      const value = options[opt];
+      const result = value === void 0 || validator2(value, opt, options);
+      if (result !== true) {
+        throw new AxiosError("option " + opt + " must be " + result, AxiosError.ERR_BAD_OPTION_VALUE);
+      }
+      continue;
+    }
+    if (allowUnknown !== true) {
+      throw new AxiosError("Unknown option " + opt, AxiosError.ERR_BAD_OPTION);
+    }
+  }
+}
+var validator = {
+  assertOptions,
+  validators: validators$1
+};
+const validators = validator.validators;
+class Axios {
+  constructor(instanceConfig) {
+    this.defaults = instanceConfig;
+    this.interceptors = {
+      request: new InterceptorManager(),
+      response: new InterceptorManager()
+    };
+  }
+  request(configOrUrl, config) {
+    if (typeof configOrUrl === "string") {
+      config = config || {};
+      config.url = configOrUrl;
+    } else {
+      config = configOrUrl || {};
+    }
+    config = mergeConfig(this.defaults, config);
+    const transitional2 = config.transitional;
+    if (transitional2 !== void 0) {
+      validator.assertOptions(transitional2, {
+        silentJSONParsing: validators.transitional(validators.boolean),
+        forcedJSONParsing: validators.transitional(validators.boolean),
+        clarifyTimeoutError: validators.transitional(validators.boolean)
+      }, false);
+    }
+    config.method = (config.method || this.defaults.method || "get").toLowerCase();
+    const defaultHeaders = config.headers && utils.merge(config.headers.common, config.headers[config.method]);
+    defaultHeaders && utils.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function cleanHeaderConfig(method) {
+      delete config.headers[method];
+    });
+    config.headers = new AxiosHeaders(config.headers, defaultHeaders);
+    const requestInterceptorChain = [];
+    let synchronousRequestInterceptors = true;
+    this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+      if (typeof interceptor.runWhen === "function" && interceptor.runWhen(config) === false) {
+        return;
+      }
+      synchronousRequestInterceptors = synchronousRequestInterceptors && interceptor.synchronous;
+      requestInterceptorChain.unshift(interceptor.fulfilled, interceptor.rejected);
+    });
+    const responseInterceptorChain = [];
+    this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+      responseInterceptorChain.push(interceptor.fulfilled, interceptor.rejected);
+    });
+    let promise;
+    let i = 0;
+    let len;
+    if (!synchronousRequestInterceptors) {
+      const chain = [dispatchRequest.bind(this), void 0];
+      chain.unshift.apply(chain, requestInterceptorChain);
+      chain.push.apply(chain, responseInterceptorChain);
+      len = chain.length;
+      promise = Promise.resolve(config);
+      while (i < len) {
+        promise = promise.then(chain[i++], chain[i++]);
+      }
+      return promise;
+    }
+    len = requestInterceptorChain.length;
+    let newConfig = config;
+    i = 0;
+    while (i < len) {
+      const onFulfilled = requestInterceptorChain[i++];
+      const onRejected = requestInterceptorChain[i++];
+      try {
+        newConfig = onFulfilled(newConfig);
+      } catch (error) {
+        onRejected.call(this, error);
+        break;
+      }
+    }
+    try {
+      promise = dispatchRequest.call(this, newConfig);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+    i = 0;
+    len = responseInterceptorChain.length;
+    while (i < len) {
+      promise = promise.then(responseInterceptorChain[i++], responseInterceptorChain[i++]);
+    }
+    return promise;
+  }
+  getUri(config) {
+    config = mergeConfig(this.defaults, config);
+    const fullPath = buildFullPath(config.baseURL, config.url);
+    return buildURL(fullPath, config.params, config.paramsSerializer);
+  }
+}
+utils.forEach(["delete", "get", "head", "options"], function forEachMethodNoData2(method) {
+  Axios.prototype[method] = function(url, config) {
+    return this.request(mergeConfig(config || {}, {
+      method,
+      url,
+      data: (config || {}).data
+    }));
+  };
+});
+utils.forEach(["post", "put", "patch"], function forEachMethodWithData2(method) {
+  function generateHTTPMethod(isForm) {
+    return function httpMethod(url, data, config) {
+      return this.request(mergeConfig(config || {}, {
+        method,
+        headers: isForm ? {
+          "Content-Type": "multipart/form-data"
+        } : {},
+        url,
+        data
+      }));
+    };
+  }
+  Axios.prototype[method] = generateHTTPMethod();
+  Axios.prototype[method + "Form"] = generateHTTPMethod(true);
+});
+class CancelToken {
+  constructor(executor) {
+    if (typeof executor !== "function") {
+      throw new TypeError("executor must be a function.");
+    }
+    let resolvePromise;
+    this.promise = new Promise(function promiseExecutor(resolve2) {
+      resolvePromise = resolve2;
+    });
+    const token = this;
+    this.promise.then((cancel) => {
+      if (!token._listeners)
+        return;
+      let i = token._listeners.length;
+      while (i-- > 0) {
+        token._listeners[i](cancel);
+      }
+      token._listeners = null;
+    });
+    this.promise.then = (onfulfilled) => {
+      let _resolve;
+      const promise = new Promise((resolve2) => {
+        token.subscribe(resolve2);
+        _resolve = resolve2;
+      }).then(onfulfilled);
+      promise.cancel = function reject() {
+        token.unsubscribe(_resolve);
+      };
+      return promise;
+    };
+    executor(function cancel(message, config, request) {
+      if (token.reason) {
+        return;
+      }
+      token.reason = new CanceledError(message, config, request);
+      resolvePromise(token.reason);
+    });
+  }
+  throwIfRequested() {
+    if (this.reason) {
+      throw this.reason;
+    }
+  }
+  subscribe(listener) {
+    if (this.reason) {
+      listener(this.reason);
+      return;
+    }
+    if (this._listeners) {
+      this._listeners.push(listener);
+    } else {
+      this._listeners = [listener];
+    }
+  }
+  unsubscribe(listener) {
+    if (!this._listeners) {
+      return;
+    }
+    const index2 = this._listeners.indexOf(listener);
+    if (index2 !== -1) {
+      this._listeners.splice(index2, 1);
+    }
+  }
+  static source() {
+    let cancel;
+    const token = new CancelToken(function executor(c) {
+      cancel = c;
+    });
+    return {
+      token,
+      cancel
+    };
+  }
+}
+function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+}
+function isAxiosError(payload) {
+  return utils.isObject(payload) && payload.isAxiosError === true;
+}
+function createInstance(defaultConfig) {
+  const context = new Axios(defaultConfig);
+  const instance = bind(Axios.prototype.request, context);
+  utils.extend(instance, Axios.prototype, context, { allOwnKeys: true });
+  utils.extend(instance, context, null, { allOwnKeys: true });
+  instance.create = function create(instanceConfig) {
+    return createInstance(mergeConfig(defaultConfig, instanceConfig));
+  };
+  return instance;
+}
+const axios = createInstance(defaults);
+axios.Axios = Axios;
+axios.CanceledError = CanceledError;
+axios.CancelToken = CancelToken;
+axios.isCancel = isCancel;
+axios.VERSION = VERSION;
+axios.toFormData = toFormData;
+axios.AxiosError = AxiosError;
+axios.Cancel = axios.CanceledError;
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+axios.spread = spread;
+axios.isAxiosError = isAxiosError;
+axios.formToJSON = (thing) => {
+  return formDataToJSON(utils.isHTMLForm(thing) ? new FormData(thing) : thing);
+};
+var QCardActions = createComponent({
+  name: "QCardActions",
+  props: __spreadProps(__spreadValues({}, useAlignProps), {
+    vertical: Boolean
+  }),
+  setup(props, { slots }) {
+    const alignClass = useAlign(props);
+    const classes = computed(() => `q-card__actions ${alignClass.value} q-card__actions--${props.vertical === true ? "vert column" : "horiz row"}`);
+    return () => h("div", { class: classes.value }, hSlot(slots.default));
+  }
+});
+var QCard = createComponent({
+  name: "QCard",
+  props: __spreadProps(__spreadValues({}, useDarkProps), {
+    tag: {
+      type: String,
+      default: "div"
+    },
+    square: Boolean,
+    flat: Boolean,
+    bordered: Boolean
+  }),
+  setup(props, { slots }) {
+    const vm = getCurrentInstance();
+    const isDark = useDark(props, vm.proxy.$q);
+    const classes = computed(() => "q-card" + (isDark.value === true ? " q-card--dark q-dark" : "") + (props.bordered === true ? " q-card--bordered" : "") + (props.square === true ? " q-card--square no-border-radius" : "") + (props.flat === true ? " q-card--flat no-shadow" : ""));
+    return () => h(props.tag, { class: classes.value }, hSlot(slots.default));
+  }
+});
+function useHistory(showing, hide, hideOnRouteChange) {
+  let historyEntry;
+  function removeFromHistory() {
+    if (historyEntry !== void 0) {
+      History.remove(historyEntry);
+      historyEntry = void 0;
+    }
+  }
+  onBeforeUnmount(() => {
+    showing.value === true && removeFromHistory();
+  });
+  return {
+    removeFromHistory,
+    addToHistory() {
+      historyEntry = {
+        condition: () => hideOnRouteChange.value === true,
+        handler: hide
+      };
+      History.add(historyEntry);
+    }
+  };
+}
+let registered = 0, scrollPositionX, scrollPositionY, maxScrollTop, vpPendingUpdate = false, bodyLeft, bodyTop, closeTimer;
+function onWheel(e) {
+  if (shouldPreventScroll(e)) {
+    stopAndPrevent(e);
+  }
+}
+function shouldPreventScroll(e) {
+  if (e.target === document.body || e.target.classList.contains("q-layout__backdrop")) {
+    return true;
+  }
+  const path = getEventPath(e), shift = e.shiftKey && !e.deltaX, scrollY = !shift && Math.abs(e.deltaX) <= Math.abs(e.deltaY), delta = shift || scrollY ? e.deltaY : e.deltaX;
+  for (let index2 = 0; index2 < path.length; index2++) {
+    const el = path[index2];
+    if (hasScrollbar(el, scrollY)) {
+      return scrollY ? delta < 0 && el.scrollTop === 0 ? true : delta > 0 && el.scrollTop + el.clientHeight === el.scrollHeight : delta < 0 && el.scrollLeft === 0 ? true : delta > 0 && el.scrollLeft + el.clientWidth === el.scrollWidth;
+    }
+  }
+  return true;
+}
+function onAppleScroll(e) {
+  if (e.target === document) {
+    document.scrollingElement.scrollTop = document.scrollingElement.scrollTop;
+  }
+}
+function onAppleResize(evt) {
+  if (vpPendingUpdate === true) {
+    return;
+  }
+  vpPendingUpdate = true;
+  requestAnimationFrame(() => {
+    vpPendingUpdate = false;
+    const { height } = evt.target, { clientHeight, scrollTop } = document.scrollingElement;
+    if (maxScrollTop === void 0 || height !== window.innerHeight) {
+      maxScrollTop = clientHeight - height;
+      document.scrollingElement.scrollTop = scrollTop;
+    }
+    if (scrollTop > maxScrollTop) {
+      document.scrollingElement.scrollTop -= Math.ceil((scrollTop - maxScrollTop) / 8);
+    }
+  });
+}
+function apply(action) {
+  const body = document.body, hasViewport = window.visualViewport !== void 0;
+  if (action === "add") {
+    const { overflowY, overflowX } = window.getComputedStyle(body);
+    scrollPositionX = getHorizontalScrollPosition(window);
+    scrollPositionY = getVerticalScrollPosition(window);
+    bodyLeft = body.style.left;
+    bodyTop = body.style.top;
+    body.style.left = `-${scrollPositionX}px`;
+    body.style.top = `-${scrollPositionY}px`;
+    if (overflowX !== "hidden" && (overflowX === "scroll" || body.scrollWidth > window.innerWidth)) {
+      body.classList.add("q-body--force-scrollbar-x");
+    }
+    if (overflowY !== "hidden" && (overflowY === "scroll" || body.scrollHeight > window.innerHeight)) {
+      body.classList.add("q-body--force-scrollbar-y");
+    }
+    body.classList.add("q-body--prevent-scroll");
+    document.qScrollPrevented = true;
+    if (client.is.ios === true) {
+      if (hasViewport === true) {
+        window.scrollTo(0, 0);
+        window.visualViewport.addEventListener("resize", onAppleResize, listenOpts.passiveCapture);
+        window.visualViewport.addEventListener("scroll", onAppleResize, listenOpts.passiveCapture);
+        window.scrollTo(0, 0);
+      } else {
+        window.addEventListener("scroll", onAppleScroll, listenOpts.passiveCapture);
+      }
+    }
+  }
+  if (client.is.desktop === true && client.is.mac === true) {
+    window[`${action}EventListener`]("wheel", onWheel, listenOpts.notPassive);
+  }
+  if (action === "remove") {
+    if (client.is.ios === true) {
+      if (hasViewport === true) {
+        window.visualViewport.removeEventListener("resize", onAppleResize, listenOpts.passiveCapture);
+        window.visualViewport.removeEventListener("scroll", onAppleResize, listenOpts.passiveCapture);
+      } else {
+        window.removeEventListener("scroll", onAppleScroll, listenOpts.passiveCapture);
+      }
+    }
+    body.classList.remove("q-body--prevent-scroll");
+    body.classList.remove("q-body--force-scrollbar-x");
+    body.classList.remove("q-body--force-scrollbar-y");
+    document.qScrollPrevented = false;
+    body.style.left = bodyLeft;
+    body.style.top = bodyTop;
+    window.scrollTo(scrollPositionX, scrollPositionY);
+    maxScrollTop = void 0;
+  }
+}
+function preventScroll(state) {
+  let action = "add";
+  if (state === true) {
+    registered++;
+    if (closeTimer !== void 0) {
+      clearTimeout(closeTimer);
+      closeTimer = void 0;
+      return;
+    }
+    if (registered > 1) {
+      return;
+    }
+  } else {
+    if (registered === 0) {
+      return;
+    }
+    registered--;
+    if (registered > 0) {
+      return;
+    }
+    action = "remove";
+    if (client.is.ios === true && client.is.nativeMobile === true) {
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(() => {
+        apply(action);
+        closeTimer = void 0;
+      }, 100);
+      return;
+    }
+  }
+  apply(action);
+}
+function usePreventScroll() {
+  let currentState;
+  return {
+    preventBodyScroll(state) {
+      if (state !== currentState && (currentState !== void 0 || state === true)) {
+        currentState = state;
+        preventScroll(state);
+      }
+    }
+  };
+}
+const handlers$1 = [];
+let escDown;
+function onKeydown(evt) {
+  escDown = evt.keyCode === 27;
+}
+function onBlur() {
+  if (escDown === true) {
+    escDown = false;
+  }
+}
+function onKeyup(evt) {
+  if (escDown === true) {
+    escDown = false;
+    if (isKeyCode(evt, 27) === true) {
+      handlers$1[handlers$1.length - 1](evt);
+    }
+  }
+}
+function update(action) {
+  window[action]("keydown", onKeydown);
+  window[action]("blur", onBlur);
+  window[action]("keyup", onKeyup);
+  escDown = false;
+}
+function addEscapeKey(fn) {
+  if (client.is.desktop === true) {
+    handlers$1.push(fn);
+    if (handlers$1.length === 1) {
+      update("addEventListener");
+    }
+  }
+}
+function removeEscapeKey(fn) {
+  const index2 = handlers$1.indexOf(fn);
+  if (index2 > -1) {
+    handlers$1.splice(index2, 1);
+    if (handlers$1.length === 0) {
+      update("removeEventListener");
+    }
+  }
+}
+const handlers = [];
+function trigger(e) {
+  handlers[handlers.length - 1](e);
+}
+function addFocusout(fn) {
+  if (client.is.desktop === true) {
+    handlers.push(fn);
+    if (handlers.length === 1) {
+      document.body.addEventListener("focusin", trigger);
+    }
+  }
+}
+function removeFocusout(fn) {
+  const index2 = handlers.indexOf(fn);
+  if (index2 > -1) {
+    handlers.splice(index2, 1);
+    if (handlers.length === 0) {
+      document.body.removeEventListener("focusin", trigger);
+    }
+  }
+}
+let maximizedModals = 0;
+const positionClass = {
+  standard: "fixed-full flex-center",
+  top: "fixed-top justify-center",
+  bottom: "fixed-bottom justify-center",
+  right: "fixed-right items-center",
+  left: "fixed-left items-center"
+};
+const transitions = {
+  standard: ["scale", "scale"],
+  top: ["slide-down", "slide-up"],
+  bottom: ["slide-up", "slide-down"],
+  right: ["slide-left", "slide-right"],
+  left: ["slide-right", "slide-left"]
+};
+var QDialog = createComponent({
+  name: "QDialog",
+  inheritAttrs: false,
+  props: __spreadProps(__spreadValues(__spreadValues({}, useModelToggleProps), useTransitionProps), {
+    transitionShow: String,
+    transitionHide: String,
+    persistent: Boolean,
+    autoClose: Boolean,
+    allowFocusOutside: Boolean,
+    noEscDismiss: Boolean,
+    noBackdropDismiss: Boolean,
+    noRouteDismiss: Boolean,
+    noRefocus: Boolean,
+    noFocus: Boolean,
+    noShake: Boolean,
+    seamless: Boolean,
+    maximized: Boolean,
+    fullWidth: Boolean,
+    fullHeight: Boolean,
+    square: Boolean,
+    position: {
+      type: String,
+      default: "standard",
+      validator: (val) => val === "standard" || ["top", "bottom", "left", "right"].includes(val)
+    }
+  }),
+  emits: [
+    ...useModelToggleEmits,
+    "shake",
+    "click",
+    "escape-key"
+  ],
+  setup(props, { slots, emit, attrs }) {
+    const vm = getCurrentInstance();
+    const innerRef = ref(null);
+    const showing = ref(false);
+    const transitionState = ref(false);
+    const animating = ref(false);
+    let shakeTimeout, refocusTarget = null, isMaximized, avoidAutoClose;
+    const hideOnRouteChange = computed(() => props.persistent !== true && props.noRouteDismiss !== true && props.seamless !== true);
+    const { preventBodyScroll } = usePreventScroll();
+    const { registerTimeout, removeTimeout } = useTimeout();
+    const { registerTick, removeTick } = useTick();
+    const { showPortal, hidePortal, portalIsAccessible, renderPortal } = usePortal(vm, innerRef, renderPortalContent, true);
+    const { hide } = useModelToggle({
+      showing,
+      hideOnRouteChange,
+      handleShow,
+      handleHide,
+      processOnMount: true
+    });
+    const { addToHistory, removeFromHistory } = useHistory(showing, hide, hideOnRouteChange);
+    const classes = computed(() => `q-dialog__inner flex no-pointer-events q-dialog__inner--${props.maximized === true ? "maximized" : "minimized"} q-dialog__inner--${props.position} ${positionClass[props.position]}` + (animating.value === true ? " q-dialog__inner--animating" : "") + (props.fullWidth === true ? " q-dialog__inner--fullwidth" : "") + (props.fullHeight === true ? " q-dialog__inner--fullheight" : "") + (props.square === true ? " q-dialog__inner--square" : ""));
+    const transitionShow = computed(() => "q-transition--" + (props.transitionShow === void 0 ? transitions[props.position][0] : props.transitionShow));
+    const transitionHide = computed(() => "q-transition--" + (props.transitionHide === void 0 ? transitions[props.position][1] : props.transitionHide));
+    const transition = computed(() => transitionState.value === true ? transitionHide.value : transitionShow.value);
+    const transitionStyle = computed(() => `--q-transition-duration: ${props.transitionDuration}ms`);
+    const useBackdrop = computed(() => showing.value === true && props.seamless !== true);
+    const onEvents = computed(() => props.autoClose === true ? { onClick: onAutoClose } : {});
+    const rootClasses = computed(() => [
+      `q-dialog fullscreen no-pointer-events q-dialog--${useBackdrop.value === true ? "modal" : "seamless"}`,
+      attrs.class
+    ]);
+    watch(showing, (val) => {
+      nextTick(() => {
+        transitionState.value = val;
+      });
+    });
+    watch(() => props.maximized, (state) => {
+      showing.value === true && updateMaximized(state);
+    });
+    watch(useBackdrop, (val) => {
+      preventBodyScroll(val);
+      if (val === true) {
+        addFocusout(onFocusChange);
+        addEscapeKey(onEscapeKey);
+      } else {
+        removeFocusout(onFocusChange);
+        removeEscapeKey(onEscapeKey);
+      }
+    });
+    function handleShow(evt) {
+      removeTimeout();
+      removeTick();
+      addToHistory();
+      refocusTarget = props.noRefocus === false && document.activeElement !== null ? document.activeElement : null;
+      updateMaximized(props.maximized);
+      showPortal();
+      animating.value = true;
+      if (props.noFocus !== true) {
+        document.activeElement !== null && document.activeElement.blur();
+        registerTick(focus);
+      }
+      registerTimeout(() => {
+        if (vm.proxy.$q.platform.is.ios === true) {
+          if (props.seamless !== true && document.activeElement) {
+            const { top, bottom } = document.activeElement.getBoundingClientRect(), { innerHeight } = window, height = window.visualViewport !== void 0 ? window.visualViewport.height : innerHeight;
+            if (top > 0 && bottom > height / 2) {
+              document.scrollingElement.scrollTop = Math.min(document.scrollingElement.scrollHeight - height, bottom >= innerHeight ? Infinity : Math.ceil(document.scrollingElement.scrollTop + bottom - height / 2));
+            }
+            document.activeElement.scrollIntoView();
+          }
+          avoidAutoClose = true;
+          innerRef.value.click();
+          avoidAutoClose = false;
+        }
+        showPortal(true);
+        animating.value = false;
+        emit("show", evt);
+      }, props.transitionDuration);
+    }
+    function handleHide(evt) {
+      removeTimeout();
+      removeTick();
+      removeFromHistory();
+      cleanup(true);
+      animating.value = true;
+      hidePortal();
+      if (refocusTarget !== null) {
+        refocusTarget.focus();
+        refocusTarget = null;
+      }
+      registerTimeout(() => {
+        hidePortal(true);
+        animating.value = false;
+        emit("hide", evt);
+      }, props.transitionDuration);
+    }
+    function focus(selector) {
+      addFocusFn(() => {
+        let node = innerRef.value;
+        if (node === null || node.contains(document.activeElement) === true) {
+          return;
+        }
+        node = node.querySelector(selector || "[autofocus], [data-autofocus]") || node;
+        node.focus({ preventScroll: true });
+      });
+    }
+    function shake() {
+      focus();
+      emit("shake");
+      const node = innerRef.value;
+      if (node !== null) {
+        node.classList.remove("q-animate--scale");
+        node.classList.add("q-animate--scale");
+        clearTimeout(shakeTimeout);
+        shakeTimeout = setTimeout(() => {
+          if (innerRef.value !== null) {
+            node.classList.remove("q-animate--scale");
+            focus();
+          }
+        }, 170);
+      }
+    }
+    function onEscapeKey() {
+      if (props.seamless !== true) {
+        if (props.persistent === true || props.noEscDismiss === true) {
+          props.maximized !== true && props.noShake !== true && shake();
+        } else {
+          emit("escape-key");
+          hide();
+        }
+      }
+    }
+    function cleanup(hiding) {
+      clearTimeout(shakeTimeout);
+      if (hiding === true || showing.value === true) {
+        updateMaximized(false);
+        if (props.seamless !== true) {
+          preventBodyScroll(false);
+          removeFocusout(onFocusChange);
+          removeEscapeKey(onEscapeKey);
+        }
+      }
+      if (hiding !== true) {
+        refocusTarget = null;
+      }
+    }
+    function updateMaximized(active) {
+      if (active === true) {
+        if (isMaximized !== true) {
+          maximizedModals < 1 && document.body.classList.add("q-body--dialog");
+          maximizedModals++;
+          isMaximized = true;
+        }
+      } else if (isMaximized === true) {
+        if (maximizedModals < 2) {
+          document.body.classList.remove("q-body--dialog");
+        }
+        maximizedModals--;
+        isMaximized = false;
+      }
+    }
+    function onAutoClose(e) {
+      if (avoidAutoClose !== true) {
+        hide(e);
+        emit("click", e);
+      }
+    }
+    function onBackdropClick(e) {
+      if (props.persistent !== true && props.noBackdropDismiss !== true) {
+        hide(e);
+      } else if (props.noShake !== true) {
+        shake();
+      }
+    }
+    function onFocusChange(evt) {
+      if (props.allowFocusOutside !== true && portalIsAccessible.value === true && childHasFocus(innerRef.value, evt.target) !== true) {
+        focus('[tabindex]:not([tabindex="-1"])');
+      }
+    }
+    Object.assign(vm.proxy, {
+      focus,
+      shake,
+      __updateRefocusTarget(target2) {
+        refocusTarget = target2 || null;
+      }
+    });
+    onBeforeUnmount(cleanup);
+    function renderPortalContent() {
+      return h("div", __spreadProps(__spreadValues({}, attrs), {
+        class: rootClasses.value
+      }), [
+        h(Transition, {
+          name: "q-transition--fade",
+          appear: true
+        }, () => useBackdrop.value === true ? h("div", {
+          class: "q-dialog__backdrop fixed-full",
+          style: transitionStyle.value,
+          "aria-hidden": "true",
+          onMousedown: onBackdropClick
+        }) : null),
+        h(Transition, { name: transition.value, appear: true }, () => showing.value === true ? h("div", __spreadValues({
+          ref: innerRef,
+          class: classes.value,
+          style: transitionStyle.value,
+          tabindex: -1
+        }, onEvents.value), hSlot(slots.default)) : null)
+      ]);
+    }
+    return renderPortal;
+  }
+});
+var NotFound_vue_vue_type_style_index_0_scoped_true_lang = "";
+const _hoisted_1$1 = /* @__PURE__ */ createTextVNode("\u0410\u0440\u0445\u0438\u0432 \u0441 \u0443\u043A\u0430\u0437\u0430\u043D\u043D\u044B\u043C \u0440\u0435\u043B\u0438\u0437\u043E\u043C \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442. \u041E\u0431\u0440\u0430\u0442\u0438\u0442\u0435\u0441\u044C \u0437\u0430 \u043F\u043E\u043C\u043E\u0449\u044C\u044E \u043A \u0430\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\u0440\u0443.");
+const _sfc_main$2 = /* @__PURE__ */ defineComponent({
+  name: "NotFound",
+  props: {
+    show: Boolean
+  },
+  emits: ["close"],
+  setup(__props, { emit }) {
+    const props = __props;
+    const close = () => {
+      emit("close");
+    };
+    return (_ctx, _cache) => {
+      return openBlock(), createBlock(QDialog, {
+        modelValue: props.show,
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => props.show = $event)
+      }, {
+        default: withCtx(() => [
+          createVNode(QCard, null, {
+            default: withCtx(() => [
+              createVNode(QCardSection, { horizontal: "" }, {
+                default: withCtx(() => [
+                  createVNode(QCardSection, null, {
+                    default: withCtx(() => [
+                      (openBlock(), createBlock(resolveDynamicComponent(SvgIcon), {
+                        class: "alert",
+                        name: "alert",
+                        color: "darkred"
+                      }))
+                    ]),
+                    _: 1
+                  }),
+                  createVNode(QCardSection, null, {
+                    default: withCtx(() => [
+                      _hoisted_1$1
+                    ]),
+                    _: 1
+                  })
+                ]),
+                _: 1
+              }),
+              createVNode(QCardActions, {
+                class: "q-pt-none",
+                align: "center"
+              }, {
+                default: withCtx(() => [
+                  createVNode(QBtn, {
+                    flat: "",
+                    color: "accent",
+                    label: "\u0417\u0430\u043A\u0440\u044B\u0442\u044C",
+                    onClick: close
+                  })
+                ]),
+                _: 1
+              })
+            ]),
+            _: 1
+          })
+        ]),
+        _: 1
+      }, 8, ["modelValue"]);
+    };
+  }
+});
+var NotFound = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-5d641874"]]);
 var Version_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _withScopeId = (n) => (pushScopeId("data-v-36c8277c"), n = n(), popScopeId(), n);
+const _withScopeId = (n) => (pushScopeId("data-v-58b1164c"), n = n(), popScopeId(), n);
 const _hoisted_1 = { class: "grid" };
 const _hoisted_2 = { class: "left" };
 const _hoisted_3 = {
@@ -11839,24 +13022,22 @@ const _hoisted_3 = {
 };
 const _hoisted_4 = ["id"];
 const _hoisted_5 = { class: "row items-center" };
-const _hoisted_6 = { class: "row items-center q-pr-sm" };
-const _hoisted_7 = {
-  key: 0,
-  class: "date q-mr-lg"
-};
-const _hoisted_8 = /* @__PURE__ */ createTextVNode("Shif-Click - \u0440\u0430\u0441\u043F\u0430\u0445\u043D\u0443\u0442\u044C \u0432\u0441\u0435");
+const _hoisted_6 = ["onClick"];
+const _hoisted_7 = { key: 0 };
+const _hoisted_8 = { key: 1 };
 const _hoisted_9 = { class: "smallgrid" };
 const _hoisted_10 = { class: "label" };
 const _hoisted_11 = { class: "text" };
 const _hoisted_12 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("br", null, null, -1));
 const _hoisted_13 = ["id"];
 const _hoisted_14 = ["innerHTML"];
-const _hoisted_15 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed accumsan ligula, vitae feugiat nibh. Cras auctor iaculis feugiat. Mauris est tortor, dignissim eu ipsum at, dapibus condimentum neque. Fusce posuere bibendum maximus.", -1));
-const _hoisted_16 = { class: "side" };
-const _hoisted_17 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("br", null, null, -1));
-const _hoisted_18 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "sod" }, "\u0421\u043E\u0434\u0435\u0440\u0436\u0430\u043D\u0438\u0435", -1));
-const _hoisted_19 = { class: "mylist" };
-const _hoisted_20 = ["onClick"];
+const _hoisted_15 = { class: "side" };
+const _hoisted_16 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("br", null, null, -1));
+const _hoisted_17 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "sod" }, "\u0421\u043E\u0434\u0435\u0440\u0436\u0430\u043D\u0438\u0435", -1));
+const _hoisted_18 = { class: "list" };
+const _hoisted_19 = ["onClick"];
+const _hoisted_20 = { key: 0 };
+const _hoisted_21 = { key: 1 };
 const _sfc_main$1 = /* @__PURE__ */ defineComponent({
   name: "Version",
   setup(__props) {
@@ -11885,9 +13066,11 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       }
     };
     const myitems = useItems();
-    myitems.setVersions(versions);
     const { getScrollTarget: getScrollTarget2, setVerticalScrollPosition: setVerticalScrollPosition2 } = scroll;
-    const filter = ref("");
+    const filter2 = ref("");
+    const clear2 = () => {
+      filter2.value = "";
+    };
     const handleScroll = (e) => {
       const ele = document.getElementById(e);
       const target2 = getScrollTarget2(ele);
@@ -11899,26 +13082,20 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       return array.reduce((prev, curr) => {
         var _a, _b;
         const children = curr.children ? filterByLabel(curr.children, searchTerm) : void 0;
-        return ((_a = curr.label) == null ? void 0 : _a.toLowerCase().includes(searchTerm.toLowerCase())) || ((_b = curr.text) == null ? void 0 : _b.toLowerCase().includes(searchTerm.toLowerCase())) || (children == null ? void 0 : children.length) > 0 ? [...prev, __spreadProps(__spreadValues({}, curr), { children })] : prev;
+        return ((_a = curr.title) == null ? void 0 : _a.toLowerCase().includes(searchTerm.toLowerCase())) || ((_b = curr.description) == null ? void 0 : _b.toLowerCase().includes(searchTerm.toLowerCase())) || (children == null ? void 0 : children.length) > 0 ? [...prev, __spreadProps(__spreadValues({}, curr), { children })] : prev;
       }, []);
     };
     const filtered = computed(() => {
-      if (filter.value !== "") {
-        return filterByLabel(myitems.versions, filter.value);
+      if (filter2.value.length > 1) {
+        return filterByLabel(myitems.versions, filter2.value);
       }
       return myitems.versions;
     });
     watchEffect(() => {
-      if (filter.value.length > 1) {
+      if (filter2.value.length > 1) {
         myitems.expandAll();
       }
     });
-    const handleClick = (e, version2) => {
-      if (e.shiftKey) {
-        myitems.toggleAll();
-      } else
-        myitems.expandBlock(version2);
-    };
     const setId = (id, label) => {
       return id + label;
     };
@@ -11927,7 +13104,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       el == null ? void 0 : el.classList.toggle("hid");
     };
     const calcClass = (e) => {
-      if (inView.value.some((el) => el === e)) {
+      if (inView.value.some((el) => el == e.toString())) {
         return "visib";
       } else
         return "";
@@ -11935,19 +13112,39 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     const showIcon = (icon) => {
       return "img:/_/img/" + icon + ".svg";
     };
+    const errorDialog = ref(false);
+    const downloadItem = (e) => {
+      const url = e.metadata.downloadLink;
+      axios({
+        url,
+        method: "GET",
+        responseType: "blob"
+      }).then((response) => {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement("a");
+        fileLink.href = fileURL;
+        fileLink.setAttribute("download", "file.svg");
+        document.body.appendChild(fileLink);
+        fileLink.click();
+      }).catch(() => {
+        console.log("File not found");
+        errorDialog.value = true;
+      });
+    };
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("div", _hoisted_1, [
         createBaseVNode("div", _hoisted_2, [
-          unref(filtered).length === 0 ? (openBlock(), createElementBlock("div", _hoisted_3, "\u041D\u0438\u0447\u0435\u0433\u043E \u043D\u0435\u0442. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0437\u0430\u043F\u0440\u043E\u0441.")) : (openBlock(true), createElementBlock(Fragment, { key: 1 }, renderList(unref(filtered), (version2, index2) => {
+          unref(filtered).length === 0 ? (openBlock(), createElementBlock("div", _hoisted_3, "\u041D\u0438\u0447\u0435\u0433\u043E \u043D\u0435\u0442. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0437\u0430\u043F\u0440\u043E\u0441.")) : createCommentVNode("", true),
+          (openBlock(true), createElementBlock(Fragment, null, renderList(unref(filtered), (version2) => {
             return openBlock(), createElementBlock(Fragment, {
               key: version2.id
             }, [
               createBaseVNode("div", {
                 class: "version",
-                id: version2.ver
+                id: version2.fileVersion
               }, [
                 createBaseVNode("div", _hoisted_5, [
-                  index2 !== 0 ? (openBlock(), createBlock(QBtn, {
+                  version2.metadata.isPublic === true ? (openBlock(), createBlock(QBtn, {
                     key: 0,
                     class: "q-mr-md",
                     dense: "",
@@ -11955,109 +13152,92 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
                     color: "accent"
                   }, {
                     default: withCtx(() => [
-                      createVNode(SvgIcon, {
+                      (openBlock(), createBlock(resolveDynamicComponent(SvgIcon), {
                         name: "source-branch",
                         color: "white"
-                      })
+                      }))
                     ]),
                     _: 1
                   })) : createCommentVNode("", true),
                   createBaseVNode("div", {
-                    class: normalizeClass({ link: index2 !== 0 })
-                  }, toDisplayString(version2.ver), 3)
+                    class: normalizeClass({ link: version2.metadata.isPublic }),
+                    onClick: withModifiers(($event) => downloadItem(version2), ["prevent"])
+                  }, [
+                    version2.metadata.isPublic === true ? (openBlock(), createElementBlock("span", _hoisted_7, toDisplayString(version2.fileVersion), 1)) : (openBlock(), createElementBlock("span", _hoisted_8, "\u0412\u043E\u0439\u0434\u0435\u0442 \u0432 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E"))
+                  ], 10, _hoisted_6)
                 ]),
-                createBaseVNode("div", _hoisted_6, [
-                  index2 !== 0 ? (openBlock(), createElementBlock("div", _hoisted_7, "23.07.2022")) : createCommentVNode("", true),
-                  filter.value.length < 1 ? (openBlock(), createBlock(QBtn, {
-                    key: 1,
-                    dense: "",
-                    flat: "",
-                    round: "",
-                    color: "accent",
-                    onClick: ($event) => handleClick($event, version2)
-                  }, {
-                    default: withCtx(() => [
-                      createVNode(QTooltip, {
-                        anchor: "top middle",
-                        self: "bottom middle"
-                      }, {
-                        default: withCtx(() => [
-                          _hoisted_8
-                        ]),
-                        _: 1
-                      }),
-                      createVNode(SvgIcon, { name: "unfold-more-horizontal" })
-                    ]),
-                    _: 2
-                  }, 1032, ["onClick"])) : createCommentVNode("", true)
-                ])
+                (openBlock(), createBlock(resolveDynamicComponent(Dateblock), {
+                  filter: filter2.value,
+                  version: version2
+                }, null, 8, ["filter", "version"]))
               ], 8, _hoisted_4),
               withDirectives((openBlock(), createBlock(QList, {
-                id: version2.ver
+                id: version2.id
               }, {
                 default: withCtx(() => [
                   (openBlock(true), createElementBlock(Fragment, null, renderList(version2.children, (item) => {
-                    return openBlock(), createBlock(QExpansionItem, {
-                      key: item.id,
-                      label: item.head,
-                      "header-class": "hd",
-                      icon: showIcon(item.icon),
-                      "expand-separator": "",
-                      "expand-icon": "img:/_/img/chevron-down.svg",
-                      "model-value": item.model,
-                      onClick: ($event) => unref(myitems).toggleModel(item)
-                    }, {
-                      default: withCtx(() => [
-                        (openBlock(true), createElementBlock(Fragment, null, renderList(item.children, (el) => {
-                          return openBlock(), createBlock(QCardSection, {
-                            key: el.label
-                          }, {
-                            default: withCtx(() => [
-                              createBaseVNode("div", _hoisted_9, [
-                                createBaseVNode("div", _hoisted_10, [
-                                  (openBlock(), createBlock(resolveDynamicComponent(unref(l)), { query: filter.value }, {
-                                    default: withCtx(() => [
-                                      createTextVNode(toDisplayString(el.label), 1)
-                                    ]),
-                                    _: 2
-                                  }, 1032, ["query"]))
+                    return openBlock(), createElementBlock(Fragment, null, [
+                      item.children.length > 0 ? (openBlock(), createBlock(QExpansionItem, {
+                        key: item.id,
+                        label: item.head,
+                        "header-class": "hd",
+                        icon: showIcon(item.icon),
+                        "expand-separator": "",
+                        "expand-icon": "img:/_/img/chevron-down.svg",
+                        "model-value": item.model,
+                        onClick: ($event) => unref(myitems).toggleModel(item)
+                      }, {
+                        default: withCtx(() => [
+                          (openBlock(true), createElementBlock(Fragment, null, renderList(item.children, (el) => {
+                            return openBlock(), createBlock(QCardSection, {
+                              key: el.title
+                            }, {
+                              default: withCtx(() => [
+                                createBaseVNode("div", _hoisted_9, [
+                                  createBaseVNode("div", _hoisted_10, [
+                                    (openBlock(), createBlock(resolveDynamicComponent(unref(l)), { query: filter2.value }, {
+                                      default: withCtx(() => [
+                                        createTextVNode(toDisplayString(el.title), 1)
+                                      ]),
+                                      _: 2
+                                    }, 1032, ["query"]))
+                                  ]),
+                                  createBaseVNode("div", _hoisted_11, [
+                                    (openBlock(), createBlock(resolveDynamicComponent(unref(l)), { query: filter2.value }, {
+                                      default: withCtx(() => [
+                                        createTextVNode(toDisplayString(el.description), 1)
+                                      ]),
+                                      _: 2
+                                    }, 1032, ["query"])),
+                                    _hoisted_12,
+                                    el.detailed ? (openBlock(), createBlock(QBtn, {
+                                      key: 0,
+                                      unelevated: "",
+                                      color: "accent",
+                                      label: "\u0415\u0449\u0435",
+                                      size: "xs",
+                                      onClick: ($event) => more(item.id, el.title)
+                                    }, null, 8, ["onClick"])) : createCommentVNode("", true)
+                                  ])
                                 ]),
-                                createBaseVNode("div", _hoisted_11, [
-                                  (openBlock(), createBlock(resolveDynamicComponent(unref(l)), { query: filter.value }, {
-                                    default: withCtx(() => [
-                                      createTextVNode(toDisplayString(el.text), 1)
-                                    ]),
-                                    _: 2
-                                  }, 1032, ["query"])),
-                                  _hoisted_12,
-                                  el.more ? (openBlock(), createBlock(QBtn, {
-                                    key: 0,
-                                    unelevated: "",
-                                    color: "accent",
-                                    label: "\u0415\u0449\u0435",
-                                    size: "xs",
-                                    onClick: ($event) => more(item.id, el.label)
-                                  }, null, 8, ["onClick"])) : createCommentVNode("", true)
-                                ])
+                                el.detailed ? (openBlock(), createElementBlock("div", {
+                                  key: 0,
+                                  class: "more hid",
+                                  id: setId(item.id, el.title)
+                                }, [
+                                  createBaseVNode("div", {
+                                    innerHTML: el.detailed
+                                  }, null, 8, _hoisted_14)
+                                ], 8, _hoisted_13)) : createCommentVNode("", true)
                               ]),
-                              el.more ? (openBlock(), createElementBlock("div", {
-                                key: 0,
-                                class: "more hid",
-                                id: setId(item.id, el.label)
-                              }, [
-                                createBaseVNode("div", {
-                                  innerHTML: el.more
-                                }, null, 8, _hoisted_14),
-                                _hoisted_15
-                              ], 8, _hoisted_13)) : createCommentVNode("", true)
-                            ]),
-                            _: 2
-                          }, 1024);
-                        }), 128))
-                      ]),
-                      _: 2
-                    }, 1032, ["label", "icon", "model-value", "onClick"]);
-                  }), 128))
+                              _: 2
+                            }, 1024);
+                          }), 128))
+                        ]),
+                        _: 2
+                      }, 1032, ["label", "icon", "model-value", "onClick"])) : createCommentVNode("", true)
+                    ], 64);
+                  }), 256))
                 ]),
                 _: 2
               }, 1032, ["id"])), [
@@ -12066,18 +13246,18 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
             ], 64);
           }), 128))
         ]),
-        createBaseVNode("div", _hoisted_16, [
+        createBaseVNode("div", _hoisted_15, [
           createVNode(QInput, {
             dense: "",
             debounce: "300",
             placeholder: "\u0424\u0438\u043B\u044C\u0442\u0440",
             autofocus: "",
             color: "primary",
-            modelValue: filter.value,
-            "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => filter.value = $event),
+            modelValue: filter2.value,
+            "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => filter2.value = $event),
             clearable: "",
             "clear-icon": "img:/_/img/close-circle-outline.svg",
-            onClear: _cache[1] || (_cache[1] = ($event) => filter.value = "")
+            onClear: clear2
           }, {
             prepend: withCtx(() => [
               createVNode(SvgIcon, {
@@ -12087,28 +13267,105 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
             ]),
             _: 1
           }, 8, ["modelValue"]),
+          _hoisted_16,
           _hoisted_17,
-          _hoisted_18,
-          createBaseVNode("div", _hoisted_19, [
-            (openBlock(true), createElementBlock(Fragment, null, renderList(unref(filtered), (item) => {
+          createBaseVNode("div", _hoisted_18, [
+            (openBlock(true), createElementBlock(Fragment, null, renderList(unref(myitems).versions, (item) => {
               return openBlock(), createElementBlock("div", {
-                class: normalizeClass(["empt", calcClass(item.ver)]),
-                onClick: ($event) => handleScroll(item.ver),
-                key: item.ver
-              }, toDisplayString(item.ver), 11, _hoisted_20);
+                class: normalizeClass(["empt", calcClass(item.id)]),
+                onClick: ($event) => handleScroll(item.fileVersion),
+                key: item.fileVersion
+              }, [
+                item.metadata.isPublic === true ? (openBlock(), createElementBlock("span", _hoisted_20, toDisplayString(item.fileVersion), 1)) : (openBlock(), createElementBlock("span", _hoisted_21, "\u0412\u043E\u0439\u0434\u0435\u0442 \u0432 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E"))
+              ], 10, _hoisted_19);
             }), 128))
-          ])
+          ]),
+          createVNode(NotFound, {
+            show: errorDialog.value,
+            onClose: _cache[1] || (_cache[1] = ($event) => errorDialog.value = false)
+          }, null, 8, ["show"])
         ])
       ]);
     };
   }
 });
-var Version = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-36c8277c"]]);
+var Version = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-58b1164c"]]);
 const _sfc_main = /* @__PURE__ */ defineComponent({
   name: "App",
   setup(__props) {
+    const myitems = useItems();
+    const apiUrl = "https://vzhik.digdes.com/api/changelog/tree/1";
+    onBeforeMount(() => {
+      fetch(apiUrl).then(async (response) => {
+        const data = await response.json();
+        if (!response.ok) {
+          const error = data && data.message || response.statusText;
+          return Promise.reject(error);
+        }
+        let data1 = [];
+        data.forEach((item) => {
+          let temp = {};
+          temp.id = item.id;
+          temp.fileVersion = item.fileVersion;
+          temp.metadata = {};
+          Object.assign(temp.metadata, item.metadata);
+          temp.children = [
+            {
+              id: 0,
+              head: "\u0424\u0443\u043D\u043A\u0446\u0438\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F",
+              icon: "briefcase-outline",
+              model: false,
+              type: "functional",
+              children: []
+            },
+            {
+              id: 1,
+              head: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0432 \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430\u0445 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F",
+              icon: "code-json",
+              model: false,
+              type: "lib",
+              children: []
+            },
+            {
+              id: 2,
+              head: "\u041E\u043F\u0442\u0438\u043C\u0438\u0437\u0430\u0446\u0438\u0438",
+              icon: "rocket-launch",
+              model: false,
+              type: "optimization",
+              children: []
+            },
+            {
+              id: 3,
+              head: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438",
+              icon: "alert",
+              model: false,
+              type: "bugfix",
+              children: []
+            }
+          ];
+          item.changes.forEach((change) => {
+            if (change.type === "functional") {
+              temp.children[0].children.push(change);
+            }
+            if (change.type === "lib") {
+              temp.children[1].children.push(change);
+            }
+            if (change.type === "optimization") {
+              temp.children[2].children.push(change);
+            }
+            if (change.type === "bugfix") {
+              temp.children[3].children.push(change);
+            }
+          });
+          data1.push(temp);
+        });
+        myitems.setVersions([...data1]);
+      }).catch((error) => {
+        console.error("\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0438\u044F \u0434\u0430\u043D\u043D\u044B\u0445 \u0441 \u0441\u0435\u0440\u0432\u0435\u0440\u0430", error);
+      });
+    });
     return (_ctx, _cache) => {
-      return openBlock(), createBlock(Version);
+      return openBlock(), createBlock(resolveDynamicComponent(Version));
     };
   }
 });
