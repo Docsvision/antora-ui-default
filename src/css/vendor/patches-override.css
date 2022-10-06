@@ -1,20 +1,3 @@
 main > .content {
   display: block !important;
 }
-
-.content .doc {
-  padding-bottom: 0;
-}
-
-.content .doc h1,
-.content .doc h2,
-.content .doc h3,
-.content .doc h4,
-.content .doc h5,
-.content .doc h6 {
-  color: var(--heading-font-color);
-  font-weight: var(--heading-font-weight);
-  hyphens: none;
-  line-height: 1.3;
-  margin: 1rem 0 0;
-}

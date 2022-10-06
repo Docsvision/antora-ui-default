@@ -12947,7 +12947,7 @@ var QDialog = createComponent({
   }
 });
 var NotFound_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _hoisted_1$1 = /* @__PURE__ */ createTextVNode("\u0410\u0440\u0445\u0438\u0432 \u0441 \u0443\u043A\u0430\u0437\u0430\u043D\u043D\u044B\u043C \u0440\u0435\u043B\u0438\u0437\u043E\u043C \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442. \u041E\u0431\u0440\u0430\u0442\u0438\u0442\u0435\u0441\u044C \u0437\u0430 \u043F\u043E\u043C\u043E\u0449\u044C\u044E \u043A \u0430\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\u0440\u0443.");
+const _hoisted_1$1 = /* @__PURE__ */ createTextVNode("\u0410\u0440\u0445\u0438\u0432 \u0441 \u0443\u043A\u0430\u0437\u0430\u043D\u043D\u044B\u043C \u0440\u0435\u043B\u0438\u0437\u043E\u043C \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442. \u041E\u0431\u0440\u0430\u0442\u0438\u0442\u0435\u0441\u044C \u0437\u0430 \u043F\u043E\u043C\u043E\u0449\u044C\u044E \u043A \u0441\u043B\u0443\u0436\u0431\u0443 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0438.");
 const _sfc_main$2 = /* @__PURE__ */ defineComponent({
   name: "NotFound",
   props: {
@@ -13011,33 +13011,34 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var NotFound = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-5d641874"]]);
+var NotFound = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-49f83984"]]);
 var Version_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _withScopeId = (n) => (pushScopeId("data-v-58b1164c"), n = n(), popScopeId(), n);
+const _withScopeId = (n) => (pushScopeId("data-v-e498b4b4"), n = n(), popScopeId(), n);
 const _hoisted_1 = { class: "grid" };
-const _hoisted_2 = { class: "left" };
-const _hoisted_3 = {
+const _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "zag" }, "\u0421\u043F\u0438\u0441\u043E\u043A \u043D\u0430\u043A\u043E\u043F\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0445 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0439", -1));
+const _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", null, null, -1));
+const _hoisted_4 = { class: "left" };
+const _hoisted_5 = {
   key: 0,
   class: "notfound"
 };
-const _hoisted_4 = ["id"];
-const _hoisted_5 = { class: "row items-center" };
-const _hoisted_6 = ["onClick"];
-const _hoisted_7 = { key: 0 };
-const _hoisted_8 = { key: 1 };
-const _hoisted_9 = { class: "smallgrid" };
-const _hoisted_10 = { class: "label" };
-const _hoisted_11 = { class: "text" };
-const _hoisted_12 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("br", null, null, -1));
-const _hoisted_13 = ["id"];
-const _hoisted_14 = ["innerHTML"];
-const _hoisted_15 = { class: "side" };
-const _hoisted_16 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("br", null, null, -1));
-const _hoisted_17 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "sod" }, "\u0421\u043E\u0434\u0435\u0440\u0436\u0430\u043D\u0438\u0435", -1));
-const _hoisted_18 = { class: "list" };
-const _hoisted_19 = ["onClick"];
-const _hoisted_20 = { key: 0 };
-const _hoisted_21 = { key: 1 };
+const _hoisted_6 = ["id"];
+const _hoisted_7 = { class: "row items-center" };
+const _hoisted_8 = ["onClick"];
+const _hoisted_9 = { key: 2 };
+const _hoisted_10 = { class: "smallgrid" };
+const _hoisted_11 = { class: "label" };
+const _hoisted_12 = { class: "text" };
+const _hoisted_13 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("br", null, null, -1));
+const _hoisted_14 = ["id"];
+const _hoisted_15 = ["innerHTML"];
+const _hoisted_16 = { class: "side" };
+const _hoisted_17 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("br", null, null, -1));
+const _hoisted_18 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "sod" }, "\u0421\u043E\u0434\u0435\u0440\u0436\u0430\u043D\u0438\u0435", -1));
+const _hoisted_19 = { class: "list" };
+const _hoisted_20 = ["onClick"];
+const _hoisted_21 = { key: 0 };
+const _hoisted_22 = { key: 1 };
 const _sfc_main$1 = /* @__PURE__ */ defineComponent({
   name: "Version",
   setup(__props) {
@@ -13133,8 +13134,10 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     };
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("div", _hoisted_1, [
-        createBaseVNode("div", _hoisted_2, [
-          unref(filtered).length === 0 ? (openBlock(), createElementBlock("div", _hoisted_3, "\u041D\u0438\u0447\u0435\u0433\u043E \u043D\u0435\u0442. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0437\u0430\u043F\u0440\u043E\u0441.")) : createCommentVNode("", true),
+        _hoisted_2,
+        _hoisted_3,
+        createBaseVNode("div", _hoisted_4, [
+          unref(filtered).length === 0 ? (openBlock(), createElementBlock("div", _hoisted_5, "\u041D\u0438\u0447\u0435\u0433\u043E \u043D\u0435\u0442. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0437\u0430\u043F\u0440\u043E\u0441.")) : createCommentVNode("", true),
           (openBlock(true), createElementBlock(Fragment, null, renderList(unref(filtered), (version2) => {
             return openBlock(), createElementBlock(Fragment, {
               key: version2.id
@@ -13143,7 +13146,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
                 class: "version",
                 id: version2.fileVersion
               }, [
-                createBaseVNode("div", _hoisted_5, [
+                createBaseVNode("div", _hoisted_7, [
                   version2.metadata.isPublic === true ? (openBlock(), createBlock(QBtn, {
                     key: 0,
                     class: "q-mr-md",
@@ -13159,18 +13162,17 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
                     ]),
                     _: 1
                   })) : createCommentVNode("", true),
-                  createBaseVNode("div", {
+                  version2.metadata.isPublic === true ? (openBlock(), createElementBlock("div", {
+                    key: 1,
                     class: normalizeClass({ link: version2.metadata.isPublic }),
                     onClick: withModifiers(($event) => downloadItem(version2), ["prevent"])
-                  }, [
-                    version2.metadata.isPublic === true ? (openBlock(), createElementBlock("span", _hoisted_7, toDisplayString(version2.fileVersion), 1)) : (openBlock(), createElementBlock("span", _hoisted_8, "\u0412\u043E\u0439\u0434\u0435\u0442 \u0432 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E"))
-                  ], 10, _hoisted_6)
+                  }, toDisplayString(version2.fileVersion), 11, _hoisted_8)) : (openBlock(), createElementBlock("div", _hoisted_9, "\u0412\u043E\u0439\u0434\u0435\u0442 \u0432 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E"))
                 ]),
                 (openBlock(), createBlock(resolveDynamicComponent(Dateblock), {
                   filter: filter2.value,
                   version: version2
                 }, null, 8, ["filter", "version"]))
-              ], 8, _hoisted_4),
+              ], 8, _hoisted_6),
               withDirectives((openBlock(), createBlock(QList, {
                 id: version2.id
               }, {
@@ -13193,8 +13195,8 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
                               key: el.title
                             }, {
                               default: withCtx(() => [
-                                createBaseVNode("div", _hoisted_9, [
-                                  createBaseVNode("div", _hoisted_10, [
+                                createBaseVNode("div", _hoisted_10, [
+                                  createBaseVNode("div", _hoisted_11, [
                                     (openBlock(), createBlock(resolveDynamicComponent(unref(l)), { query: filter2.value }, {
                                       default: withCtx(() => [
                                         createTextVNode(toDisplayString(el.title), 1)
@@ -13202,14 +13204,14 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
                                       _: 2
                                     }, 1032, ["query"]))
                                   ]),
-                                  createBaseVNode("div", _hoisted_11, [
+                                  createBaseVNode("div", _hoisted_12, [
                                     (openBlock(), createBlock(resolveDynamicComponent(unref(l)), { query: filter2.value }, {
                                       default: withCtx(() => [
                                         createTextVNode(toDisplayString(el.description), 1)
                                       ]),
                                       _: 2
                                     }, 1032, ["query"])),
-                                    _hoisted_12,
+                                    _hoisted_13,
                                     el.detailed ? (openBlock(), createBlock(QBtn, {
                                       key: 0,
                                       unelevated: "",
@@ -13227,8 +13229,8 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
                                 }, [
                                   createBaseVNode("div", {
                                     innerHTML: el.detailed
-                                  }, null, 8, _hoisted_14)
-                                ], 8, _hoisted_13)) : createCommentVNode("", true)
+                                  }, null, 8, _hoisted_15)
+                                ], 8, _hoisted_14)) : createCommentVNode("", true)
                               ]),
                               _: 2
                             }, 1024);
@@ -13246,7 +13248,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
             ], 64);
           }), 128))
         ]),
-        createBaseVNode("div", _hoisted_15, [
+        createBaseVNode("div", _hoisted_16, [
           createVNode(QInput, {
             dense: "",
             debounce: "300",
@@ -13267,17 +13269,17 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
             ]),
             _: 1
           }, 8, ["modelValue"]),
-          _hoisted_16,
           _hoisted_17,
-          createBaseVNode("div", _hoisted_18, [
+          _hoisted_18,
+          createBaseVNode("div", _hoisted_19, [
             (openBlock(true), createElementBlock(Fragment, null, renderList(unref(myitems).versions, (item) => {
               return openBlock(), createElementBlock("div", {
                 class: normalizeClass(["empt", calcClass(item.id)]),
                 onClick: ($event) => handleScroll(item.fileVersion),
                 key: item.fileVersion
               }, [
-                item.metadata.isPublic === true ? (openBlock(), createElementBlock("span", _hoisted_20, toDisplayString(item.fileVersion), 1)) : (openBlock(), createElementBlock("span", _hoisted_21, "\u0412\u043E\u0439\u0434\u0435\u0442 \u0432 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E"))
-              ], 10, _hoisted_19);
+                item.metadata.isPublic === true ? (openBlock(), createElementBlock("span", _hoisted_21, toDisplayString(item.fileVersion), 1)) : (openBlock(), createElementBlock("span", _hoisted_22, "\u0412\u043E\u0439\u0434\u0435\u0442 \u0432 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E"))
+              ], 10, _hoisted_20);
             }), 128))
           ]),
           createVNode(NotFound, {
@@ -13289,7 +13291,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var Version = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-58b1164c"]]);
+var Version = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-e498b4b4"]]);
 const _sfc_main = /* @__PURE__ */ defineComponent({
   name: "App",
   setup(__props) {
