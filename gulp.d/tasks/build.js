@@ -48,7 +48,7 @@ module.exports = (src, dest, preview) => () => {
         },
       },
     ]),
-    postcssVar({ preserve: preview }),
+    postcssVar({ importFrom: path.join(src, 'css', 'vars.css'), preserve: true }),
     preview ? postcssCalc : () => {},
     autoprefixer,
     preview
