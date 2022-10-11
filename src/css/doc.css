@@ -83,7 +83,7 @@
   position: absolute;
   text-decoration: none;
   width: 1.75ex;
-  margin-left: -1.5ex;
+  margin-left: -2ex;
   visibility: hidden;
   font-size: 0.8em;
   font-weight: normal;
@@ -96,7 +96,8 @@
 .doc h4 .anchor::before,
 .doc h5 .anchor::before,
 .doc h6 .anchor::before {
-  content: "\00a7";
+  content: "\e157";
+  font-family: "Material Icons", sans-serif;
 }
 
 .doc h1:hover .anchor,
@@ -227,6 +228,8 @@
 
 .doc p.tableblock + p.tableblock {
   margin-top: 0.5rem;
+  hyphens: auto;
+  word-wrap: anywhere;
 }
 
 .doc td.tableblock > .content > :first-child {
