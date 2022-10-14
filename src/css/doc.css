@@ -232,6 +232,12 @@
   word-break: break-word;
 }
 
+.doc p.tableblock + p.tableblock {
+  hyphens: auto;
+  word-wrap: anywhere;
+  word-break: break-word;
+}
+
 .doc td.tableblock > .content > :first-child {
   margin-top: 0;
 }
