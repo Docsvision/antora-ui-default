@@ -232,7 +232,7 @@
   word-break: break-word;
 }
 
-.doc p.tableblock + p.tableblock {
+.body .doc p.tableblock {
   hyphens: auto;
   word-wrap: anywhere;
   word-break: break-word;
