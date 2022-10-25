@@ -18,6 +18,10 @@
   }
 }
 
+.doc [id] {
+  scroll-margin-top: var(--toc-top);
+}
+
 .doc h1,
 .doc h2,
 .doc h3,
@@ -529,15 +533,21 @@
 }
 
 .doc ul.circle {
-  list-style-type: square;
+  list-style-type: circle;
 }
 
 .doc ul.disc {
-  list-style-type: square;
+  list-style-type: disc;
 }
 
 .doc ul.square {
   list-style-type: square;
+}
+
+.doc ul.circle ul:not([class]),
+.doc ul.disc ul:not([class]),
+.doc ul.square ul:not([class]) {
+  list-style: inherit;
 }
 
 .doc ol.arabic {
