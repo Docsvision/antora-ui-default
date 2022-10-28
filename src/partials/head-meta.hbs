@@ -3,7 +3,9 @@
     <meta name="page-component" content="{{page.component.name}}">
     <meta name="page-version" content="{{page.version}}">
     <meta name="page-url" content="{{page.url}}">
-	<meta name="version" content="{{page.componentVersion.displayVersion}}">
-	<meta name="title" content="{{page.component.title}}">
-	<meta name="context" content="{{page.componentVersion.displayVersion}} {{page.component.title}}">
+	<meta name="context" content="{{page.component.title}} {{page.componentVersion.displayVersion}}">
+	{{!--<div class="context">
+      <span class="title">{{page.component.title}}</span>
+      <span class="version">{{page.componentVersion.displayVersion}}</span>
+    </div>--}}
     {{/if}}
