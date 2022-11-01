@@ -2,10 +2,6 @@
 {{#with page.title}}
 <h1 class="page">{{{this}}}</h1>
 {{/with}}
-<div class="context">
-  <span class="title">{{page.component.title}}</span>
-  <span class="version">{{page.componentVersion.displayVersion}}</span>
-</div>
 {{{page.contents}}}
 {{> pagination}}
 </article>
