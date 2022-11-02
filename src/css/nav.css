@@ -255,3 +255,7 @@ html.is-clipped--nav {
   opacity: 0.9;
   font-weight: var(--body-font-weight-bold);
 }
+
+.body .nav div.context {
+  display: none;
+}
