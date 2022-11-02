@@ -1,15 +1,12 @@
 <aside class="nav-container nav-sidebar">
   <nav class="nav" aria-label="Docs">
   <div class="context">
-  <span class="title">{{page.component.title}}</span>
-  <span class="version">{{page.componentVersion.displayVersion}}</span>
-  {{#each ./versions}}
-  <span class="version
-  {{~#if (and (eq .. @root.page.component) (eq this @root.page.componentVersion))}} is-current{{/if~}}
-  {{~#if (eq this ../latest)}} is-latest{{/if}}">
-  {{./displayVersion}}
-  </span>
-  {{/each}}
-</div>
+    <span class="title">{{page.component.title}}</span>
+    <span class="version
+      {{~#if (and (eq .. @root.page.component) (eq this @root.page.componentVersion))}} is-current{{/if~}}
+      {{~#if (eq this ../latest)}} is-latest{{/if}}">
+      {{./displayVersion}}
+    </span>
+  </div>
   </nav>
 </aside>
