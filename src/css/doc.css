@@ -135,8 +135,14 @@
 }
 
 .doc i.fa {
+  display: inline-block;
+  background: no-repeat center / 1em 1em;
+  filter: var(--doc-icon-filter);
   hyphens: none;
   font-style: normal;
+  height: 1em;
+  width: 1em;
+  vertical-align: -0.125em;
 }
 
 .doc p code,
@@ -607,20 +613,18 @@
   padding-left: 1.75rem;
 }
 
-.doc ul.checklist p > i.fa-check-square-o:first-child,
-.doc ul.checklist p > i.fa-square-o:first-child {
-  display: inline-flex;
-  justify-content: center;
+.doc ul.checklist > li > * > i.fa-check-square-o:first-child,
+.doc ul.checklist > li > * > i.fa-square-o:first-child {
   width: 1.25rem;
   margin-left: -1.25rem;
 }
 
-.doc ul.checklist i.fa-check-square-o::before {
-  content: "\2713";
+.doc ul.checklist > li > * > i.fa-check-square-o:first-child {
+  background-image: url(../img/octicons-16.svg#view-tasklist);
 }
 
-.doc ul.checklist i.fa-square-o::before {
-  content: "\274f";
+.doc ul.checklist > li > * > i.fa-square-o:first-child {
+  background-image: url(../img/octicons-16.svg#view-tasklist-unchecked);
 }
 
 .doc .dlist .dlist,
