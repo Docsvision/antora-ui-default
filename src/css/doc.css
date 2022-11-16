@@ -362,57 +362,88 @@
 .doc .admonitionblock td.content {
   padding: 1rem 1rem 0.75rem;
   background: var(--admonition-background);
+  /*
+  border: 1px solid var(--color-smoke-90);
+  */
   width: 100%;
   word-wrap: anywhere;
 }
 
-.doc .admonitionblock .icon {
+.doc .admonitionblock td.icon {
   position: absolute;
   top: 0;
   left: 0;
   font-size: calc(15 / var(--rem-base) * 1rem);
-  padding: 0 0.5rem;
-  height: 1.25rem;
   line-height: 1;
-  font-weight: var(--admonition-label-font-weight);
-  text-transform: uppercase;
-  border-radius: 0.45rem;
   transform: translate(-0.5rem, -50%);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%) no-repeat left center / 2.075em 100%;
+  border-radius: 0.5em;
+  padding: 0.25em 0.075em;
 }
 
-.doc .admonitionblock.caution .icon {
+.doc .admonitionblock td.icon i {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  background-position-x: 0.5em;
+  filter: invert(100%);
+  padding-left: 2em;
+  vertical-align: initial;
+}
+
+.doc .admonitionblock td.icon i::after {
+  content: attr(title);
+  text-transform: uppercase;
+  filter: invert(100%); /* NOTE reverse the filter on the icon */
+  font-weight: var(--admonition-label-font-weight);
+  font-style: normal;
+  padding: 0 0.5em;
+  margin: -0.05em; /* NOTE account for slight offset in font */
+}
+
+.doc .admonitionblock.caution td.icon {
   background-color: var(--caution-color);
   color: var(--caution-on-color);
 }
 
-.doc .admonitionblock.important .icon {
+.doc .admonitionblock.caution td.icon i {
+  background-image: url(../img/octicons-16.svg#view-flame);
+}
+
+.doc .admonitionblock.important td.icon {
   background-color: var(--important-color);
   color: var(--important-on-color);
 }
 
-.doc .admonitionblock.note .icon {
+.doc .admonitionblock.important td.icon i {
+  background-image: url(../img/octicons-16.svg#view-stop);
+}
+
+.doc .admonitionblock.note td.icon {
   background-color: var(--note-color);
   color: var(--note-on-color);
 }
 
-.doc .admonitionblock.tip .icon {
+.doc .admonitionblock.note td.icon i {
+  background-image: url(../img/octicons-16.svg#view-info);
+}
+
+.doc .admonitionblock.tip td.icon {
   background-color: var(--tip-color);
   color: var(--tip-on-color);
 }
 
-.doc .admonitionblock.warning .icon {
+.doc .admonitionblock.tip td.icon i {
+  background-image: url(../img/octicons-16.svg#view-light-bulb);
+}
+
+.doc .admonitionblock.warning td.icon {
   background-color: var(--warning-color);
   color: var(--warning-on-color);
 }
 
-.doc .admonitionblock .icon i {
-  display: inline-flex;
-  align-items: center;
-  height: 100%;
-}
-
-.doc .admonitionblock .icon i::after {
-  content: attr(title);
+.doc .admonitionblock.warning td.icon i {
+  background-image: url(../img/octicons-16.svg#view-alert);
 }
 
 .doc .imageblock,
