@@ -3,4 +3,8 @@
     <meta name="page-component" content="{{page.component.name}}">
     <meta name="page-version" content="{{page.version}}">
     <meta name="page-url" content="{{page.url}}">
+    {{else if (eq page.layout '404')}}
+    <meta name="page-component" content="ROOT">
+    <meta name="page-version" content="">
+    <meta name="page-url" content="/404.html">
     {{/if}}
