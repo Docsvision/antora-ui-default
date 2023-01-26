@@ -7,5 +7,5 @@ main > .content {
 }
 
 body {
-	font-size: calc(16 / var(--rem-base) * 1rem) !important;
+  font-size: calc(16 / var(--rem-base) * 1rem);
 }
