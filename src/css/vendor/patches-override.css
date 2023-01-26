@@ -5,3 +5,7 @@ main > .content {
 .content article nav.pagination {
   margin: 2rem;
 }
+
+body {
+	font-size: calc(16 / var(--rem-base) * 1rem) !important;
+}
