@@ -1,10 +1,11 @@
 {{#with page.versions}}
 <div class="page-versions">
-  <button class="version-menu-toggle" title="Показать другие версии страницы">{{@root.page.componentVersion.displayVersion}}</button>
+  <button class="version-menu-toggle" title="Другие версии страницы">{{@root.page.componentVersion.displayVersion}}</button>
   <div class="version-menu">
     {{#each this}}
     <a class="version
       {{~#if (eq ./version @root.page.version)}} is-current{{/if~}}
+      {{~#if (eq ./version @current)}} is-current{{/if~}}
       {{~#if ./missing}} is-missing{{/if}}" href="{{{relativize ./url}}}">{{./displayVersion}}</a>
     {{/each}}
   </div>
