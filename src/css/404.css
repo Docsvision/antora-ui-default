@@ -17,20 +17,12 @@
 
 .dog-paragraph {
   position: relative;
-  background-color: var(--color-white); 
+  background-color: var(--color-white);
   background-size: fill;
   width: 400px;
   height: 300px;
   margin: 30px;
   padding: 0;
-}
-
-.dog {
-	position: absolute;
-	top: 52%;
-	width: 50vmin;
-	height: 40vmin;
-	z-index: var(--z-index-dog);
 }
 
 .dog {
