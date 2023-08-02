@@ -186,12 +186,12 @@
   transform: rotate(-4deg);
 }
 
-.legs____back--left {
+.legs__back--left {
   left: 69%;
   transform: rotate(-7deg);
 }
 
-.legs____back--right {
+.legs__back--right {
   left: 85%;
   transform: rotate(2deg);
 }
