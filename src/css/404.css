@@ -76,11 +76,11 @@
   animation: dog-head 1s $easing infinite;
   animation-fill-mode: both;
   animation-direction: alternate;
+}
 
-  @keyframes dog-head {
-    to {
-      transform: translateX(-3px) rotate(3deg);
-    }
+@keyframes dog-head {
+  to {
+    transform: translateX(-3px) rotate(3deg);
   }
 }
 
@@ -98,17 +98,17 @@
   z-index: var(--z-index-tail);
   transform: rotate(20deg);
   animation: dog-tail 370ms $easing infinite;
+}
 
-  @keyframes dog-tail {
-    from,
-    to {
-      transform: rotate(10deg);
-    }
+@keyframes dog-tail {
+  from,
+  to {
+    transform: rotate(10deg);
+  }
 
-    50%,
-    60% {
-      transform: rotate(70deg) translateX(10px) translateY(2px);
-    }
+  50%,
+  60% {
+    transform: rotate(70deg) translateX(10px) translateY(2px);
   }
 }
 
@@ -122,16 +122,16 @@
   background-color: var(--main-color);
   border-radius: 50%;
   animation: dog-tail-before 160ms $easing infinite;
+}
 
-  @keyframes dog-tail-before {
-    from,
-    to {
-      transform: translateX(0);
-    }
+@keyframes dog-tail-before {
+  from,
+  to {
+    transform: translateX(0);
+  }
 
-    50% {
-      transform: translateX(3px);
-    }
+  50% {
+    transform: translateX(3px);
   }
 }
 
@@ -237,19 +237,19 @@
   background-color: var(--black-color);
   z-index: var(--z-index-eyes);
   animation: dog-eye $interval * 9 infinite;
+}
 
-  @keyframes dog-eye {
-    from,
-    to {
-      animation-timing-function: step-end;
-      opacity: 1;
-    }
+@keyframes dog-eye {
+  from,
+  to {
+    animation-timing-function: step-end;
+    opacity: 1;
+  }
 
-    50%,
-    55% {
-      animation-timing-function: step-start;
-      opacity: 0;
-    }
+  50%,
+  55% {
+    animation-timing-function: step-start;
+    opacity: 0;
   }
 }
 
@@ -298,23 +298,23 @@
   animation: left-ear 2000ms ease-out infinite;
   animation-fill-mode: both;
   animation-direction: alternate;
+}
 
-  @keyframes left-ear {
-    from {
-      transform: rotate(-26deg);
-    }
+@keyframes left-ear {
+  from {
+    transform: rotate(-26deg);
+  }
 
-    25% {
-      transform: rotate(-35deg);
-    }
+  25% {
+    transform: rotate(-35deg);
+  }
 
-    50% {
-      transform: rotate(-26deg);
-    }
+  50% {
+    transform: rotate(-26deg);
+  }
 
-    to {
-      transform: rotate(-40deg);
-    }
+  to {
+    transform: rotate(-40deg);
   }
 }
 
@@ -332,23 +332,23 @@
   animation: right-ear 1000ms ease-out infinite;
   animation-fill-mode: both;
   animation-direction: alternate;
+}
 
-  @keyframes right-ear {
-    from {
-      transform: rotate(-331deg);
-    }
+@keyframes right-year {
+  from {
+    transform: rotate(-331deg);
+  }
 
-    25% {
-      transform: rotate(-320deg);
-    }
+  25% {
+    transform: rotate(-320deg);
+  }
 
-    50% {
-      transform: rotate(-331deg);
-    }
+  50% {
+    transform: rotate(-331deg);
+  }
 
-    to {
-      transform: rotate(-320deg);
-    }
+  to {
+    transform: rotate(-320deg);
   }
 }
 
