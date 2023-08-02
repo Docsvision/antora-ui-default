@@ -15,6 +15,10 @@
   color: var(--color-dv-font);
 }
 
+.dog-paragraph {
+  position: relative;
+}
+
 .dog {
   position: absolute;
   top: 52%;
@@ -68,7 +72,7 @@
   left: -4%;
 }
 
-.head {
+.dog-head {
   position: absolute;
   width: 100%;
   height: 100%;
