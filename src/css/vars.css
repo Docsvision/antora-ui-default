@@ -20,6 +20,28 @@
   --color-dv-green: #bbd02d;
   --color-dv-font: #4a3b87;
   --hover-green: #adc229;
+  --main-color: #f79e38;
+  --prime-color: #e99036;
+  --white-color: #eee;
+  --black-color: #000;
+  --red-color: #e64356;
+  --bg-color: var(--color-white);
+  --z-index-dog: 0;
+  --z-index-body: 3;
+  --z-index-head: 4;
+  --z-index-tail: 2;
+  --z-index-legs: 2;
+  --z-index-cheast: 4;
+  --z-index-hair: 2;
+  --z-index-face: 6;
+  --z-index-mouth: 6;
+  --z-index-eyes: 6;
+  --z-index-years: 0;
+  --z-index-nose: 7;
+  --duration: 2s;
+  --total-steps: 20;
+  --interval: 200ms;
+  --easing: ease-out;
   /* fonts */
   --rem-base: 16; /* used to compute rem value from desired pixel value (e.g., calc(18 / var(--rem-base) * 1rem) = 18px) */
   --body-font-size: 1.0625em; /* 17px */
