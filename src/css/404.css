@@ -17,6 +17,20 @@
 
 .dog-paragraph {
   position: relative;
+  background-color: var(--color-white); 
+  background-size: fill;
+  width: 400px;
+  height: 300px;
+  margin: 30px;
+  padding: 0;
+}
+
+.dog {
+	position: absolute;
+	top: 52%;
+	width: 50vmin;
+	height: 40vmin;
+	z-index: var(--z-index-dog);
 }
 
 .dog {
@@ -77,7 +91,7 @@
   width: 100%;
   height: 100%;
   z-index: var(--z-index-head);
-  animation: dog-head 1s $easing infinite;
+  animation: dog-head 1s var(--easing) infinite;
   animation-fill-mode: both;
   animation-direction: alternate;
 }
@@ -101,7 +115,7 @@
   border-bottom-left-radius: 40% 40%;
   z-index: var(--z-index-tail);
   transform: rotate(20deg);
-  animation: dog-tail 370ms $easing infinite;
+  animation: dog-tail 370ms var(--easing) infinite;
 }
 
 @keyframes dog-tail {
@@ -125,7 +139,7 @@
   height: 50%;
   background-color: var(--main-color);
   border-radius: 50%;
-  animation: dog-tail-before 160ms $easing infinite;
+  animation: dog-tail-before 160ms var(--easing) infinite;
 }
 
 @keyframes dog-tail-before {
@@ -240,7 +254,7 @@
   top: 24%;
   background-color: var(--black-color);
   z-index: var(--z-index-eyes);
-  animation: dog-eye $interval * 9 infinite;
+  animation: dog-eye var(--interval) * 9 infinite;
 }
 
 @keyframes dog-eye {
