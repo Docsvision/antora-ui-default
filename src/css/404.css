@@ -343,7 +343,7 @@
   animation-direction: alternate;
 }
 
-@keyframes right-year {
+@keyframes right-ear {
   from {
     transform: rotate(-331deg);
   }

@@ -31,12 +31,12 @@
   --z-index-head: 4;
   --z-index-tail: 2;
   --z-index-legs: 2;
-  --z-index-cheast: 4;
+  --z-index-chest: 4;
   --z-index-hair: 2;
   --z-index-face: 6;
   --z-index-mouth: 6;
   --z-index-eyes: 6;
-  --z-index-years: 0;
+  --z-index-ears: 0;
   --z-index-nose: 7;
   --duration: 2s;
   --total-steps: 20;
