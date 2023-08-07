@@ -17,11 +17,9 @@
 .dog-paragraph {
   position: relative;
   background-color: var(--color-white);
-  background-size: fill;
-  width: 400px;
-  height: 300px;
-  margin: 30px;
   padding: 0;
+  float: left;
+  display: block;
 }
 
 .dog {
