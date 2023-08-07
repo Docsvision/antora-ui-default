@@ -2,10 +2,11 @@
   {{#if page.breadcrumbs}}
   <ul>
     <li>
+    <span>
       {{~#if (and (eq .. @root.page.component) (eq this @root.page.componentVersion))}} is-current{{/if~}}
       {{~#if (eq this ../latest)}} is-latest{{/if}}">
       {{./displayVersion}}
-    </li>
+    </span></li>
     {{#with page.componentVersion}}
     {{#if (and ./title (ne ./title @root.page.breadcrumbs.0.content))}}
     <li><a href="{{{relativize ./url}}}">{{{./title}}}</a></li>
