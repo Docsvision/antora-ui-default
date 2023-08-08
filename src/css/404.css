@@ -15,12 +15,11 @@
 }
 
 .dog-paragraph {
-  position: absolute;
-  right: 0;
-  width: 50%;
-  height: 100%;
+  position: relative;
   background-color: var(--color-white);
   padding: 0;
+  width: 50%;
+  height: 50%;
 }
 
 .dog {
