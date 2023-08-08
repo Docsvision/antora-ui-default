@@ -1,16 +1,12 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   {{#if page.breadcrumbs}}
   <ul>
-  {{#if page.displayVersion.version}}
-    <li>
-      {{page.displayVersion.version}}
-    </li>
   {{/if~}}
-  <li>
-  {{~#if (and (eq .. @root.page.component) (eq this @root.page.componentVersion))}} is-current{{/if~}}
-  {{~#if (eq this ../latest)}} is-latest{{/if}}"
-  {{./displayVersion}}
-  {{page.componentVersion}}
+  {{~#if (has . displayVersion)}}
+  <li>{{. displayVersion}}</li>
+  {{else}}
+  <li>{{. componentVersion}}</li>
+{{/if~}}
   </li>
     {{#with page.componentVersion}}
     {{#if (and ./title (ne ./title @root.page.breadcrumbs.0.content))}}
