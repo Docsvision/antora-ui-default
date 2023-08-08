@@ -1,11 +1,11 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   {{#if page.breadcrumbs}}
   <ul>
-  {{~#if (./displayVersion)}}
+  {{#if ./displayVersion}}
   <li>{{./displayVersion}}</li>
   {{else}}
   <li>{{./componentVersion}}</li>
-{{/if~}}
+  {{/if}}
   </li>
     {{#with page.componentVersion}}
     {{#if (and ./title (ne ./title @root.page.breadcrumbs.0.content))}}
