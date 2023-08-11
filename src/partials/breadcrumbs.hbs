@@ -2,7 +2,7 @@
   {{#if page.breadcrumbs}}
   <ul>
   <li>
-  {{./componentVersion}}
+  {{page.componentVersion.version}}
   </li>
     {{#with page.componentVersion}}
     {{#if (and ./title (ne ./title @root.page.breadcrumbs.0.content))}}
