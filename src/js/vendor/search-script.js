@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 $('document').ready(function () {
 		var search = instantsearch({
 		  appId: 'BH4D9OD16A',

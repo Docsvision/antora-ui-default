@@ -8,8 +8,9 @@
 
 .ais-lvl0 {
   color: black;
-  font-size: 1.1em;
+  font-size: 1.1em
 }
+
 
 #ais-input-container input {
   width: 100%;
@@ -25,6 +26,6 @@
   padding-left: 10px;
 }
 
-input:focus {
+input:focus{
   outline: none;
 }
