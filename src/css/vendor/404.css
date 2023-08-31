@@ -1,4 +1,4 @@
-article.doc {
+.dog-grid {
   display: grid;
   grid-template-columns: 450px 1fr;
 }
@@ -24,7 +24,7 @@ article.doc {
   /* background: #dedede; */
 }
 
-.dog {
+ .dog {
   position: absolute;
   top: 95px;
   left: 100px;
