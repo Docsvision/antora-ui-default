@@ -1,8 +1,3 @@
-article.doc {
-  display: grid;
-  grid-template-columns: 450px 1fr;
-}
-
 .box__button {
   position: relative;
   background: var(--color-dv-font);
@@ -19,42 +14,44 @@ article.doc {
   color: var(--color-dv-font);
 }
 
-.place {
+.dog-paragraph {
   position: relative;
-  /* background: #dedede; */
+  background-color: var(--color-white);
+  padding: 0;
+  width: 50%;
+  height: 50%;
 }
 
 .dog {
   position: absolute;
-  top: 95px;
-  left: 100px;
-  width: 200px;
-  height: 200px;
-  z-index: 0;
+  top: 52%;
+  width: 50vmin;
+  height: 40vmin;
+  z-index: var(--z-index-dog);
 }
 
-.dogbody {
+.dog-body {
   position: absolute;
   width: 100%;
   height: 50%;
-  background-color: #f79e38;
+  background-color: var(--main-color);
   border-top-right-radius: 17% 40%;
   border-top-left-radius: 25%;
   border-bottom-right-radius: 5% 13%;
   border-bottom-left-radius: 30% 40%;
-  z-index: 3;
+  z-index: var(--z-index-body);
 }
 
 .chest {
   position: absolute;
   width: 45%;
   height: 100%;
-  background-color: #eee;
+  background-color: var(--white-color);
   border-top-right-radius: 17% 40%;
   border-top-left-radius: 25%;
   border-bottom-right-radius: 40% 40%;
   border-bottom-left-radius: 40% 40%;
-  z-index: 4;
+  z-index: var(--z-index-chest);
 }
 
 .chest::after,
@@ -64,7 +61,7 @@ article.doc {
   width: 7%;
   height: 55%;
   border-radius: 39%;
-  background-color: #eee;
+  background-color: var(--white-color);
 }
 
 .chest::after {
@@ -78,17 +75,17 @@ article.doc {
   left: -4%;
 }
 
-.doghead {
+.dog-head {
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 4;
-  animation: dog-doghead 1s ease-out infinite;
+  z-index: var(--z-index-head);
+  animation: dog-head 1s var(--easing) infinite;
   animation-fill-mode: both;
   animation-direction: alternate;
 }
 
-@keyframes dog-doghead {
+@keyframes dog-head {
   to {
     transform: translateX(-3px) rotate(3deg);
   }
@@ -100,14 +97,14 @@ article.doc {
   left: 92%;
   width: 10%;
   height: 45%;
-  background-color: #f79e38;
+  background-color: var(--main-color);
   border-top-right-radius: 30% 30%;
   border-top-left-radius: 40% 30%;
   border-bottom-right-radius: 30% 40%;
   border-bottom-left-radius: 40% 40%;
-  z-index: 2;
+  z-index: var(--z-index-tail);
   transform: rotate(20deg);
-  animation: dog-tail 370ms ease-out infinite;
+  animation: dog-tail 370ms var(--easing) infinite;
 }
 
 @keyframes dog-tail {
@@ -129,9 +126,9 @@ article.doc {
   left: -7%;
   width: 100%;
   height: 50%;
-  background-color: #f79e38;
+  background-color: var(--main-color);
   border-radius: 50%;
-  animation: dog-tail-before 160ms ease-out infinite;
+  animation: dog-tail-before 160ms var(--easing) infinite;
 }
 
 @keyframes dog-tail-before {
@@ -151,14 +148,14 @@ article.doc {
   left: 0;
   width: 100%;
   height: 30%;
-  z-index: 2;
+  z-index: var(--z-index-legs);
 }
 
 .legs__front,
 .legs__back {
   width: 10%;
   height: 100%;
-  background-color: #f79e38;
+  background-color: var(--main-color);
   position: absolute;
   border-bottom-right-radius: 100%;
   border-bottom-left-radius: 100%;
@@ -171,7 +168,7 @@ article.doc {
   top: 50%;
   width: 100%;
   height: 49%;
-  background-color: #eee;
+  background-color: var(--white-color);
   border-bottom-right-radius: 100%;
   border-bottom-left-radius: 100%;
 }
@@ -202,18 +199,18 @@ article.doc {
   position: absolute;
   top: -13%;
   left: -3%;
-  background-color: #eee;
+  background-color: var(--white-color);
   border-top-right-radius: 45% 50%;
   border-top-left-radius: 35% 50%;
   border-bottom-left-radius: 35% 21%;
-  z-index: 6;
+  z-index: var(--z-index-face);
 }
 
 .face::after,
 .face::before {
   content: '';
   position: absolute;
-  background-color: #f79e38;
+  background-color: var(--main-color);
 }
 
 .face::after {
@@ -244,9 +241,9 @@ article.doc {
   position: absolute;
   border-radius: 100%;
   top: 24%;
-  background-color: #000;
-  z-index: 6;
-  animation: dog-eye 1800ms infinite;
+  background-color: var(--black-color);
+  z-index: var(--z-index-eyes);
+  animation: dog-eye var(--interval) * 9 infinite;
 }
 
 @keyframes dog-eye {
@@ -273,12 +270,12 @@ article.doc {
 
 .mouth {
   background-color: transparent;
-  border-color: #000;
+  border-color: var(--black-color);
   width: 44%;
   border-style: solid;
   border-width: 0.7vmin;
   height: 48%;
-  z-index: 6;
+  z-index: var(--z-index-mouth);
   position: absolute;
   bottom: 35%;
   left: 14%;
@@ -300,8 +297,8 @@ article.doc {
   left: 3%;
   height: 47%;
   width: 19%;
-  z-index: 0;
-  background-color: #e99036;
+  z-index: var(--z-index-ears);
+  background-color: var(--prime-color);
   border-top-left-radius: 68% 100%;
   border-top-right-radius: 100% 100%;
   transform-origin: bottom center;
@@ -333,8 +330,8 @@ article.doc {
   left: 19%;
   height: 38%;
   width: 18%;
-  z-index: 0;
-  background-color: #f79e38;
+  z-index: var(--z-index-ears);
+  background-color: var(--main-color);
   border-top-left-radius: 56% 100%;
   border-top-right-radius: 100% 100%;
   transform-origin: bottom center;
@@ -366,8 +363,8 @@ article.doc {
   position: absolute;
   width: 24%;
   height: 24%;
-  background-color: #eee;
-  z-index: 7;
+  background-color: var(--white-color);
+  z-index: var(--z-index-nose);
   left: -12%;
   top: -3%;
   border-bottom-left-radius: 50% 88%;
@@ -380,7 +377,7 @@ article.doc {
   position: absolute;
   width: 50%;
   height: 55%;
-  background-color: #000;
+  background-color: var(--black-color);
   border-radius: 100%;
   left: -7%;
   top: -18%;
