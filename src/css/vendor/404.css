@@ -1,8 +1,3 @@
-.dog-grid {
-  display: grid;
-  grid-template-columns: 450px 1fr;
-}
-
 .box__button {
   position: relative;
   background: var(--color-dv-font);
@@ -19,6 +14,11 @@
   color: var(--color-dv-font);
 }
 
+.dog-grid {
+  display: grid;
+  grid-template-columns: 450px 1fr;
+}
+
 .place {
   position: relative;
   /* background: #dedede; */
@@ -33,7 +33,7 @@
   z-index: 0;
 }
 
-.dogbody {
+.dog-body {
   position: absolute;
   width: 100%;
   height: 50%;
@@ -78,17 +78,17 @@
   left: -4%;
 }
 
-.doghead {
+.dog-head {
   position: absolute;
   width: 100%;
   height: 100%;
   z-index: 4;
-  animation: dog-doghead 1s ease-out infinite;
+  animation: dog-head 1s ease-out infinite;
   animation-fill-mode: both;
   animation-direction: alternate;
 }
 
-@keyframes dog-doghead {
+@keyframes dog-head {
   to {
     transform: translateX(-3px) rotate(3deg);
   }
