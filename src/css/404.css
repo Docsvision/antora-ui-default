@@ -1,3 +1,8 @@
+article.doc {
+  display: grid;
+  grid-template-columns: 450px 1fr;
+}
+
 .box__button {
   position: relative;
   background: var(--color-dv-font);
@@ -14,44 +19,42 @@
   color: var(--color-dv-font);
 }
 
-.dog-paragraph {
+.place {
   position: relative;
-  background-color: var(--color-white);
-  padding: 0;
-  width: 50%;
-  height: 50%;
+  /* background: #dedede; */
 }
 
 .dog {
   position: absolute;
-  top: 52%;
-  width: 50vmin;
-  height: 40vmin;
-  z-index: var(--z-index-dog);
+  top: 95px;
+  left: 100px;
+  width: 200px;
+  height: 200px;
+  z-index: 0;
 }
 
-.dog-body {
+.dogbody {
   position: absolute;
   width: 100%;
   height: 50%;
-  background-color: var(--main-color);
+  background-color: #f79e38;
   border-top-right-radius: 17% 40%;
   border-top-left-radius: 25%;
   border-bottom-right-radius: 5% 13%;
   border-bottom-left-radius: 30% 40%;
-  z-index: var(--z-index-body);
+  z-index: 3;
 }
 
 .chest {
   position: absolute;
   width: 45%;
   height: 100%;
-  background-color: var(--white-color);
+  background-color: #eee;
   border-top-right-radius: 17% 40%;
   border-top-left-radius: 25%;
   border-bottom-right-radius: 40% 40%;
   border-bottom-left-radius: 40% 40%;
-  z-index: var(--z-index-chest);
+  z-index: 4;
 }
 
 .chest::after,
@@ -61,7 +64,7 @@
   width: 7%;
   height: 55%;
   border-radius: 39%;
-  background-color: var(--white-color);
+  background-color: #eee;
 }
 
 .chest::after {
@@ -75,17 +78,17 @@
   left: -4%;
 }
 
-.dog-head {
+.doghead {
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: var(--z-index-head);
-  animation: dog-head 1s var(--easing) infinite;
+  z-index: 4;
+  animation: dog-doghead 1s ease-out infinite;
   animation-fill-mode: both;
   animation-direction: alternate;
 }
 
-@keyframes dog-head {
+@keyframes dog-doghead {
   to {
     transform: translateX(-3px) rotate(3deg);
   }
@@ -97,14 +100,14 @@
   left: 92%;
   width: 10%;
   height: 45%;
-  background-color: var(--main-color);
+  background-color: #f79e38;
   border-top-right-radius: 30% 30%;
   border-top-left-radius: 40% 30%;
   border-bottom-right-radius: 30% 40%;
   border-bottom-left-radius: 40% 40%;
-  z-index: var(--z-index-tail);
+  z-index: 2;
   transform: rotate(20deg);
-  animation: dog-tail 370ms var(--easing) infinite;
+  animation: dog-tail 370ms ease-out infinite;
 }
 
 @keyframes dog-tail {
@@ -126,9 +129,9 @@
   left: -7%;
   width: 100%;
   height: 50%;
-  background-color: var(--main-color);
+  background-color: #f79e38;
   border-radius: 50%;
-  animation: dog-tail-before 160ms var(--easing) infinite;
+  animation: dog-tail-before 160ms ease-out infinite;
 }
 
 @keyframes dog-tail-before {
@@ -148,14 +151,14 @@
   left: 0;
   width: 100%;
   height: 30%;
-  z-index: var(--z-index-legs);
+  z-index: 2;
 }
 
 .legs__front,
 .legs__back {
   width: 10%;
   height: 100%;
-  background-color: var(--main-color);
+  background-color: #f79e38;
   position: absolute;
   border-bottom-right-radius: 100%;
   border-bottom-left-radius: 100%;
@@ -168,7 +171,7 @@
   top: 50%;
   width: 100%;
   height: 49%;
-  background-color: var(--white-color);
+  background-color: #eee;
   border-bottom-right-radius: 100%;
   border-bottom-left-radius: 100%;
 }
@@ -199,18 +202,18 @@
   position: absolute;
   top: -13%;
   left: -3%;
-  background-color: var(--white-color);
+  background-color: #eee;
   border-top-right-radius: 45% 50%;
   border-top-left-radius: 35% 50%;
   border-bottom-left-radius: 35% 21%;
-  z-index: var(--z-index-face);
+  z-index: 6;
 }
 
 .face::after,
 .face::before {
   content: '';
   position: absolute;
-  background-color: var(--main-color);
+  background-color: #f79e38;
 }
 
 .face::after {
@@ -241,9 +244,9 @@
   position: absolute;
   border-radius: 100%;
   top: 24%;
-  background-color: var(--black-color);
-  z-index: var(--z-index-eyes);
-  animation: dog-eye var(--interval) * 9 infinite;
+  background-color: #000;
+  z-index: 6;
+  animation: dog-eye 1800ms infinite;
 }
 
 @keyframes dog-eye {
@@ -270,12 +273,12 @@
 
 .mouth {
   background-color: transparent;
-  border-color: var(--black-color);
+  border-color: #000;
   width: 44%;
   border-style: solid;
   border-width: 0.7vmin;
   height: 48%;
-  z-index: var(--z-index-mouth);
+  z-index: 6;
   position: absolute;
   bottom: 35%;
   left: 14%;
@@ -297,8 +300,8 @@
   left: 3%;
   height: 47%;
   width: 19%;
-  z-index: var(--z-index-ears);
-  background-color: var(--prime-color);
+  z-index: 0;
+  background-color: #e99036;
   border-top-left-radius: 68% 100%;
   border-top-right-radius: 100% 100%;
   transform-origin: bottom center;
@@ -330,8 +333,8 @@
   left: 19%;
   height: 38%;
   width: 18%;
-  z-index: var(--z-index-ears);
-  background-color: var(--main-color);
+  z-index: 0;
+  background-color: #f79e38;
   border-top-left-radius: 56% 100%;
   border-top-right-radius: 100% 100%;
   transform-origin: bottom center;
@@ -363,8 +366,8 @@
   position: absolute;
   width: 24%;
   height: 24%;
-  background-color: var(--white-color);
-  z-index: var(--z-index-nose);
+  background-color: #eee;
+  z-index: 7;
   left: -12%;
   top: -3%;
   border-bottom-left-radius: 50% 88%;
@@ -377,7 +380,7 @@
   position: absolute;
   width: 50%;
   height: 55%;
-  background-color: var(--black-color);
+  background-color: #000;
   border-radius: 100%;
   left: -7%;
   top: -18%;
