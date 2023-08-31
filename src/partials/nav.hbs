@@ -5,7 +5,7 @@
     <span class="version>
       {{~#if (and (eq .. @root.page.component) (eq this @root.page.componentVersion))}} is-current{{/if~}}
       {{~#if (eq this ../latest)}} is-latest{{/if}}">
-      {{./displayVersion}}
+      {{page.version}}
     </span>
   </div>
   </nav>
