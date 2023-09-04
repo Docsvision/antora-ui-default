@@ -1,24 +1,14 @@
 <aside class="toc sidebar" data-title="{{or page.attributes.toctitle 'Содержание'}}" data-levels="{{{or page.attributes.toclevels 2}}}">
 <div class="sidebar-box">
-    {{> toolbar}}
     <div class="toc-menu"></div>
     <div class="is-this-helpful-box">
-      <h4> Is this page helpful?</h4>
       <div class="any-feedback">
-        <a href="#" class="btn any-feedback-btn" id="myCustomTrigger">Leave Additional Feedback? </a>
+        <a href="#" class="btn any-feedback-btn" id="myCustomTrigger">Ошибка в документации?</a>
       </div>
       <div class="dialog-box" id="dialogBox">
         <form>
             <div class="form-group " id="additionalFeedbackBox">
-              <textarea class="input-control feed-back-msg" rows="8" placeholder="Any Additonal Feedback?"></textarea>
-
-              <div class="action-btn-row ">
-                <a href="#" class="skip-btn" id="skipBtnMsg">Skip</a>
-                  <button class="submit-btn btn blue-btn disabled" > Submit  </button>
-                  <a href="#" class="info-btn"><i class="fas fa-info-circle"></i></a>
-              </div>
-
-
+              <textarea class="input-control feed-back-msg" rows="8" placeholder="Ошибка в документации?"></textarea>
             </div>
 
             {{!-- <div class="leave-addtional-box" id="leaveAddtinalBox">
@@ -44,9 +34,7 @@
     </div>
     <div class="popup-content">
       <p>
-        Please use the form below to provide your feedback. Because your feedback is valuable to us,
-         the information you submit in this form is recorded in our issue tracking system (JIRA), which is publicly available.
-        You can track the status of your feedback using the ticket number displayed in the dialog once you submit the form.
+        Пожалуйста, оставьте замечания в форме ниже. Ваша информация поможет улучшить документацию. При нажатии кнопки "Отправить" будет автоматически создана ошибка в нашей системе отслеживания ошибок (YouTrack), исправление будет выполнено в ближайшее время. Вы сможете отследить статус изменений через техническую поддержку Docsvision, используя номер ошибки, который отобразится после отправки формы.
       </p>
     </div>
   </div>
