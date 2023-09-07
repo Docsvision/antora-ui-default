@@ -1,3 +1,8 @@
+{{#if (eq page.layout 'patches')}}
+<aside class="toc sidebar" data-title="{{or page.attributes.toctitle 'Содержание'}}" data-levels="{{{or page.attributes.toclevels 2}}}">
+  <div class="toc-menu"></div>
+</aside>
+{{else}}
 <aside class="toc sidebar" data-title="{{or page.attributes.toctitle 'Содержание'}}" data-levels="{{{or page.attributes.toclevels 2}}}">
 <div class="sidebar-box">
     <div class="toc-menu"></div>
@@ -41,3 +46,4 @@
 </div>
 
 {{!-- <script src="https://kit.fontawesome.com/4a5569d39d.js" crossorigin="anonymous"></script> --}}
+{{/if}}
