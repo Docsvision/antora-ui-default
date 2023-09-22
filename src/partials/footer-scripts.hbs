@@ -5,6 +5,11 @@
 <script src="{{{uiRootPath}}}/js/nav.js"></script>
 {{/if}}
 <script id="site-script" src="{{{uiRootPath}}}/js/site.js" data-ui-root-path="{{{uiRootPath}}}"></script>
+{{#if (eq page.layout 'home')}}
+<script async src="{{{uiRootPath}}}/js/vendor/tabs.js"></script>
+{{else}}
+{{/if}}
+<script async src="{{{uiRootPath}}}/js/vendor/tabs.js"></script>
 <script async src="{{{uiRootPath}}}/js/vendor/highlight.js"></script>
 {{#if env.SITE_SEARCH_PROVIDER}}
 {{> search-scripts}}
