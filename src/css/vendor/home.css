@@ -1,3 +1,53 @@
-#general {
-  color: red;
+.sect1 .sectionbody {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media screen and (max-width: 700px) {
+  .sect1 .sectionbody {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.doc .sidebarblock {
+  background: #fff;
+  padding: 1rem;
+  border: 1px solid #eee;
+  box-shadow: 0 0.5rem 1.5rem -0.75rem rgba(36, 34, 66, 0.3);
+  border-radius: 0.25rem;
+  transition: all 0.5s;
+  margin-top: 0;
+}
+
+.doc .sidebarblock ul {
+  font-size: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebarblock ul li {
+  margin-bottom: 0.5rem;
+}
+
+.sidebarblock ul li p {
+  margin: 0;
+  padding: 0;
+}
+
+.sidebarblock:hover {
+  border-color: var(--link-font-color);
+  box-shadow: 0.1rem 0.5rem 2rem rgba(36, 34, 66, 0.3);
+}
+
+.doc .sidebarblock > .content > .title {
+  font-size: 1rem;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.doc .sidebarblock p {
+  font-size: 0.8rem;
+  line-height: 1.2;
 }
