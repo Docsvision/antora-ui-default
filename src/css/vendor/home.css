@@ -1,7 +1,11 @@
-.sect1 .sectionbody {
+.tabpanel {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+}
+
+.doc {
+  max-width: initial;
 }
 
 @media screen and (max-width: 700px) {
