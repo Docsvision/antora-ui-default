@@ -68,9 +68,15 @@
   width: 80%;
 }
 
+#search-field span {
+  width: 100%;
+}
+
 #search-input {
   width: 100%;
   height: 42px;
+  border: 1px solid #ccc;
+  font-size: 19px;
 }
 
 #search-input:focus {
