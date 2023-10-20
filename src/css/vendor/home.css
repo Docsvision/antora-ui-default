@@ -83,7 +83,7 @@
   outline: 2px solid var(--color-dv-green);
 }
 
-.algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu {
+.algolia-autocomplete.algolia-autocomplete-right.ds-dropdown-menu {
   right: initial !important;
 }
 
