@@ -162,15 +162,8 @@ body {
   cursor: pointer;
 }
 
-.navbar-item .navbar-link .version-toggler {
+.navbar-menu .navbar-end .version-toggler .navbar-link {
   background: hsl(68 64% 43% / 1);
-  background-color: var(--color-dv-green);
-  color: var(--navbar-font-color);
-}
-
-.navbar-item .navbar-link .version-toggler:hover {
-  background-color: var(--color-dv-font);
-  color: var(--toolbar-font-color);
 }
 
 .navbar-item.has-dropdown {
