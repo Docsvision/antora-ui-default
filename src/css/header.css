@@ -164,6 +164,13 @@ body {
 
 .navbar-link .version-toggler {
   background: hsl(68 64% 43% / 1);
+  background-color: var(--color-dv-green);
+  color: var(--navbar-font-color);
+}
+
+.navbar-link .version-toggler:hover {
+  background-color: var(--color-dv-font);
+  color: var(--toolbar-font-color);
 }
 
 .navbar-item.has-dropdown {
