@@ -1,0 +1,48 @@
+{{#if (eq page.layout 'patches')}}
+<aside class="toc sidebar" data-title="{{or page.attributes.toctitle 'Содержание'}}" data-levels="{{{or page.attributes.toclevels 2}}}">
+  <div class="toc-menu"></div>
+</aside>
+{{else}}
+<aside class="toc sidebar" data-title="{{or page.attributes.toctitle 'Содержание'}}" data-levels="{{{or page.attributes.toclevels 2}}}">
+<div class="sidebar-box">
+    <div class="toc-menu"></div>
+</div>
+<div class="is-this-helpful-box">
+      <div class="any-feedback">
+        <a href="#" class="btn any-feedback-btn" id="myCustomTrigger">Ошибка в документации?</a>
+      </div>
+      <div class="dialog-box" id="dialogBox">
+        <form>
+            <div class="form-group " id="additionalFeedbackBox">
+              <textarea class="input-control feed-back-msg" rows="8" placeholder="Ошибка в документации?"></textarea>
+            </div>
+
+            {{!-- <div class="leave-addtional-box" id="leaveAddtinalBox">
+              <div class="text-msg"> <p>Leave Additional Feedback?</p> </div>
+                    <div class="action-btn-row leave-feedback-btn-row">
+                      <a href="#" class="skip-btn" id="skipLeaveBtn">Skip</a>
+                      <button class="yes-btn btn blue-btn"> Yes  </button>
+
+                </div>
+            </div> --}}
+        </form>
+
+      </div>
+    </div>
+
+</aside>
+
+<div class="feedback-modal modal-popup">
+  <div class="modal-popup-dialogue">
+    <div class="popup-header">
+      <a href="#" class="close-popup"><i class="fa fa-times"></i></a>
+    </div>
+    <div class="popup-content">
+      <p>
+        Пожалуйста, оставьте замечания в форме ниже. Ваша информация поможет улучшить документацию. При нажатии кнопки "Отправить" будет автоматически создана ошибка в нашей системе отслеживания ошибок (YouTrack), исправление будет выполнено в ближайшее время. Вы сможете отследить статус изменений через техническую поддержку Docsvision, используя номер ошибки, который отобразится после отправки формы.
+      </p>
+    </div>
+  </div>
+</div>
+{{!-- <script src="https://kit.fontawesome.com/4a5569d39d.js" crossorigin="anonymous"></script> --}}
+{{/if}}
