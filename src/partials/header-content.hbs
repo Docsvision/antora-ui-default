@@ -19,18 +19,22 @@
       <div class="navbar-end">
         <div class="navbar-item has-dropdown is-hoverable version-toggler">
           <div class="navbar-link">
-		    {{#if (eq site.url 'https://help.docsvision.com/dv5/')}}
+		    {{#if (eq site.url '{{{site.url siteRootPath}}}/dv5/')}}
 		    Docsvision 5
-		    {{else}}
-		    Docsvision Linux Edition
+			{{else}}
+			{{#if (eq site.url '{{{site.url siteRootPath}}}/dv6/')}}
+			Docsvision Linux Edition
+			{{else}}
+		    Все версии
 		    {{/if}}
+			{{/if}}
 		  </div>
           <div class="navbar-dropdown">
             <a class="navbar-item" href="/dv5/">Docsvision 5</a>
             <a class="navbar-item" href="/dv6/">Docsvision Linux Edition</a>
           </div>
         </div>
-        <a class="navbar-item" href="https://docsvision.com/">Сайт Docsvision</a>
+        <a class="navbar-item" href="https://docsvision.com/">Docsvision.com</a>
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link">Дополнительно</div>
           <div class="navbar-dropdown is-right">
