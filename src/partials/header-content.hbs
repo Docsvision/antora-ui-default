@@ -17,12 +17,28 @@
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
+      {{#if env.ANTORA_PROD_BUILD}}
         <div class="navbar-item has-dropdown is-hoverable version-toggler">
           <div class="navbar-link">
-		    {{#if (eq site.url 'https://help.docsvision.com/dv5/')}}
+		    {{#if (eq site.url '/dv5')}}
 		    Docsvision 5
 			{{else}}
-			{{#if (eq site.url 'https://help.docsvision.com/dv6/')}}
+			Docsvision Linux Edition
+		    Все версии
+			{{/if}}
+		  </div>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="/dv5">Docsvision 5</a>
+            <a class="navbar-item" href="/dv6">Docsvision Linux Edition</a>
+          </div>
+        </div>
+      {{else}}
+        <div class="navbar-item has-dropdown is-hoverable version-toggler">
+          <div class="navbar-link">
+		    {{#if (eq site.url '/dv5')}}
+		    Docsvision 5
+			{{else}}
+			{{#if (eq site.url '/dv6')}}
 			Docsvision Linux Edition
 			{{else}}
 		    Все версии
@@ -31,10 +47,11 @@
 		  </div>
           <div class="navbar-dropdown">
             <a class="navbar-item" href="/">Все версии</a>
-            <a class="navbar-item" href="/dv5/">Docsvision 5</a>
-            <a class="navbar-item" href="/dv6/">Docsvision Linux Edition</a>
+            <a class="navbar-item" href="/dv5">Docsvision 5</a>
+            <a class="navbar-item" href="/dv6">Docsvision Linux Edition</a>
           </div>
         </div>
+        {{/if}}
         <a class="navbar-item" href="https://docsvision.com/">Docsvision.com</a>
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link">Дополнительно</div>
