@@ -1,7 +1,11 @@
 {{> head-prelude}}
 {{> head-title}}
 {{> head-info}}
+{{#if (eq page.layout '404')}}
+{{> head-styles-404}}
+{{else}}
 {{> head-styles}}
+{{/if}}
 {{> head-meta}}
 {{> head-scripts}}
 {{> head-icons}}

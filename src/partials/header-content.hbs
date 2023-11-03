@@ -5,16 +5,53 @@
         <img src="{{{uiRootPath}}}/img/logo.svg" alt="ДВ-Лого" width="24"></a>
       <a class="navbar-item title" href="{{{or site.url siteRootPath}}}">{{site.title}}</a>
       {{#if env.SITE_SEARCH_PROVIDER}}
+      {{#if (eq page.layout 'home')}}
+      {{else}}
       <div class="navbar-item search hide-for-print">
         <div id="search-field" class="field">
           <input id="search-input" type="text" placeholder="Поиск"{{#if page.home}} autofocus{{/if}}>
         </div>
       </div>
       {{/if}}
+      {{/if}}
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="https://docsvision.com/">Сайт Docsvision</a>
+      {{#if env.ANTORA_PROD_BUILD}}
+        <div class="navbar-item has-dropdown is-hoverable version-toggler">
+          <div class="navbar-link">
+		    {{#if (eq site.url '/dv5')}}
+		    Docsvision 5
+			{{else}}
+			Docsvision Linux Edition
+			{{/if}}
+		  </div>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="/dv5">Docsvision 5</a>
+            <a class="navbar-item" href="/dv6">Docsvision Linux Edition</a>
+          </div>
+        </div>
+      {{else}}
+        <div class="navbar-item has-dropdown is-hoverable version-toggler">
+          <div class="navbar-link">
+		    {{#if (eq site.url '/dv5')}}
+		    Docsvision 5
+			{{else}}
+			{{#if (eq site.url '/dv6')}}
+			Docsvision Linux Edition
+			{{else}}
+		    Все версии
+		    {{/if}}
+			{{/if}}
+		  </div>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="/">Все версии</a>
+            <a class="navbar-item" href="/dv5">Docsvision 5</a>
+            <a class="navbar-item" href="/dv6">Docsvision Linux Edition</a>
+          </div>
+        </div>
+        {{/if}}
+        <a class="navbar-item" href="https://docsvision.com/">Docsvision.com</a>
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link">Дополнительно</div>
           <div class="navbar-dropdown is-right">
