@@ -31,7 +31,7 @@
                     <p>Страница, которую вы ищете, не существует. возможно, она была перемещена, или её съела собака. 
                         <ul>
                             <li><button class="box__button" onclick="history.back()">Вернитесь</button> на предыдущую страницу,</li>
-                            <li>{{#with site.homeUrl}}<a href="{{{this}}}"><button class="box__button">Откройте</button></a> стартовую страницу,{{/with}}</li>
+                            <li>{{#with site.url}}<a href="{{{this}}}"><button class="box__button">Откройте</button></a> стартовую страницу,{{/with}}</li>
                             <li>Если вы ввели адрес вручную, проверьте адресную строку ещё раз: возможно, вы где-то ошиблись.</li>
                         </ul>
                     </p>
