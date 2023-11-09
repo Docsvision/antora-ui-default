@@ -3,6 +3,7 @@
     <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','{{this}}')</script>
     {{/with}}
     {{!-- <script>var uiRootPath = '{{{uiRootPath}}}'</script> --}}
+    {{#if env.ANTORA_PROD_BUILD}}
     <!-- Yandex.Metrika counter -->
 
 <script type="text/javascript" >
@@ -21,4 +22,4 @@
 
 <noscript><div><img src="https://mc.yandex.ru/watch/95506341" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-   
+   {{/if}}
