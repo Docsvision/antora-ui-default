@@ -2,7 +2,12 @@
 {{#if (eq page.layout '404')}}
 {{else}}
 <script src="{{uiRootPath}}/js/vendor/icondefs.js"></script>
-<script src="{{{uiRootPath}}}/js/nav.js"></script>
+<script id="navigator-script" src="{{{uiRootPath}}}/js/nav.js"
+  data-t-home="Домой"
+  data-t-current-version="Последняя версия"
+  data-t-previous-versions="Предыдущие версии"
+  data-t-prerelease-versions="Версии в разработке">
+</script>
 {{/if}}
 <script id="site-script" src="{{{uiRootPath}}}/js/site.js" data-ui-root-path="{{{uiRootPath}}}"></script>
 {{#if (eq page.layout 'home')}}
