@@ -6,9 +6,9 @@
   var TRAILING_SPACE_RX = / +$/gm
 
   var config = (document.getElementById('site-script') || { dataset: {} }).dataset
-  var uiRootPath = config.uiRootPath == null ? '.' : config.uiRootPath
-  var svgAs = config.svgAs
   var supportsCopy = window.navigator.clipboard
+  var svgAs = config.svgAs
+  var uiRootPath = (config.uiRootPath == null ? window.uiRootPath : config.uiRootPath) || '.'
 
   ;[].slice.call(document.querySelectorAll('.doc pre.highlight, .doc .literalblock pre')).forEach(function (pre) {
     var code, language, lang, copy, toast, toolbox
@@ -50,7 +50,7 @@
         copy.appendChild(img)
       }
       ;(toast = document.createElement('span')).className = 'copy-toast'
-      toast.appendChild(document.createTextNode('Copied!'))
+      toast.appendChild(document.createTextNode('Скопировано!'))
       copy.appendChild(toast)
       toolbox.appendChild(copy)
     }
