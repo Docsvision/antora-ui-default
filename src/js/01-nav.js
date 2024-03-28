@@ -4,7 +4,10 @@
   var SECT_CLASS_RX = /^sect[0-5](?=$| )/
 
   var navContainer = document.querySelector('.nav-container')
-  var navToggle = document.querySelector('.toolbar .nav-toggle')
+  if (!navContainer) return
+  var navToggle = document.querySelector('.nav-toggle')
+  var nav = navContainer.querySelector('.nav')
+  var navMenuToggle = navContainer.querySelector('.nav-menu-toggle')
 
   navToggle.addEventListener('click', showNav)
   navContainer.addEventListener('click', trapEvent)
