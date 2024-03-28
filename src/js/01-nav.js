@@ -5,9 +5,7 @@
 
   var navContainer = document.querySelector('.nav-container')
   if (!navContainer) return
-  var navToggle = document.querySelector('.nav-toggle')
-  var nav = navContainer.querySelector('.nav')
-  var navMenuToggle = navContainer.querySelector('.nav-menu-toggle')
+  var navToggle = document.querySelector('.toolbar .nav-toggle')
 
   navToggle.addEventListener('click', showNav)
   navContainer.addEventListener('click', trapEvent)
