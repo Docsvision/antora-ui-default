@@ -4,6 +4,7 @@
   var SECT_CLASS_RX = /^sect[0-5](?=$| )/
 
   var navContainer = document.querySelector('.nav-container')
+  var navBar = document.querySelector('nav.navbar')
   if (!navContainer) return
   var navToggle = document.querySelector('.toolbar .nav-toggle')
 
@@ -171,18 +172,18 @@
   function fitNavInit (e) {
     window.removeEventListener('scroll', fitNav)
     if (window.getComputedStyle(navContainer).position === 'fixed') return
-    navBounds.availableHeight = window.innerHeight
-    navBounds.preferredHeight = navContainer.getBoundingClientRect().height
     if (fitNav() && e.type !== 'resize' && currentPageItem) scrollItemToMidpoint(menuPanel, currentPageItem)
     window.addEventListener('scroll', fitNav)
   }
 
   function fitNav () {
+    navBounds.availableHeight = window.innerHeight
     var scrollDatum = menuPanel && menuPanel.scrollTop + menuPanel.offsetHeight
     var occupied = navBounds.availableHeight - navBounds.encroachingElement.getBoundingClientRect().top
     var modified =
       occupied > 0
-        ? nav.style.height !== (nav.style.height = Math.max(Math.round(navBounds.preferredHeight - occupied), 0) + 'px')
+        ? nav.style.height !== (nav.style.height = Math.max(Math.round(
+          navBounds.availableHeight - occupied - navBar.getBoundingClientRect().height), 0) + 'px')
         : !!nav.style.removeProperty('height')
     if (menuPanel) menuPanel.scrollTop = scrollDatum - menuPanel.offsetHeight
     return modified
