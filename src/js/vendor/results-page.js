@@ -2,7 +2,7 @@
 
 // Init DocSearch
 const appId = "XXX";
-const apiKey = "12345abc";
+const apiKey = "env.TYPESENSE_API_KEY";
 docsearch({
     container: "#mycontainer",
     appId,
@@ -15,7 +15,7 @@ docsearch({
             constructor: undefined,
             key: state.query,
             props: {
-                href: `/search.html?q=${state.query}`,
+                href: `/search?q=${state.query}`,
                 children: `See all ${state.context.nbHits} results`
             },
             __v: null
