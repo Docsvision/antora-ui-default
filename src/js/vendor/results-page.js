@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // Init DocSearch
 const appId = "XXX";
 const apiKey = "12345abc";
