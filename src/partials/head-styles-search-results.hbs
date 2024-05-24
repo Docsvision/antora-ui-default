@@ -1,0 +1,10 @@
+    <link rel="stylesheet" href="{{{uiRootPath}}}/css/site.css">
+    <link rel="stylesheet" href="{{{uiRootPath}}}/css/vendor/tabs.css">
+    {{#if env.SITE_SEARCH_PROVIDER}}
+    {{> search-styles}}
+    {{/if}}
+    {{#if (eq page.layout 'home')}}
+    <link rel="stylesheet" href="{{{uiRootPath}}}/css/vendor/home.css">
+    {{/if}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7.4.5/themes/satellite-min.css">
+    
