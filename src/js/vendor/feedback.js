@@ -163,7 +163,7 @@ async function sendFeedback (feedbackType) {
   }
 
   const repo = 'Docsvision/online-doc-issues'
-  const token = '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'
+  // const token = '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'
 
   if ((selectedText && errorDescription) || (contactEmail && suggestionText)) {
     try {
