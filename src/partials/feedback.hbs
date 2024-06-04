@@ -55,14 +55,32 @@
           <textarea id="suggestion-text" class="suggestion-text-input"></textarea>
           <div class="feedback-buttons">
             <button class="feedback-button feedback-back">Назад</button>
-            <button class="feedback-button feedback-next">Далее</button>
+            <button class="feedback-button feedback-submit">Отправить</button>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Предложение -->
+    {{!-- <div id="feedback-suggestion" class="feedback-modal" aria-hidden="true">
+      <div class="feedback-modal-content">
+        <header class="feedback-header">
+          <h2><img src="{{{uiRootPath}}}/img/message.svg" alt="icon" class="msg-icon"> ПРЕДЛОЖЕНИЕ</h2>
+          <p>Опишите ваше предложение</p>
+        </header>
+        <div class="feedback-body">
+          <label for="suggestion-text">Моё предложение:</label>
+          <textarea id="suggestion-text" class="suggestion-text-input"></textarea>
+          <div class="feedback-buttons">
+            <button class="feedback-button feedback-back">Назад</button>
+            <button class="feedback-button feedback-submit">Отправить</button>
+          </div>
+        </div>
+      </div>
+    </div> --}}
+
     <!-- Подтверждение -->
-    <div id="feedback-confirm" class="feedback-modal" aria-hidden="true">
+    {{!-- <div id="feedback-confirm" class="feedback-modal" aria-hidden="true">
       <div class="feedback-modal-content">
         <header class="feedback-header">
           <h2><img src="{{{uiRootPath}}}/img/message.svg" alt="icon" class="msg-icon"> ПОДТВЕРЖДЕНИЕ</h2>
@@ -78,7 +96,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
   </div>
   
   <!-- Контейнер для сообщения об успешной отправке -->

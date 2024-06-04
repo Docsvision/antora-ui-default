@@ -5,7 +5,7 @@ var uiRootPath = (config.uiRootPath == null ? window.uiRootPath : config.uiRootP
 let selectedText = ''
 let errorDescription = ''
 let suggestionText = ''
-let contactEmail = ''
+// let contactEmail = ''
 
 // Константы для строковых значений
 const ICON_MSG = `<img src="${uiRootPath}/img/message.svg" alt="icon" class="msg-icon-xs">`
@@ -56,9 +56,9 @@ function handleBackButtonClick () {
 function handleSubmitButtonClick (event) {
   event.preventDefault()
   const feedbackType = this.closest('.feedback-modal').id
-  if (feedbackType === 'feedback-confirm' && !validateEmail()) {
-    return
-  }
+  // if (feedbackType === 'feedback-confirm' && !validateEmail()) {
+  //   return
+  // }
   sendFeedback(feedbackType)
 }
 
@@ -108,30 +108,30 @@ function handleOptionClick () {
 }
 
 // Функция проверки валидности email
-function validateEmail () {
-  const contactEmailInput = getElementById('contact-email')
-  const emailError = getElementById('email-error')
+// function validateEmail () {
+//   const contactEmailInput = getElementById('contact-email')
+//   const emailError = getElementById('email-error')
 
-  if (!contactEmailInput.checkValidity()) {
-    emailError.textContent = 'Email введён некорректно'
-    return false
-  } else {
-    emailError.textContent = ''
-    return true
-  }
-}
+//   if (!contactEmailInput.checkValidity()) {
+//     emailError.textContent = 'Email введён некорректно'
+//     return false
+//   } else {
+//     emailError.textContent = ''
+//     return true
+//   }
+// }
 
 // Функция очистки всех полей ввода
 function clearInputs () {
   selectedText = ''
   errorDescription = ''
   suggestionText = ''
-  contactEmail = ''
+  // contactEmail = ''
   getElementById('error-text').value = ''
   getElementById('error-description').value = ''
   getElementById('suggestion-text').value = ''
-  getElementById('contact-email').value = ''
-  getElementById('email-error').textContent = ''
+  // getElementById('contact-email').value = ''
+  // getElementById('email-error').textContent = ''
 }
 
 // Функция закрытия всех модальных окон
@@ -149,23 +149,26 @@ async function sendFeedback (feedbackType) {
   if (getElementById('error-description')) {
     errorDescription = getElementById('error-description').value
   }
-  if (getElementById('contact-email')) {
-    contactEmail = getElementById('contact-email').value
+  // if (getElementById('contact-email')) {
+  //   contactEmail = getElementById('contact-email').value
+  // }
+  if (getElementById('suggestion-text')) {
+    suggestionText = getElementById('suggestion-text').value
   }
 
   switch (feedbackType) {
     case 'feedback-error':
       body = `Выделенный текст: ${selectedText}\nОписание: ${errorDescription}\nURL: ${window.location.href}`
       break
-    case 'feedback-confirm':
-      body = `Предложение: ${suggestionText}\nКонтакт: ${contactEmail}`
+      // case 'feedback-confirm':
+      // body = `Предложение: ${suggestionText}\nКонтакт: ${contactEmail}`
+      // break
+    case 'feedback-suggestion':
+      body = `Предложение: ${suggestionText}`
       break
   }
 
-  const repo = 'Docsvision/online-doc-issues'
-  // const token = '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'
-
-  if ((selectedText && errorDescription) || (contactEmail && suggestionText)) {
+  if ((selectedText && errorDescription) || (suggestionText)) {
     try {
       await createGitHubIssue(title, body, repo, token)
       showSuccessMessage('Сообщение успешно отправлено!')
@@ -179,24 +182,22 @@ async function sendFeedback (feedbackType) {
   }
 }
 // Функция создания тикета в GitHub
-async function createGitHubIssue (title, body, repo, token) {
-  const url = `https://api.github.com/repos/${repo}/issues`
+async function createGitHubIssue (title, body) {
+  const url = 'https://help.docsvision.com/api/feedback/issues'
 
   const issueData = {
     title: title,
     body: body,
   }
 
-  const options = {
+  const response = await fetch(url, {
     method: 'POST',
     headers: {
-      Authorization: `token ${token}`,
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(issueData),
-  }
-
-  const response = await fetch(url, options)
+  })
   if (!response.ok) {
     throw new Error(`Ошибка при создании тикета: ${response.statusText}`)
   }
@@ -220,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const feedbackBackButtons = document.querySelectorAll('.feedback-back')
   const feedbackSubmitButtons = document.querySelectorAll('.feedback-submit')
   const feedbackNextButtons = document.querySelectorAll('.feedback-next')
-  const contactEmailInput = document.getElementById('contact-email')
+  // const contactEmailInput = document.getElementById('contact-email')
 
   // Обработчики событий
   feedbackButton.addEventListener('click', toggleMainMenu)
@@ -242,5 +243,5 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.feedback-option').forEach((option) => {
     option.addEventListener('click', handleOptionClick)
   })
-  contactEmailInput.addEventListener('input', validateEmail)
+  // contactEmailInput.addEventListener('input', validateEmail)
 })
