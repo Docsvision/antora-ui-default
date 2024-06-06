@@ -170,7 +170,7 @@ async function sendFeedback (feedbackType) {
 
   if ((selectedText && errorDescription) || (suggestionText)) {
     try {
-      await createGitHubIssue(title, body, repo, token)
+      await createGitHubIssue(title, body)
       showSuccessMessage('Сообщение успешно отправлено!')
       clearInputs()
       closeAllModals()
