@@ -39,7 +39,8 @@ function toggleMainMenu () {
     // Сохранение выделенного текста
     selectedText = window.getSelection().toString()
     if (selectedText) {
-      getElementById('error-text').value = selectedText
+      getElementById('feedback-error').querySelector('#error-text').value = selectedText
+      getElementById('feedback-suggestion').querySelector('#error-text').value = selectedText
     }
   }
 }
@@ -81,12 +82,24 @@ function handleNextButtonClick () {
 function handleKeyDown (event) {
   if (event.ctrlKey && event.key === 'Enter') {
     selectedText = window.getSelection().toString()
+
     if (selectedText) {
-      closeAllModals()
-      getElementById('error-text').value = selectedText
-      getElementById('feedback-error').style.display = DISPLAY_FLEX
-      getElementById('feedback-error').setAttribute('aria-hidden', 'false')
-      getElementById('feedback-button').innerHTML = ICON_CLOSE
+      const feedbackErrorModal = getElementById('feedback-error')
+      const feedbackSuggestionModal = getElementById('feedback-suggestion')
+      const isFeedbackErrorVisible = feedbackErrorModal.style.display === DISPLAY_FLEX
+      const isFeedbackSuggestionVisible = feedbackSuggestionModal.style.display === DISPLAY_FLEX
+
+      if (isFeedbackErrorVisible) {
+        getElementById('feedback-error').querySelector('#error-text').value = selectedText
+      } else if (isFeedbackSuggestionVisible) {
+        getElementById('feedback-suggestion').querySelector('#error-text').value = selectedText
+      } else {
+        closeAllModals()
+        getElementById('feedback-error').querySelector('#error-text').value = selectedText
+        feedbackErrorModal.style.display = DISPLAY_FLEX
+        feedbackErrorModal.setAttribute('aria-hidden', 'false')
+        getElementById('feedback-button').innerHTML = ICON_CLOSE
+      }
     }
   }
 }
@@ -96,11 +109,12 @@ function handleOptionClick () {
   const feedbackType = this.getAttribute('data-feedback')
   closeAllModals()
   if (feedbackType === 'error') {
-    getElementById('error-text').value = selectedText || ''
+    getElementById('feedback-error').querySelector('#error-text').value = selectedText || ''
     getElementById('error-description').value = errorDescription || ''
     getElementById('feedback-error').style.display = DISPLAY_FLEX
     getElementById('feedback-error').setAttribute('aria-hidden', 'false')
   } else if (feedbackType === 'suggestion') {
+    getElementById('feedback-suggestion').querySelector('#error-text').value = selectedText || ''
     getElementById('suggestion-text').value = suggestionText || ''
     getElementById('feedback-suggestion').style.display = DISPLAY_FLEX
     getElementById('feedback-suggestion').setAttribute('aria-hidden', 'false')
@@ -127,7 +141,8 @@ function clearInputs () {
   errorDescription = ''
   suggestionText = ''
   // contactEmail = ''
-  getElementById('error-text').value = ''
+  getElementById('feedback-error').querySelector('#error-text').value = ''
+  getElementById('feedback-suggestion').querySelector('#error-text').value = ''
   getElementById('error-description').value = ''
   getElementById('suggestion-text').value = ''
   // getElementById('contact-email').value = ''
@@ -142,9 +157,22 @@ function closeAllModals () {
   })
 }
 
+// Функция формирования пути к разделу
+function BuildSectionPath () {
+  let path = ''
+  const sections = document.querySelectorAll('.breadcrumbs ul li')
+  path = Array.from(sections).map((el) => {
+    const link = el.querySelector('a')
+    const textContent = link ? link.textContent : el.textContent
+    return textContent.trim()
+  }).join(' > ')
+  return path
+}
+
 // Функция отправки обратной связи на сервер
 async function sendFeedback (feedbackType) {
-  const title = feedbackType === 'feedback-error' ? 'Ошибка' : 'Предложение'
+  const type = feedbackType === 'feedback-error' ? 'Ошибка' : 'Предложение'
+  const title = `${type} в "${BuildSectionPath()}"`
   let body = ''
   if (getElementById('error-description')) {
     errorDescription = getElementById('error-description').value
@@ -164,14 +192,14 @@ async function sendFeedback (feedbackType) {
       // body = `Предложение: ${suggestionText}\nКонтакт: ${contactEmail}`
       // break
     case 'feedback-suggestion':
-      body = `Предложение: ${suggestionText}`
+      body = `Выделенный текст: ${selectedText}\nПредложение: ${suggestionText}\nURL: ${window.location.href}`
       break
   }
 
-  if ((selectedText && errorDescription) || (suggestionText)) {
+  if ((selectedText && errorDescription) || (selectedText && suggestionText)) {
     try {
       await createGitHubIssue(title, body)
-      showSuccessMessage('Сообщение успешно отправлено!')
+      showMessage('Сообщение успешно отправлено!')
       clearInputs()
       closeAllModals()
       getElementById('feedback-button').innerHTML = ICON_MSG
@@ -179,8 +207,11 @@ async function sendFeedback (feedbackType) {
       alert('Ошибка при отправке сообщения.')
       console.error('Error:', error)
     }
+  } else {
+    showMessage('Необходимо заполнить все поля!')
   }
 }
+
 // Функция создания тикета в GitHub
 async function createGitHubIssue (title, body) {
   const url = 'https://help.docsvision.com/api/feedback/issues'
@@ -204,8 +235,8 @@ async function createGitHubIssue (title, body) {
   return await response.json()
 }
 
-// Функция отображения сообщения об успешной отправке
-function showSuccessMessage (message) {
+// Функция отображения сообщения
+function showMessage (message) {
   const successMessage = getElementById('success-message')
   successMessage.textContent = message
   successMessage.style.display = 'block'
