@@ -165,7 +165,7 @@ function BuildSectionPath () {
     const link = el.querySelector('a')
     const textContent = link ? link.textContent : el.textContent
     return textContent.trim()
-  }).join(' > ')
+  }).filter((text) => text.length > 0).join(' > ')
   return path
 }
 
@@ -196,7 +196,7 @@ async function sendFeedback (feedbackType) {
       break
   }
 
-  if ((selectedText && errorDescription) || (selectedText && suggestionText)) {
+  if ((errorDescription) || (suggestionText)) {
     try {
       await createGitHubIssue(title, body)
       showMessage('Сообщение успешно отправлено!')
