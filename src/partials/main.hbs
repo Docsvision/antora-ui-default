@@ -8,12 +8,6 @@
 {{#unless (or (ne page.attributes.hide-view-latest undefined) (eq page.componentVersion page.component.latest))}}
 {{#with page.latest}}
 {{#if ./missing}}
-{{#if (and @root.page.componentVersion.prerelease (not ./prerelease))}}
-<div class="article">
-<i class="fas fa-file-alt"></i> <p>Версия готовится к релизу, техническая поддержка по ней не осуществляется.</p>
-</div>
-{{/if}}
-{{else}}
 <div class="article-banner">
 {{#if (and @root.page.componentVersion.prerelease (not ./prerelease))}}
 <i class="fas fa-file-alt"></i> <p>Вы просматриваете документацию для версии, готовящейся к релизу. Техническая поддержка по данному модулю в данный момент не осуществляется.</p>
