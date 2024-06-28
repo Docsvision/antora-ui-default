@@ -37,7 +37,7 @@
     additionalSearchParameters: {
       collectionName: '{{env.TYPESENSE_IDX_NAME}}',
       indexName: '{{env.TYPESENSE_IDX_NAME}}',
-      queryBy: "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content",
+      queryBy: "content",
       per_page: 15,
       infix: "always"
     }
@@ -87,12 +87,12 @@ instantsearch.widgets.hits({
   }
 }),
 instantsearch.widgets.configure({hitsPerPage: 8}),
-instantsearch.widgets.hierarchicalMenu({
+{{!-- instantsearch.widgets.hierarchicalMenu({
   container: '#hierarchical-menu',
   attributes: [
     'hierarchy.lvl0','hierarchy.lvl1'
   ],
-}),
+}), --}}
   instantsearch.widgets.pagination({container: "#pagination"}),
 ]),
 search.start();
