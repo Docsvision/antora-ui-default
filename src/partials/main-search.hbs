@@ -5,7 +5,88 @@
 {{> article-404}}
 {{else}}
 {{> toc}}
-{{> article-search}}
+<script src="{{uiRootPath}}/js/vendor/typesense-instantsearch-adapter.min.js"></script>
+<script src="{{uiRootPath}}/js/vendor/instantsearch.production.min.js"></script>
+</div>
+  <div class="search-panel">
+    <div class="search-panel__filters">
+      <div id="brand-list"></div>
+    </div>
+    <div id="searchbox"></div>
+    <div class="search-panel__results">
+      <div id="hits"></div>
+      <div id="pagination"></div>
+      <div id="trending"></div>
+    </div>
+  </div>
+  <div id="search-results-container"></div>
+  <div id="hierarchical-menu"></div>
+</main>
+<script>
+  const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+    server: {
+      appId: "123",
+      nodes: [{
+        host: "help.docsvision.com",
+        port: "443",
+        protocol: "https"
+      }],
+      apiKey: '{{env.TYPESENSE_API_KEY}}',
+      sendApiKeyAsQueryParam: false,
+    },
+    additionalSearchParameters: {
+      collectionName: '{{env.TYPESENSE_IDX_NAME}}',
+      indexName: '{{env.TYPESENSE_IDX_NAME}}',
+      queryBy: "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content",
+      per_page: 15,
+      infix: "always"
+    }
+  }), searchClient = typesenseInstantsearchAdapter.searchClient,
+  search = instantsearch({
+    indexName: '{{env.TYPESENSE_IDX_NAME}}',
+    searchClient: searchClient,
+    insights: false,
+    routing: true,
+    searchFunction(helper) {
+    if (helper.state.query === '') {
+      document.querySelector('.search-panel__results').classList.add('search-panel__results_empty');
+    } else {
+      document.querySelector('.search-panel__results').classList.remove('search-panel__results_empty');
+      helper.search();
+    }
+  },
+    });
+search.addWidgets([
+instantsearch.widgets.searchBox({container: "#searchbox"}),
+instantsearch.widgets.hits({
+  container: "#hits", templates: {
+    item: (t, {html: e, components: a}) => {
+      return e`
+        <article>
+        ${t.hierarchy.lvl0}
+          <h1>
+            <a href="${t.url}"
+              >${a.Highlight({hit: t, attribute: "anchor"})}</a
+            >
+          </h1>
+          <p>${a.Highlight({hit: t, attribute: "content"})}</p>
+          <a href="${t.url}">Подробнее</a>
+        </article>
+      `
+    }
+  }
+}),
+instantsearch.widgets.configure({hitsPerPage: 8}),
+instantsearch.widgets.hierarchicalMenu({
+  container: '#hierarchical-menu',
+  attributes: [
+    'hierarchy.lvl0','hierarchy.lvl1'
+  ],
+}),
+  instantsearch.widgets.pagination({container: "#pagination"}),
+]),
+search.start();
+</script>
 {{/if}}
   </div>
 </main>

@@ -1,0 +1,4 @@
+.search-panel__results_empty {
+  visibility: hidden;
+  margin-bottom: 200px;
+}
