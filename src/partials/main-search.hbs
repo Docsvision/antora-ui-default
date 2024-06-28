@@ -12,7 +12,7 @@
     <div class="search-panel__filters">
       <div id="brand-list"></div>
     </div>
-    <div id="searchbox"></div>
+    <div id="searchbox" class="search-panel__searchbox"></div>
     <div class="search-panel__results">
       <div id="hits"></div>
       <div id="pagination"></div>
@@ -61,15 +61,25 @@ instantsearch.widgets.searchBox({container: "#searchbox"}),
 instantsearch.widgets.hits({
   container: "#hits", templates: {
     item: (t, {html: e, components: a}) => {
+      let title = t.hierarchy.lvl0;
+      let hierarchyString = t.hierarchy.lvl0;
+      if (!t.content) {
+        return null
+      }
+      for (let i = 1; i < 7; i++) {
+        if (t.hierarchy[`lvl${i}`]) {
+          title = t.hierarchy[`lvl${i}`];
+          hierarchyString += ` > ${t.hierarchy[`lvl${i}`]}`
+        }
+      }
+      console.log(t)
       return e`
         <article>
-        ${t.hierarchy.lvl0}
+        ${hierarchyString.replaceAll("&quot;", `"`)}
           <h1>
-            <a href="${t.url}"
-              >${a.Highlight({hit: t, attribute: "anchor"})}</a
-            >
+            <a href="${t.url}">${title.replaceAll("&quot;", `"`)}</a>
           </h1>
-          <p>${a.Highlight({hit: t, attribute: "content"})}</p>
+          <p>${t.content?.replaceAll("&quot;", `"`)}</p>
           <a href="${t.url}">Подробнее</a>
         </article>
       `
