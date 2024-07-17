@@ -15,12 +15,5 @@
     "max-len": [1, 120, 2],
     "spaced-comment": "off",
     "radix": ["error", "always"]
-  },
-  "globals": {
-    "alert": "readonly",
-    "fetch": "readonly"
-  },
-  "env": {
-    "browser": true
   }
 }

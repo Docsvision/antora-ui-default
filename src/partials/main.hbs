@@ -1,37 +1,33 @@
 <main class="article" data-ceiling="topbar">
+{{> toolbar}}
 
-  {{> toolbar}}
+{{#if (eq page.layout '404')}}
+{{> article-404}}
+{{else}}
 
-  {{#if (eq page.layout '404')}}
-  {{> article-404}}
-  {{else}}
-
-    {{#unless (or (ne page.attributes.hide-view-latest undefined) (eq page.componentVersion page.component.latest))}}
-      {{#with page.latest}}
-        {{#if ./missing}}
-          {{#if (and @root.page.componentVersion.prerelease (not ./prerelease))}}
-          <div class="article-banner">
-            <i class="fas fa-file-alt"></i> <p>Вы просматриваете документацию для версии, готовящейся к релизу. Техническая поддержка по данному модулю в текущий момент не осуществляется.</p>
-          </div>
-          {{/if}}
-        
-        {{else}}
-        
-          <div class="article-banner">
-            {{#if (and @root.page.componentVersion.prerelease (not ./prerelease))}}
-              <i class="fas fa-file-alt"></i> <p>Вы просматриваете документацию для версии, готовящейся к релизу. Техническая поддержка по данному модулю в текущий момент не осуществляется.</p>
-            {{else}}
-              <i class="fas fa-file-alt"></i> <p>Доступна более новая версия документации данного модуля.</p>
-            {{/if}}
-              <a class="btn" href="{{relativize ./url}}">См. последнюю версию</a>
-          </div>
-        {{/if}}
-      {{/with}}
-    {{/unless}}
-      
-    <div class="content">
-    {{> toc}}
-    {{> article}}
-    {{/if}}
-    </div>
+{{#unless (or (ne page.attributes.hide-view-latest undefined) (eq page.componentVersion page.component.latest))}}
+{{#with page.latest}}
+{{#if ./missing}}
+{{#if (and @root.page.componentVersion.prerelease (not ./prerelease))}}
+<div class="article">
+<i class="fas fa-file-alt"></i> <p>Версия готовится к релизу, техническая поддержка по ней не осуществляется.</p>
+</div>
+{{/if}}
+{{else}}
+<div class="article-banner">
+{{#if (and @root.page.componentVersion.prerelease (not ./prerelease))}}
+<i class="fas fa-file-alt"></i> <p>Вы просматриваете документацию для версии, готовящейся к релизу. Техническая поддержка по данному модулю в данный момент не осуществляется.</p>
+{{else}}
+<i class="fas fa-file-alt"></i> <p>Доступна более новая версия документации данного модуля.</p>
+{{/if}}
+<a class="btn" href="{{relativize ./url}}">См. последнюю версию</a>
+</div>
+{{/if}}
+{{/with}}
+{{/unless}}
+<div class="content">
+{{> toc}}
+{{> article}}
+{{/if}}
+</div>
 </main>
