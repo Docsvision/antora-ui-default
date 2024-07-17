@@ -27,7 +27,7 @@
     server: {
       appId: "123",
       nodes: [{
-        host: "help.docsvision.com",
+        host: window.location.hostname,
         port: "443",
         protocol: "https"
       }],
@@ -35,9 +35,9 @@
       sendApiKeyAsQueryParam: false,
     },
     additionalSearchParameters: {
-      collectionName: '{{env.TYPESENSE_IDX_NAME}}',
-      indexName: '{{env.TYPESENSE_IDX_NAME}}',
-      queryBy: "content",
+      collection_name: '{{env.TYPESENSE_IDX_NAME}}',
+      index_name: '{{env.TYPESENSE_IDX_NAME}}',
+      query_by: "content",
       per_page: 15,
       infix: "always"
     }
