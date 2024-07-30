@@ -4,10 +4,7 @@
 {{#if (eq page.layout '404')}}
 {{> article-404}}
 {{else}}
-{{> toc}}
-<script src="{{uiRootPath}}/js/vendor/typesense-instantsearch-adapter.min.js"></script>
-<script src="{{uiRootPath}}/js/vendor/instantsearch.production.min.js"></script>
-</div>
+<article class="doc">
   <div class="search-panel">
     <div class="search-panel__filters">
       <div id="brand-list"></div>
@@ -21,13 +18,14 @@
   </div>
   <div id="search-results-container"></div>
   <div id="hierarchical-menu"></div>
+</article>
 </main>
 <script>
   const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     server: {
       appId: "123",
       nodes: [{
-        host: window.location.hostname,
+        host: "help.docsvision.com",
         port: "443",
         protocol: "https"
       }],
@@ -35,9 +33,9 @@
       sendApiKeyAsQueryParam: false,
     },
     additionalSearchParameters: {
-      collection_name: '{{env.TYPESENSE_IDX_NAME}}',
-      index_name: '{{env.TYPESENSE_IDX_NAME}}',
-      query_by: "content",
+      collectionName: '{{env.TYPESENSE_IDX_NAME}}',
+      indexName: '{{env.TYPESENSE_IDX_NAME}}',
+      queryBy: "content",
       per_page: 15,
       infix: "always"
     }
@@ -74,14 +72,16 @@ instantsearch.widgets.hits({
       }
       console.log(t)
       return e`
-        <article>
-        ${hierarchyString.replaceAll("&quot;", `"`)}
-          <h1>
-            <a href="${t.url}">${title.replaceAll("&quot;", `"`)}</a>
-          </h1>
-          <p>${t.content?.replaceAll("&quot;", `"`)}</p>
+        <div>
+          <h2>
+            ${title.replaceAll("&quot;", `"`)}
+          </h2>
+          <div class="instant-search-breadcrumbs">${hierarchyString.replaceAll("&quot;", `"`)}</div>
+          <div class='paragraph'>
+            <p>${t.content?.replaceAll("&quot;", `"`)}</p>
+          </div>
           <a href="${t.url}">Подробнее</a>
-        </article>
+        </div>
       `
     }
   }
