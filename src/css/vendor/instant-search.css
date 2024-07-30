@@ -44,6 +44,11 @@ input.ais-SearchBox-input[type="search"]::-webkit-search-results-decoration {
   opacity: 0.8;
 }
 
+.ais-Highlight-highlighted {
+  color: #174d8c;
+  background: rgba(143, 187, 237, 0.1);
+}
+
 /* Pagination */
 .ais-Pagination {
   display: flex;

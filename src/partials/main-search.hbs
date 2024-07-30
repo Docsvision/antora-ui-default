@@ -33,11 +33,10 @@
       sendApiKeyAsQueryParam: false,
     },
     additionalSearchParameters: {
-      collectionName: '{{env.TYPESENSE_IDX_NAME}}',
-      indexName: '{{env.TYPESENSE_IDX_NAME}}',
-      queryBy: "content",
+      collection_name: '{{env.TYPESENSE_IDX_NAME}}',
+      index_name: '{{env.TYPESENSE_IDX_NAME}}',
+      query_by: "content",
       per_page: 15,
-      infix: "always"
     }
   }), searchClient = typesenseInstantsearchAdapter.searchClient,
   search = instantsearch({
@@ -70,7 +69,12 @@ instantsearch.widgets.hits({
           hierarchyString += ` > ${t.hierarchy[`lvl${i}`]}`
         }
       }
-      console.log(t)
+
+
+      if (t.content) {t.content = t.content?.replaceAll("&quot;", `"`)}
+      if (t._highlightResult?.content?.value) {
+        t._highlightResult.content.value = t._highlightResult.content.value.replaceAll("&amp;quot;", `"`)
+      }
       return e`
         <div>
           <h2>
@@ -78,7 +82,7 @@ instantsearch.widgets.hits({
           </h2>
           <div class="instant-search-breadcrumbs">${hierarchyString.replaceAll("&quot;", `"`)}</div>
           <div class='paragraph'>
-            <p>${t.content?.replaceAll("&quot;", `"`)}</p>
+            <p>${t.content && a.Highlight({ hit: t, attribute: 'content' })}</p>
           </div>
           <a href="${t.url}">Подробнее</a>
         </div>

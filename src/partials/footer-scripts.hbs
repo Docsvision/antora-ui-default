@@ -17,7 +17,10 @@
 <script async src="{{{uiRootPath}}}/js/vendor/tabs.js"></script>
 <script async src="{{{uiRootPath}}}/js/vendor/highlight.js"></script>
 {{#if env.SITE_SEARCH_PROVIDER}}
+{{#if (eq page.layout 'search')}}
+{{else}}
 {{> search-scripts}}
+{{/if}}
 {{/if}}
 {{#if (eq page.layout 'patches')}}
 {{else}}

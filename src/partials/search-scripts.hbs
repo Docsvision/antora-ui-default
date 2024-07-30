@@ -1,7 +1,7 @@
 {{#if (eq env.SITE_SEARCH_PROVIDER "Typesense")}}
 <script src="{{uiRootPath}}/js/vendor/docsearch.min.js"></script>
 <script>
-  document.querySelector('#search-input').addEventListener('keydown', function (e) {
+  document.querySelector('#search-input')?.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
       e.preventDefault();
       e.stopPropagation();
