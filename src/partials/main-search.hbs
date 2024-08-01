@@ -35,8 +35,12 @@
     additionalSearchParameters: {
       collection_name: '{{env.TYPESENSE_IDX_NAME}}',
       index_name: '{{env.TYPESENSE_IDX_NAME}}',
-      query_by: "content",
+      query_by: "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content",
       per_page: 15,
+      infix: 'always',
+      highlight_full_fields: "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content",
+      group_by: "url",
+      group_limit: 1
     }
   }), searchClient = typesenseInstantsearchAdapter.searchClient,
   search = instantsearch({
@@ -58,9 +62,9 @@ instantsearch.widgets.searchBox({container: "#searchbox"}),
 instantsearch.widgets.hits({
   container: "#hits", templates: {
     item: (t, {html: e, components: a}) => {
-      let title = t.hierarchy.lvl0;
-      let hierarchyString = t.hierarchy.lvl0;
-      if (!t.content) {
+      let title = t.hierarchy?.lvl0;
+      let hierarchyString = t.hierarchy?.lvl0;
+      if (!t.content || !t.hierarchy) {
         return null
       }
       for (let i = 1; i < 7; i++) {
@@ -90,7 +94,7 @@ instantsearch.widgets.hits({
     }
   }
 }),
-instantsearch.widgets.configure({hitsPerPage: 8}),
+instantsearch.widgets.configure({hitsPerPage: 15}),
 {{!-- instantsearch.widgets.hierarchicalMenu({
   container: '#hierarchical-menu',
   attributes: [
