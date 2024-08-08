@@ -1,0 +1,19 @@
+.search-panel__results_empty {
+  visibility: hidden;
+  margin-bottom: 200px;
+}
+
+.search-panel__searchbox .ais-SearchBox-form::before {
+  height: 1em;
+  left: 1em;
+  margin-top: -0.5em;
+  width: 1em;
+}
+
+.search-panel__searchbox {
+  margin: 10px 0;
+}
+
+.doc {
+  max-width: none;
+}
