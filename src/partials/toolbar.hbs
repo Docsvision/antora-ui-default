@@ -3,6 +3,8 @@
   {{#with site.homeUrl}}
   <a href="{{{relativize this}}}" class="home-link{{#if @root.page.home}} is-current{{/if}}"></a>
   {{/with}}
+  <button class="nav-tree-toggle" data-action="collapse" aria-label="Expand all">Свернуть все</button>
+  <button class="nav-tree-toggle" data-action="expand" aria-label="Collapse all">Развернуть все</button>
 {{> breadcrumbs}}
 {{> page-versions}}
 {{> edit-this-page}}

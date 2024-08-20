@@ -39,6 +39,14 @@
   background-size: 41.5%;
 }
 
+.nav-tree-toggle {
+  visibility: hidden;
+}
+
+.nav-tree-toggle.is-active {
+  visibility: visible;
+}
+
 .home-link {
   display: block;
   background: url(../img/home-o.svg) no-repeat center;

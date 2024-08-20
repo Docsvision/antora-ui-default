@@ -7,6 +7,7 @@
   var navBar = document.querySelector('nav.navbar')
   if (!navContainer) return
   var navToggle = document.querySelector('.toolbar .nav-toggle')
+  var navTreeToggles = document.querySelectorAll('.toolbar .nav-tree-toggle') || []
 
   navToggle.addEventListener('click', showNav)
   navContainer.addEventListener('click', trapEvent)
@@ -124,6 +125,7 @@
     html.classList.add('is-clipped--nav')
     navToggle.classList.add('is-active')
     navContainer.classList.add('is-active')
+    navTreeToggles.forEach(function (t) { t.classList.add('is-active') })
     html.addEventListener('click', hideNav)
   }
 
@@ -133,6 +135,7 @@
     html.classList.remove('is-clipped--nav')
     navToggle.classList.remove('is-active')
     navContainer.classList.remove('is-active')
+    navTreeToggles.forEach(function (t) { t.classList.remove('is-active') })
     html.removeEventListener('click', hideNav)
   }
 
