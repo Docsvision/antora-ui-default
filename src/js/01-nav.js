@@ -175,6 +175,7 @@
   function fitNavInit (e) {
     window.removeEventListener('scroll', fitNav)
     if (window.getComputedStyle(navContainer).position === 'fixed') return
+    navTreeToggles.forEach(function (t) { t.classList.add('is-active') })
     if (fitNav() && e.type !== 'resize' && currentPageItem) scrollItemToMidpoint(menuPanel, currentPageItem)
     window.addEventListener('scroll', fitNav)
   }
