@@ -6,10 +6,11 @@
 {{else}}
 <article class="doc">
   <div class="search-panel">
-    <div class="search-panel__filters">
-      <div id="brand-list"></div>
-    </div>
     <div id="searchbox" class="search-panel__searchbox"></div>
+    <div class="search-panel__filters"></div>
+
+    </div>
+    <div id="product-list" class="search-panel__product-list"></div>
     <div class="search-panel__results">
       <div id="hits"></div>
       <div id="pagination"></div>
@@ -37,13 +38,13 @@
       index_name: '{{env.TYPESENSE_IDX_NAME}}',
       query_by: "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content",
       per_page: 15,
-      infix: 'always',
-      highlight_full_fields: "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content",
+      highlight_fields: "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content,content_camel",
       group_by: "url",
-      group_limit: 1
+      group_limit: 1,
     }
-  }), searchClient = typesenseInstantsearchAdapter.searchClient,
-  search = instantsearch({
+  });
+  const searchClient = typesenseInstantsearchAdapter.searchClient;
+  const search = instantsearch({
     indexName: '{{env.TYPESENSE_IDX_NAME}}',
     searchClient: searchClient,
     insights: false,
@@ -51,58 +52,73 @@
     searchFunction(helper) {
     if (helper.state.query === '') {
       document.querySelector('.search-panel__results').classList.add('search-panel__results_empty');
+      document.querySelector('.search-panel__product-list').classList.add('search-panel__product-list_empty');
     } else {
       document.querySelector('.search-panel__results').classList.remove('search-panel__results_empty');
+      document.querySelector('.search-panel__product-list').classList.remove('search-panel__product-list_empty');
       helper.search();
     }
   },
     });
+const { searchBox, hits, pagination, hierarchicalMenu, configure, refinementList, panel } = instantsearch.widgets;
 search.addWidgets([
-instantsearch.widgets.searchBox({container: "#searchbox"}),
-instantsearch.widgets.hits({
-  container: "#hits", templates: {
-    item: (t, {html: e, components: a}) => {
-      let title = t.hierarchy?.lvl0;
-      let hierarchyString = t.hierarchy?.lvl0;
-      if (!t.hierarchy) {
-        return null
-      }
-      for (let i = 1; i < 7; i++) {
-        if (t.hierarchy[`lvl${i}`]) {
-          title = t.hierarchy[`lvl${i}`];
-          hierarchyString += ` > ${t.hierarchy[`lvl${i}`]}`
+  searchBox({container: "#searchbox"}),
+  hits({
+    container: "#hits",
+    templates: {
+      item: (t, {html: e, components: a}) => {
+        let title = t.hierarchy?.lvl0;
+        let highlightedTitle = t._highlightResult?.hierarchy?.lvl0?.value;
+        let getHighlightedTitle;
+        let hierarchyString = t.hierarchy?.lvl0;
+        let hierarchyAttribute = `hierarchy.lvl0`;
+        if (!t.hierarchy) {
+          return null
         }
-      }
+        for (let i = 1; i < 7; i++) {
+          if (t.hierarchy[`lvl${i}`]) {
+            title = t.hierarchy[`lvl${i}`];
+            highlightedTitle = t._highlightResult?.[`hierarchy.lvl${i}`]?.value;
+            t._highlightResult.hierarchy[`lvl${i}`] = t._highlightResult?.[`hierarchy.lvl${i}`];
+            hierarchyString += ` > ${t.hierarchy[`lvl${i}`]}`
+            hierarchyAttribute = `hierarchy.lvl${i}`
+          }
+        }
 
-
-      if (t.content) {t.content = t.content?.replaceAll("&quot;", `"`)}
-      if (t._highlightResult?.content?.value) {
-        t._highlightResult.content.value = t._highlightResult.content.value.replaceAll("&amp;quot;", `"`)
-      }
-      return e`
-        <div>
-          <h2>
-            ${title.replaceAll("&quot;", `"`)}
-          </h2>
-          <div class="instant-search-breadcrumbs">${hierarchyString.replaceAll("&quot;", `"`)}</div>
-          <div class='paragraph'>
-          ${t.content && e`<p>${t.content && a.Highlight({ hit: t, attribute: 'content' })}</p>`}
-
+        if (t.content) {t.content = t.content?.replaceAll("&quot;", `"`)}
+        if (t._highlightResult?.content?.value) {
+          t._highlightResult.content.value = t._highlightResult.content.value.replaceAll("&amp;quot;", `"`)
+        }
+        return e`
+          <div>
+            <a class="instant-search-heading-link" href="${t.url}">
+              <h2>
+                {{!-- ${title.replaceAll("&quot;", `"`)} --}}
+                ${(!!highlightedTitle && a.Highlight({ hit: t, attribute: hierarchyAttribute })) || title}
+              </h2>
+            </a>
+            <div class="instant-search-breadcrumbs">${hierarchyString.replaceAll("&quot;", `"`)}</div>
+            <div class='paragraph'>
+              ${t.content && e`<p>${t.content && a.Highlight({ hit: t, attribute: 'content' })}</p>`}
+            </div>
           </div>
-          <a href="${t.url}">Подробнее</a>
-        </div>
-      `
+        `
+      }
     }
-  }
-}),
-instantsearch.widgets.configure({hitsPerPage: 15}),
-{{!-- instantsearch.widgets.hierarchicalMenu({
-  container: '#hierarchical-menu',
-  attributes: [
-    'hierarchy.lvl0','hierarchy.lvl1'
-  ],
-}), --}}
-  instantsearch.widgets.pagination({container: "#pagination"}),
+  }),
+  configure({hitsPerPage: 15}),
+  {{!-- hierarchicalMenu({
+    container: '#hierarchical-menu',
+    attributes: [
+      'hierarchy.lvl0',
+    ],
+  }), --}}
+  panel()(instantsearch.widgets.refinementList)({
+    container: '#product-list',
+    attribute: 'hierarchy.lvl0',
+    sortBy: ["count"],
+  }),
+  pagination({container: "#pagination"}),
 ]),
 search.start();
 </script>
