@@ -3,11 +3,6 @@
   {{#with site.homeUrl}}
   <a href="{{{relativize this}}}" class="home-link{{#if @root.page.home}} is-current{{/if}}"></a>
   {{/with}}
-  <div class="nav-tree-toggle-container">
-    <input type="checkbox" class="nav-tree-toggle" data-action="collapse/expand" />
-    <span class="nav-tree-toggle-balloon" data-action="collapse">Свернуть все</span>
-    <span class="nav-tree-toggle-balloon" data-action="expand">Развернуть все</span>
-  </div>
 {{> breadcrumbs}}
 {{> page-versions}}
 {{> edit-this-page}}
