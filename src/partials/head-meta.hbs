@@ -1,7 +1,7 @@
     <link rel="stylesheet" href="{{{uiRootPath}}}/css/nav.css">
     {{#if page.component}}
-    <meta name="docsearch:component" content="{{page.component.name}}">
-    <meta name="docsearch:version" content="{{page.version}}">
+    <meta name="page-component" content="{{page.component.name}}">
+    <meta name="page-version" content="{{page.version}}">
     <meta name="page-url" content="{{page.url}}">
     {{else if (eq page.layout '404')}}
     <meta name="page-component" content="ROOT">
