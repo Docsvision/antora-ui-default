@@ -64,7 +64,7 @@ instantsearch.widgets.hits({
     item: (t, {html: e, components: a}) => {
       let title = t.hierarchy?.lvl0;
       let hierarchyString = t.hierarchy?.lvl0;
-      if (!t.content || !t.hierarchy) {
+      if (!t.hierarchy) {
         return null
       }
       for (let i = 1; i < 7; i++) {
@@ -86,7 +86,8 @@ instantsearch.widgets.hits({
           </h2>
           <div class="instant-search-breadcrumbs">${hierarchyString.replaceAll("&quot;", `"`)}</div>
           <div class='paragraph'>
-            <p>${t.content && a.Highlight({ hit: t, attribute: 'content' })}</p>
+          ${t.content && e`<p>${t.content && a.Highlight({ hit: t, attribute: 'content' })}</p>`}
+
           </div>
           <a href="${t.url}">Подробнее</a>
         </div>
