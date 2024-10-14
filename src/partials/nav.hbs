@@ -4,6 +4,7 @@
     <span class="title">{{page.component.title}} {{~#if (and (eq .. @root.page.component) (eq this @root.page.componentVersion))}} is-current{{/if~}} {{~#if (eq this ../latest)}} is-latest{{/if}} {{page.version}}</span>
   </div>
   <div class="nav-tree-toggle-container">
+      <div class="nav-tree-toggle-loader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
       <input type="checkbox" class="nav-tree-toggle" data-action="collapse/expand" />
       <span class="nav-tree-toggle-balloon" data-action="collapse">Свернуть все</span>
       <span class="nav-tree-toggle-balloon" data-action="expand">Развернуть все</span>
