@@ -179,7 +179,7 @@ main > .content.content__search-page {
   align-items: center;
   padding: 0;
   margin: 0;
-  font-size: var(--doc-font-size--desktop);
+  font-size: calc(15 / var(--rem-base) * 1rem);
 }
 
 .version-title::after {
@@ -207,13 +207,13 @@ main > .content.content__search-page {
 }
 
 .search-version-icon {
-  translate: 0 1.5px;
+  translate: 0 1px;
   transition: all 0.3s;
 }
 
 .version-block_expanded .search-version-icon,
 .version-block.version-block_before-click:has(input[type="checkbox"]:checked) .search-version-icon {
-  translate: 0 1.5px;
+  translate: 0;
   transform: rotate(180deg);
 }
 
@@ -227,6 +227,7 @@ main > .content.content__search-page {
 
 .version-name {
   cursor: pointer;
+  font-size: calc(13.5 / var(--rem-base) * 1rem);
 }
 
 .version-count {
