@@ -4,8 +4,17 @@
 {{#if (eq page.layout '404')}}
 {{> article-404}}
 {{else}}
-<div id="searchbox" class="search-panel__searchbox"></div>
-<article class="doc doc__search-page">
+
+<script type="text/javascript">
+
+</script>
+{{#with page.title}}
+<div class="doc doc__search-page-title">
+  <h1 class="page page__search-page">{{{this}}}</h1>
+</div>
+{{/with}}
+<article class="doc doc__search-page 1">
+  <div id="searchbox" class="search-panel__searchbox"></div>
   <div class="search-panel">
     <div class="search-panel__main-container">
       <div class="search-panel__filters"></div>
@@ -32,11 +41,11 @@
       server: {
         appId: "123",
         nodes: [{
-          host: window.location.hostname,
+          host: "doc-online-vdv.digdes.com",
           port: "443",
           protocol: "https"
         }],
-        apiKey: '{{env.TYPESENSE_API_KEY}}',
+        apiKey: "dalFZ8WqMk82hMCEYFMyqURlzldGTpmm",
         sendApiKeyAsQueryParam: false,
         collection: '{{env.TYPESENSE_IDX_NAME}}'
       },
@@ -83,6 +92,11 @@
             let highlightedTitle = t._highlightResult?.hierarchy?.lvl0?.value;
             let getHighlightedTitle;
             let hierarchyString = t.hierarchy?.lvl0;
+            products.forEach(product => {
+                if (hierarchyString.startsWith(product)) {
+                  hierarchyString = hierarchyString.replace(product, `${product} >`);
+                }
+            });
             let hierarchyAttribute = `hierarchy.lvl0`;
             if (!t.hierarchy) {
               return null
@@ -119,12 +133,6 @@
         }
       }),
       configure({ hitsPerPage: 15 }),
-      {{!-- hierarchicalMenu({
-        container: '#hierarchical-menu',
-        attributes: [
-          'hierarchy.lvl0',
-        ],
-      }), --}}
       panel()(instantsearch.widgets.refinementList)({
         container: '#internal-product-list',
         attribute: 'hierarchy.lvl0',
@@ -136,10 +144,11 @@
             let itemContainer;
             for (const product of products) {
               if (item.value.startsWith(product)) {
+                const version = item.value.replace(`${product} `, "");
                 itemContainer = h.html`
-                  <li onclick=${(event) => onItemClick(item, product, event)} data-value="${item.value}" data-item-product="${product}" class=${isRefined ? "refined" : ""}>
+                  <li data-version="${version}" data-value="${item.value}" data-item-product="${product}" class=${isRefined ? "refined" : ""}>
                     <input class="version-checkbox" type="checkbox" checked=${isRefined}></input>
-                    <span class="version-name"> ${item.value.replace(`${product} `, "")}</span>
+                    <span class="version-name"> ${version}</span>
                     <span class="version-count"> (${count})</span>
                   </li>
                 `;
@@ -159,32 +168,31 @@
       await new Promise((resolve, reject) => resolve());
       for (const product of products) {
         let productItem = productVersions[product]?.component;
-        let versionTitle = productVersions[product]?.titleComponent;
+        let productTitle = productVersions[product]?.titleComponent;
         let versionList = productVersions[product]?.listComponent;
         let versionIcon = productVersions[product]?.iconComponent;
         if (!productItem) {
           productItem = document.createElement('div');
           productItem.dataset.product = product;
           productItem.classList.add('version-block');
-
-          versionTitleWrapper = document.createElement('div');
-          versionTitleWrapper.classList.add('version-title-wrapper');
-          productItem.appendChild(versionTitleWrapper);
-          versionTitle = document.createElement('h3');
-          versionTitle.classList.add('version-title');
-          versionTitle.innerText = product;
-          versionTitleWrapper.appendChild(versionTitle);
+          const productTitleWrapper = document.createElement('div');
+          productTitleWrapper.classList.add('version-title-wrapper');
+          productItem.appendChild(productTitleWrapper);
+          productTitle = document.createElement('h3');
+          productTitle.classList.add('version-title');
+          productTitle.innerText = product;
+          productTitleWrapper.appendChild(productTitle);
           productItem.classList.add('version-block');
           productVersions[product].component = productItem;
-          productVersions[product].titleComponent = versionTitle;
+          productVersions[product].titleComponent = productTitle;
           productsList.appendChild(productItem);
-          versionTitle.addEventListener('click', (event) => onProductTitleClick(event, productItem));
+          productTitleWrapper.addEventListener('click', (event) => onProductTitleClick(event, productItem));
           versionIcon = document.querySelector('.template-version-icon').cloneNode(true);
           versionIcon.classList.remove('template-version-icon');
-          versionTitleWrapper.prepend(versionIcon);
+          productTitleWrapper.prepend(versionIcon);
         }
-        if (!versionTitle) {
-          versionTitle = productItem.querySelector('.version-title');
+        if (!productTitle) {
+          productTitle = productItem.querySelector('.version-title');
         }
         if (!versionList) {
           versionList = document.createElement('ul');
@@ -192,9 +200,24 @@
           productItem.appendChild(versionList);
           productVersions[product].listComponent = versionList;
         }
-        const versionItems = document.querySelectorAll(`#internal-product-list li:has(li[data-item-product="${product}"])`);
+        let versionItems = [];
+        if (CSS.supports('selector(:has(*))')) {
+          versionItems = document.querySelectorAll(`#internal-product-list li:has(li[data-item-product="${product}"])`);
+        } else {
+          versionItemsWrappers = document.querySelectorAll(`#internal-product-list li`);
+          versionItemsWrappers.forEach(versionItemWrapper => {
+            if (!versionItems.length) {
+              versionItems = versionItemWrapper.querySelectorAll(`li[data-item-product="${product}"]`);
+            }
+          });
+        }
         if (versionItems.length > 0 && versionItems[0].parentElement !== versionList) {
           versionList.append(...versionItems);
+          versionItems.forEach((item) => {
+            if (productVersions[product]?.componentItem.latest?.displayVersion === item.children[0].children[0].dataset.version) {
+              versionList.prepend(item);
+            }
+          });
           const mainCount = search.renderState['{{env.TYPESENSE_IDX_NAME}}'].refinementList["hierarchy.lvl0"].items.reduce((acc, item) => {
             if (item.value.startsWith(product)) {
               return acc + item.count
@@ -211,7 +234,8 @@
             productItem.classList.add('version-block_expanded');
           }
 
-          versionTitle.textContent = `${product} (${mainCount})`;
+          productTitle.textContent = `${product} (${mainCount})`;
+          setProductTitleHeight(productItem, productTitle);
           setTimeout(() => {
             firstRender = false;
             if (versionItems[0].parentElement !== versionList) {
@@ -247,19 +271,25 @@
         }
       }
 
-      function onItemClick(item, productName, event) {
-        {{!-- let arrayToRefine = search.renderState['{{env.TYPESENSE_IDX_NAME}}'].refinementList["hierarchy.lvl0"].items.filter(i => i.value !== item.value && i.isRefined && i.value.startsWith(productName));
-        arrayToRefine.forEach(i => search.renderState['{{env.TYPESENSE_IDX_NAME}}'].refinementList["hierarchy.lvl0"].refine(i.value))
-        productVersions.clickedItem = item; --}}
+      function onProductTitleClick(event, productItemElement) {;
+          productItemElement.classList.toggle("version-block_expanded");
+          setProductTitleHeight(productItemElement);
       }
 
-      function onProductTitleClick(event, productItemElement) {
-        if (event.target === event.currentTarget) {
-          productItemElement.classList.toggle("version-block_expanded");
+      function setProductTitleHeight(productItemElement, prodTitleElement = null) {
+        if (!prodTitleElement) {
+          prodTitleElement = productItemElement.querySelector('.version-title');
+        }
+        if (!productItemElement.classList.contains('version-block_expanded')) {
+          const prodTitleElementHeight = prodTitleElement.offsetHeight;
+          productItemElement.style.maxHeight = `${prodTitleElementHeight}px`;
+        } else {
+          productItemElement.style.maxHeight = '1000px';
         }
       }
 
-    const products = [
+    {{!-- Хардкод для разработки --}}
+    {{!-- const products = [
       "Web-клиент",
       "Базовые объекты",
       "Платформа",
@@ -289,20 +319,34 @@
       "Описание системы",
       "Конструктор шаблонов",
       "Конструкторы и справочники"
-    ]
+    ] --}}
 
-    products.forEach(product => {
+    {{!-- products.forEach(product => {
       productVersions[product] = {
         versions: [],
-        component: null
+        component: null,
+        componentItem: null
       }
-    })
+    }) --}}
 
-    let needTimeout = false;
+    var components = {{{toJson site.components}}};
+
+    let products = [];
+    for (let key in components) {
+      const productVersionsKey = components[key].latest?.title || components[key].versions[0]?.title;
+      if (productVersionsKey) {
+        productVersions[productVersionsKey] = {
+          versions: [],
+          component: null,
+          componentItem: components[key]
+        };
+        products.push(components[key].latest?.title || components[key].versions[0]?.title);
+      }
+    }
+
     search.on('render', function(data) {
-    createProductItems()
-});
-
+      createProductItems()
+    });
 </script>
 {{/if}}
   </div>
