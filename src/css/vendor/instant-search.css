@@ -239,7 +239,6 @@ main > .content.content__search-page {
   margin-bottom: 0;
   padding-bottom: 0.5rem;
   max-width: none;
-  width: 100%;
 }
 
 .doc.doc__search-page-title h1.page:first-child {
@@ -249,5 +248,9 @@ main > .content.content__search-page {
 @media screen and (max-width: 1024px) {
   .doc.doc__search-page {
     margin: 0;
+  }
+
+  .doc__search-page-title {
+    margin-left: 0;
   }
 }

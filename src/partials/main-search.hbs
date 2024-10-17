@@ -41,11 +41,11 @@
       server: {
         appId: "123",
         nodes: [{
-          host: "doc-online-vdv.digdes.com",
+          host: window.location.hostname,
           port: "443",
           protocol: "https"
         }],
-        apiKey: "dalFZ8WqMk82hMCEYFMyqURlzldGTpmm",
+        apiKey: '{{env.TYPESENSE_API_KEY}}',
         sendApiKeyAsQueryParam: false,
         collection: '{{env.TYPESENSE_IDX_NAME}}'
       },
