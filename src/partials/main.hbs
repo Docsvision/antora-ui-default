@@ -9,8 +9,8 @@
 {{#with page.latest}}
 {{#if ./missing}}
 {{#if (and @root.page.componentVersion.prerelease (not ./prerelease))}}
-<div class="article">
-<i class="fas fa-file-alt"></i> <p>Версия готовится к релизу, техническая поддержка по ней не осуществляется.</p>
+<div class="article-banner">
+<i class="fas fa-file-alt"></i> <p>Вы просматриваете документацию для версии, готовящейся к релизу. Техническая поддержка по данному модулю в данный момент не осуществляется.</p>
 </div>
 {{/if}}
 {{else}}
