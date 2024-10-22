@@ -144,6 +144,6 @@
   /* stacking */
   --z-index-nav: 1;
   --z-index-toolbar: 4;
-  --z-index-page-version-menu: 3;
-  --z-index-navbar: 4;
+  --z-index-page-version-menu: 5;
+  --z-index-navbar: 6;
 }
