@@ -1,6 +1,14 @@
 {{#if (eq env.SITE_SEARCH_PROVIDER "Typesense")}}
 <script src="{{uiRootPath}}/js/vendor/docsearch.min.js"></script>
 <script>
+  document.querySelector('#search-input')?.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      document.location.href = '/search?' + '{{env.TYPESENSE_IDX_NAME}}[query]=' + e.target.value;
+    }
+  })
   docsearch({
     inputSelector: '#search-input',
     typesenseCollectionName: '{{env.TYPESENSE_IDX_NAME}}',

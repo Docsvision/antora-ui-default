@@ -1,4 +1,8 @@
 {{#if (eq env.SITE_SEARCH_PROVIDER "Typesense")}}
 <link rel="stylesheet" href="{{uiRootPath}}/css/vendor/docsearch.min.css">
+{{#if (eq page.layout 'search')}}
+<link rel="stylesheet" href="{{uiRootPath}}/css/vendor/main-search.css">
+<link rel="stylesheet" href="{{{uiRootPath}}}/css/vendor/instant-search.css">
 <link rel="stylesheet" href="{{uiRootPath}}/css/vendor/docsearch.override.css">
+{{/if}}
 {{/if}}

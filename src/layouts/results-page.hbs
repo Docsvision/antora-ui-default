@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+{{> head-search-results defaultPageTitle='Untitled'}}
+  </head>
+  <body class="article{{#with (or page.attributes.role page.role)}} {{{this}}}{{/with}}">
+{{> header}}
+{{> body-search-results}}
+{{> footer-search-results}}
+  </body>
+</html>
