@@ -81,6 +81,7 @@ body {
 .navbar-brand .navbar-item.search {
   flex: auto;
   justify-content: flex-end;
+  cursor: default;
 }
 
 #search-input {
