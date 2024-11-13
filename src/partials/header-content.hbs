@@ -57,7 +57,15 @@
         </div>
         {{/if}}
         <a class="navbar-item" href="https://docsvision.com/">Docsvision.com</a>
-        <a class="navbar-item" href="/timeline/">Изменения в продукте</a>
+        {{#if (eq site.url '/dv5')}}
+		<a class="navbar-item" href="/dv5/timeline/">Изменения в продукте</a>
+		{{else}}
+		{{#if (eq site.url '/dv6')}}
+		<a class="navbar-item" href="/dv6/timeline/">Изменения в продукте</a>
+		{{else}}
+		a class="navbar-item" href="/timeline/">Изменения в продукте</a>
+		{{/if}}
+		{{/if}}
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link">Дополнительно</div>
           <div class="navbar-dropdown is-right">
