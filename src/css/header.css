@@ -359,3 +359,24 @@ body {
     background: var(--navbar-menu_hover-background);
   }
 }
+
+.header-search-button {
+  background-color: var(--color-dv-font);
+  height: 28px;
+  width: max-content;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+}
+
+.header-search-button:hover {
+  box-shadow: 0 0 5px var(--color-dv-font);
+}
+
+.field.search-field-header {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}

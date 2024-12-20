@@ -8,8 +8,9 @@
       {{#if (or (eq page.layout 'home') (eq page.layout 'search'))}}
       {{else}}
       <div class="navbar-item search hide-for-print">
-        <div id="search-field" class="field">
-          <input id="search-input" type="text" placeholder="Поиск"{{#if page.home}} autofocus{{/if}}>
+        <div id="search-field" class="field search-field-header">
+          <input id="search-input" type="text" placeholder="Нажмите Enter"{{#if page.home}} autofocus{{/if}}>
+          <button class="header-search-button">Поиск</button>
         </div>
       </div>
       {{/if}}
