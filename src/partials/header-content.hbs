@@ -24,19 +24,11 @@
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
       {{#if (eq env.ANTORA_PROD_BUILD 'true')}}
-        <div class="navbar-item has-dropdown is-hoverable version-toggler">
-          <div class="navbar-link">
-		    {{#if (eq site.url '/dv5')}}
-		    Docsvision 5
-			{{else}}
-			Docsvision Linux Edition
-			{{/if}}
-		  </div>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="/dv5">Docsvision 5</a>
-            <a class="navbar-item" href="/dv6">Docsvision Linux Edition</a>
-          </div>
-        </div>
+        {{#if (eq site.url '/dv5')}}
+        <a class="navbar-item" href="/dv6/">Linux Edition</a>
+		{{else}}
+		<a class="navbar-item" href="/dv5/">Docsvision 5</a>
+		{{/if}}
       {{else}}
         <div class="navbar-item has-dropdown is-hoverable version-toggler">
           <div class="navbar-link">
