@@ -27,46 +27,45 @@
         {{#if (eq site.url '/dv5')}}
         <a class="navbar-item" href="/dv6/">Linux Edition</a>
 		{{else}}
-		<a class="navbar-item" href="/dv5/">Docsvision 5</a>
+		<a class="navbar-item" href="/dv5/">DV5</a>
 		{{/if}}
       {{else}}
-        <div class="navbar-item has-dropdown is-hoverable version-toggler">
-          <div class="navbar-link">
+        <div class="navbar-item has-dropdown is-hoverable">
+          
 		    {{#if (eq site.url '/dv5')}}
 		    Docsvision 5
 			{{else}}
 			{{#if (eq site.url '/dv6')}}
 			Docsvision Linux Edition
 			{{else}}
-		    Все версии
+		    <a class="navbar-link" href="/">Все версии</a>
 		    {{/if}}
 			{{/if}}
-		  </div>
+		  
           <div class="navbar-dropdown">
-            <a class="navbar-item" href="/">Все версии</a>
-            <a class="navbar-item" href="/dv5/">Docsvision 5</a>
-            <a class="navbar-item" href="/dv6/">Docsvision Linux Edition</a>
+            
+            <a class="navbar-item" href="/dv5/">DV5</a>
+            <a class="navbar-item" href="/dv6/">Linux Edition</a>
           </div>
         </div>
         {{/if}}
-        <a class="navbar-item" href="https://docsvision.com/">Docsvision.com</a>
-        {{#if (eq site.url '/dv5')}}
-		<a class="navbar-item" href="/dv5/timeline/">Изменения в продукте</a>
-		{{else}}
-		{{#if (eq site.url '/dv6')}}
-		<a class="navbar-item" href="/dv6/timeline/">Изменения в продукте</a>
-		{{else}}
-		<a class="navbar-item" href="/timeline/">Изменения в продукте</a>
-		{{/if}}
-		{{/if}}
         <div class="navbar-item has-dropdown is-hoverable">
-          <div class="navbar-link">Дополнительно</div>
+          <div class="navbar-link">Ещё...</div>
           <div class="navbar-dropdown is-right">
+            {{#if (eq site.url '/dv5')}}
+		    <a class="navbar-item" href="/dv5/timeline/">Изменения в продукте</a>
+		    {{else}}
+		    {{#if (eq site.url '/dv6')}}
+		    <a class="navbar-item" href="/dv6/timeline/">Изменения в продукте</a>
+		    {{else}}
+		    <a class="navbar-item" href="/timeline/">Изменения в продукте</a>
+		    {{/if}}
+		    {{/if}}
             <a class="navbar-item" href="https://docsvision.github.io/WebClient-JsDocApi">Справочник JavaScript API модуля Web-клиент</a>
             <a class="navbar-item" href="https://github.com/Docsvision/WebClient-Samples">Docsvision Web-клиент. Примеры разработки</a>
-            <a class="navbar-item" href="https://docsvision.com/info-centr/istoriya-izmeneniy-docsvision">История изменений Docsvision</a>
             <a class="navbar-item" href="https://docsvision.itsm365.com/sd/">Портал технической поддержки Docsvision</a>
-          </div>
+            <a class="navbar-item" href="https://docsvision.com/">Docsvision.com</a>
+            <a class="navbar-item" href="https://docsvision.com/info-centr/istoriya-izmeneniy-docsvision">История изменений Docsvision</a>
         </div>
       </div>
     </div>
