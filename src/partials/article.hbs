@@ -3,11 +3,16 @@
 <h1 class="page">{{{this}}}</h1>
 {{/with}}
 {{#if (eq page.layout 'home')}}
-      <div class="navbar-item search hide-for-print">
-        <div id="search-field" class="field">
-          <input id="search-input" type="text" placeholder="Поиск"{{#if page.home}} autofocus{{/if}}>
-        </div>
-      </div>
+  <a class="user-type-button" href="/type-admin">Admin</a> |
+  <a class="user-type-button" href="/type-user">User</a> |
+  <a class="user-type-button" href="/type-engineer">Engineer</a> |
+  <a class="user-type-button" href="/type-programmer">Programmer</a>
+  
+  <div class="navbar-item search hide-for-print">
+    <div id="search-field" class="field">
+      <input id="search-input" type="text" placeholder="Поиск"{{#if page.home}} autofocus{{/if}}>
+    </div>
+  </div>
 {{/if}}
 {{{page.contents}}}
 {{> pagination}}
