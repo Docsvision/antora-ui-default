@@ -14,6 +14,12 @@
   visibility: hidden;
 }
 
+@media screen and (min-width: 1600px) {
+  .nav-container {
+    width: var(--nav-width--big);
+  }
+}
+
 @media screen and (min-width: 769px) {
   .nav-container {
     width: var(--nav-width);
