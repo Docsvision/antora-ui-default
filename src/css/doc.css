@@ -8,12 +8,6 @@
   padding: 0 1rem 4rem;
 }
 
-@media screen and (min-width: 1600px) {
-  .doc {
-    max-width: var(--doc-max-width--desktop--big);
-  }
-}
-
 @media screen and (min-width: 1024px) {
   .doc {
     flex: auto;
@@ -21,6 +15,12 @@
     margin: var(--doc-margin--desktop);
     max-width: var(--doc-max-width--desktop);
     min-width: 0;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .doc {
+    max-width: var(--doc-max-width--desktop--big);
   }
 }
 
