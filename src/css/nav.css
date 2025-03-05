@@ -40,6 +40,16 @@
   visibility: visible;
 }
 
+@media screen and (min-width: 2000px) {
+  .nav-container {
+    width: var(--nav-width--2k);
+  }
+}
+
+.nav-container.is-active {
+  visibility: visible;
+}
+
 .nav {
   background: var(--nav-background);
   position: relative;
