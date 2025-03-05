@@ -46,10 +46,6 @@
   }
 }
 
-.nav-container.is-active {
-  visibility: visible;
-}
-
 .nav {
   background: var(--nav-background);
   position: relative;
