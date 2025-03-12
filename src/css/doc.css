@@ -1086,11 +1086,11 @@
   width: 1.5em;
 }
 
-a.user-type-button {
+.doc a.user-type-button {
   background-color: var(--color-dv-font);
   height: 28px;
   width: max-content;
-  color: #fff;
+  color: var(--color-white);
   border: none;
   border-radius: 3px;
 }
