@@ -2,7 +2,8 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item logo" href="{{{or site.url siteRootPath}}}" title="{{site.title}}">
-        <img src="{{{uiRootPath}}}/img/logo.svg" alt="ДВ-Лого" width="24"></a>
+        <img src="{{{uiRootPath}}}/img/logo.svg" alt="ДВ-Лого" width="24">
+      </a>
       <a class="navbar-item title" href="{{{or site.url siteRootPath}}}">{{site.title}}</a>
       {{#if env.SITE_SEARCH_PROVIDER}}
       {{#if (or (eq page.layout 'home') (eq page.layout 'search'))}}
@@ -23,6 +24,10 @@
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
+        <a class="navbar-item" href="/admin">Admin</a> |
+        <a class="navbar-item" href="/user">User</a> |
+        <a class="navbar-item" href="/engineer">Engineer</a> |
+        <a class="navbar-item" href="/programmer">Programmer</a>
       {{#if (eq env.ANTORA_PROD_BUILD 'true')}}
         {{#if (eq site.url '/dv5')}}
         <a class="navbar-item" href="/dv6/">Linux Edition</a>

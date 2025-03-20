@@ -1085,16 +1085,3 @@
   text-align: right;
   width: 1.5em;
 }
-
-.doc a.user-type-button {
-  background-color: var(--color-dv-font);
-  height: 28px;
-  width: max-content;
-  color: var(--color-white);
-  border: none;
-  border-radius: 3px;
-}
-
-a.user-type-button:hover {
-  box-shadow: 0 0 5px var(--color-dv-font);
-}
