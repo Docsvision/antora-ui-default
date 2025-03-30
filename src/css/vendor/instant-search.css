@@ -233,6 +233,7 @@ main > .content.content__search-page {
 
 .version-count {
   cursor: pointer;
+  font-size: calc(13.5 / var(--rem-base) * 1rem);
 }
 
 .doc__search-page-title {
