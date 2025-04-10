@@ -38,8 +38,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" class="icon nav-version-icon template-version-icon search-version-icon"><use xlink:href="#icon-nav-version"></use></svg>
 <script type="module">
   import { AiSearch } from '{{uiRootPath}}/js/vendor/ai-search.js';
-  const API_PATH = 'https://help.docsvision.com/api/search';
+  import { SearchMode } from '{{uiRootPath}}/js/vendor/search-mode.js';
 
+  const API_PATH = 'https://help.docsvision.com/api/search';
+  const switchElement = document.getElementById("search-mode-switch");
+
+  const searchMode = new SearchMode(switchElement);
   const aiSearch = new AiSearch(API_PATH);
 
   let productsList = document.querySelector('#product-list');
@@ -82,7 +86,7 @@
         stateToRoute(uiState) {
           const indexUiState = uiState['{{env.TYPESENSE_IDX_NAME}}'];
           
-          return window.searchMode.isAiSearchMode 
+          return searchMode.isAiSearchMode 
             ? {'{{env.TYPESENSE_IDX_NAME}}': { aiquery: indexUiState.query } }
             : { '{{env.TYPESENSE_IDX_NAME}}': { query: indexUiState.query } };
         },
@@ -100,7 +104,7 @@
         isAiQuery = null;
         return;
       }
-      if (window.searchMode.isAiSearchMode) {
+      if (searchMode.isAiSearchMode) {
         return;
       }
       if (helper.state.query === '') {
@@ -384,7 +388,7 @@
 
   const searchInputElement = document.querySelector('.ais-SearchBox-input');
 
-  window.searchMode.subscribe((isAiSearchMode) => {
+  searchMode.subscribe((isAiSearchMode) => {
     if (isAiSearchMode) {
       searchInputElement.addEventListener('keydown', aiSearchOnKeyDown);
       return;
@@ -395,9 +399,9 @@
 
   document.addEventListener('ai-search initialised', () => {
     if (aiSearch.isAvailable) {
-      window.searchMode.switchElement.disabled = false;
+      searchMode.switchElement.disabled = false;
       if (window.location.search.includes('aiquery')) {
-        window.searchMode.toggleMode(true);
+        searchMode.toggleMode(true);
         aiSearch.search(searchInputElement.value)
           .then(renderElementsFromAiSearch)
           .catch((error) => {
@@ -427,8 +431,8 @@
   }
 
   function disableAiMode() {
-    window.searchMode.toggleMode(false);
-    window.searchMode.switchElement.disabled = true;
+    searchMode.toggleMode(false);
+    searchMode.switchElement.disabled = true;
   }
 
   function renderElementsFromAiSearch(data) {

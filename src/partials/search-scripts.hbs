@@ -2,8 +2,12 @@
 <script src="{{uiRootPath}}/js/vendor/docsearch.min.js"></script>
 <script type="module">
   import { AiSearch } from '{{uiRootPath}}/js/vendor/ai-search.js';
-  const API_PATH = 'https://help.docsvision.com/api/search';
+  import { SearchMode } from '{{uiRootPath}}/js/vendor/search-mode.js';
 
+  const API_PATH = 'https://help.docsvision.com/api/search';
+  const switchElement = document.getElementById("search-mode-switch");
+
+  const searchMode = new SearchMode(switchElement);
   const aiSearch = new AiSearch(API_PATH);
 
   const collectionName = '{{env.TYPESENSE_IDX_NAME}}';
@@ -16,7 +20,7 @@
       const siteVersion = window.location.pathname.split('/')[1];
       hrefUrl = '/' + siteVersion + '/' + hrefUrl;
     }
-    const queryAttribute = window.searchMode.isAiSearchMode ? '[aiquery]' : '[query]';
+    const queryAttribute = searchMode.isAiSearchMode ? '[aiquery]' : '[query]';
     document.location.href = hrefUrl + '{{env.TYPESENSE_IDX_NAME}}' + queryAttribute + '=' + value;
   }
   const searchInput = document.querySelector('#search-input');
@@ -38,13 +42,13 @@
 
   document.addEventListener('ai-search initialised', () => {
     if (aiSearch.isAvailable) {
-      window.searchMode.switchElement.disabled = false;
+      searchMode.switchElement.disabled = false;
     }
   })
 
   let docSearchInstance = initDocsearch();
 
-  window.searchMode.subscribe((isAiSearchMode) => {
+  searchMode.subscribe((isAiSearchMode) => {
     if (isAiSearchMode) {
       docSearchInstance.autocomplete.autocomplete.destroy()
       return
