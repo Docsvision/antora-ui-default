@@ -21,6 +21,7 @@
 	"@fontsource/material-icons": "~4.5",
     "@vscode/gulp-vinyl-zip": "~2.5",
     "autoprefixer": "~9.7",
+    "babel-eslint": "10.1.0",
     "browser-pack-flat": "~3.4",
     "browserify": "~16.5",
     "cssnano": "~4.1",

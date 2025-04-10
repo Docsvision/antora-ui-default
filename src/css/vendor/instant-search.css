@@ -126,7 +126,7 @@ input.ais-SearchBox-input[type="search"]::-webkit-search-results-decoration {
   grid-row: span 2;
 }
 
-.search-panel__searchbox {
+.search-panel__searchbox-container {
   margin: 0 0 30px 0;
 }
 
@@ -247,6 +247,10 @@ main > .content.content__search-page {
   margin-bottom: 0;
 }
 
+.search-container__searchbox {
+  flex-grow: 1;
+}
+
 @media screen and (max-width: 1024px) {
   .doc.doc__search-page {
     margin: 0;
@@ -255,4 +259,10 @@ main > .content.content__search-page {
   .doc__search-page-title {
     margin-left: 0;
   }
+}
+
+.hits-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
 }

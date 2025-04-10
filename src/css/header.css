@@ -380,3 +380,18 @@ body {
   align-items: center;
   flex-wrap: wrap;
 }
+
+.search-container {
+  display: flex;
+  flex-direction: column-reverse;
+  row-gap: 8px;
+}
+
+@media screen and (min-width: 600px) {
+  .search-container {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: 8px;
+  }
+}

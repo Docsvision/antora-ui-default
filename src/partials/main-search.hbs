@@ -14,7 +14,10 @@
 </div>
 {{/with}}
 <article class="doc doc__search-page 1">
-  <div id="searchbox" class="search-panel__searchbox"></div>
+  <div class="search-container search-panel__searchbox-container">
+    <div id="searchbox" class="search-container__searchbox"></div>
+    {{> search-mode-switch}}
+  </div>
   <div class="search-panel">
     <div class="search-panel__main-container">
       <div class="search-panel__filters"></div>
@@ -33,320 +36,437 @@
 </main>
 <div id="internal-product-list" class="search-panel__internal-product-list"></div>
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" class="icon nav-version-icon template-version-icon search-version-icon"><use xlink:href="#icon-nav-version"></use></svg>
-<script>
+<script type="module">
+  import { AiSearch } from '{{uiRootPath}}/js/vendor/ai-search.js';
+  const API_PATH = 'https://help.docsvision.com/api/search';
+
+  const aiSearch = new AiSearch(API_PATH);
+
   let productsList = document.querySelector('#product-list');
   let firstRender = true;
 
-    const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
-      server: {
-        appId: "123",
-        nodes: [{
-          host: window.location.hostname,
-          port: "443",
-          protocol: "https"
-        }],
-        apiKey: '{{env.TYPESENSE_API_KEY}}',
-        sendApiKeyAsQueryParam: false,
-        collection: '{{env.TYPESENSE_IDX_NAME}}'
+  const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+    server: {
+      appId: "123",
+      nodes: [{
+        host: window.location.hostname,
+        port: "443",
+        protocol: "https"
+      }],
+      apiKey: '{{env.TYPESENSE_API_KEY}}',
+      sendApiKeyAsQueryParam: false,
+      collection: '{{env.TYPESENSE_IDX_NAME}}'
+    },
+    additionalSearchParameters: {
+      collection_name: '{{env.TYPESENSE_IDX_NAME}}',
+      collection: '{{env.TYPESENSE_IDX_NAME}}',
+      index_name: '{{env.TYPESENSE_IDX_NAME}}',
+      query_by: "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content",
+      per_page: 15,
+      highlight_fields: "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content,content_camel",
+      group_by: "url",
+      group_limit: 1,
+    }
+  });
+
+  const searchClient = typesenseInstantsearchAdapter.searchClient;
+  let isAiQuery = window.location.search.includes('aiquery');
+
+  const search = instantsearch({
+    indexName: '{{env.TYPESENSE_IDX_NAME}}',
+    searchClient: searchClient,
+    insights: false,
+    routing: {
+      router: instantsearch.routers.history(),
+      stateMapping: {
+        stateToRoute(uiState) {
+          const indexUiState = uiState['{{env.TYPESENSE_IDX_NAME}}'];
+          
+          return window.searchMode.isAiSearchMode 
+            ? {'{{env.TYPESENSE_IDX_NAME}}': { aiquery: indexUiState.query } }
+            : { '{{env.TYPESENSE_IDX_NAME}}': { query: indexUiState.query } };
+        },
+        routeToState(routeState) {
+          const indexState = routeState['{{env.TYPESENSE_IDX_NAME}}'];
+
+          return indexState?.aiquery 
+            ? {'{{env.TYPESENSE_IDX_NAME}}': { query: indexState.aiquery } }
+            : { '{{env.TYPESENSE_IDX_NAME}}': { query: indexState.query } };
+        },
       },
-      additionalSearchParameters: {
-        collection_name: '{{env.TYPESENSE_IDX_NAME}}',
-        collection: '{{env.TYPESENSE_IDX_NAME}}',
-        index_name: '{{env.TYPESENSE_IDX_NAME}}',
-        query_by: "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content",
-        per_page: 15,
-        highlight_fields: "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content,content_camel",
-        group_by: "url",
-        group_limit: 1,
+    },
+    searchFunction: async function (helper) {
+      if (isAiQuery) {
+        isAiQuery = null;
+        return;
       }
-    });
-
-    const searchClient = typesenseInstantsearchAdapter.searchClient;
-
-    const search = instantsearch({
-      indexName: '{{env.TYPESENSE_IDX_NAME}}',
-      searchClient: searchClient,
-      insights: false,
-      routing: true,
-      searchFunction: async function (helper) {
-        if (helper.state.query === '') {
-          document.querySelector('.search-panel__results').classList.add('search-panel__results_empty');
-          document.querySelector('.search-panel__product-list').classList.add('search-panel__product-list_empty');
-        } else {
-          document.querySelector('.search-panel__results').classList.remove('search-panel__results_empty');
-          document.querySelector('.search-panel__product-list').classList.remove('search-panel__product-list_empty');
-          await helper.search();
-        }
+      if (window.searchMode.isAiSearchMode) {
+        return;
       }
-    });
+      if (helper.state.query === '') {
+        document.querySelector('.search-panel__results').classList.add('search-panel__results_empty');
+        document.querySelector('.search-panel__product-list').classList.add('search-panel__product-list_empty');
+      } else {
+        document.querySelector('.search-panel__results').classList.remove('search-panel__results_empty');
+        document.querySelector('.search-panel__product-list').classList.remove('search-panel__product-list_empty');
+        await helper.search();
+      }
+    }
+  });
 
-    const { searchBox, hits, pagination, hierarchicalMenu, configure, refinementList, panel } = instantsearch.widgets;
+  const { searchBox, hits, pagination, hierarchicalMenu, configure, refinementList, panel } = instantsearch.widgets;
 
-    search.addWidgets([
-      searchBox({ container: "#searchbox" }),
-      hits({
-        container: "#hits",
-        templates: {
-          item: (t, { html: e, components: a }) => {
-            let title = t.hierarchy?.lvl0;
-            let highlightedTitle = t._highlightResult?.hierarchy?.lvl0?.value;
-            let getHighlightedTitle;
-            let hierarchyString = t.hierarchy?.lvl0;
-            products.forEach(product => {
-                if (hierarchyString.startsWith(product)) {
-                  hierarchyString = hierarchyString.replace(product, `${product} >`);
-                }
-            });
-            let hierarchyAttribute = `hierarchy.lvl0`;
-            if (!t.hierarchy) {
-              return null
-            }
-            for (let i = 1; i < 7; i++) {
-              if (t.hierarchy[`lvl${i}`]) {
-                title = t.hierarchy[`lvl${i}`];
-                highlightedTitle = t._highlightResult?.[`hierarchy.lvl${i}`]?.value;
-                t._highlightResult.hierarchy[`lvl${i}`] = t._highlightResult?.[`hierarchy.lvl${i}`];
-                hierarchyString += ` > ${t.hierarchy[`lvl${i}`]}`
-                hierarchyAttribute = `hierarchy.lvl${i}`
+  search.addWidgets([
+    searchBox({ container: "#searchbox" }),
+    hits({
+      container: "#hits",
+      templates: {
+        item: (t, { html: e, components: a }) => {
+          let title = t.hierarchy?.lvl0;
+          let highlightedTitle = t._highlightResult?.hierarchy?.lvl0?.value;
+          let getHighlightedTitle;
+          let hierarchyString = t.hierarchy?.lvl0;
+          products.forEach(product => {
+              if (hierarchyString.startsWith(product)) {
+                hierarchyString = hierarchyString.replace(product, `${product} >`);
               }
+          });
+          let hierarchyAttribute = `hierarchy.lvl0`;
+          if (!t.hierarchy) {
+            return null
+          }
+          for (let i = 1; i < 7; i++) {
+            if (t.hierarchy[`lvl${i}`]) {
+              title = t.hierarchy[`lvl${i}`];
+              highlightedTitle = t._highlightResult?.[`hierarchy.lvl${i}`]?.value;
+              t._highlightResult.hierarchy[`lvl${i}`] = t._highlightResult?.[`hierarchy.lvl${i}`];
+              hierarchyString += ` > ${t.hierarchy[`lvl${i}`]}`
+              hierarchyAttribute = `hierarchy.lvl${i}`
             }
+          }
 
-            if (t.content) { t.content = t.content?.replaceAll("&quot;", `"`) }
-            if (t._highlightResult?.content?.value) {
-              t._highlightResult.content.value = t._highlightResult.content.value.replaceAll("&amp;quot;", `"`)
-            }
-            return e`
-          <div>
-            <a class="instant-search-heading-link" href="${t.url}">
-              <h2>
-                {{!-- ${title.replaceAll("&quot;", `"`)} --}}
-                ${(!!highlightedTitle && a.Highlight({ hit: t, attribute: hierarchyAttribute })) || title}
-              </h2>
-            </a>
-            <div class="instant-search-breadcrumbs">${hierarchyString.replaceAll("&quot;", `"`)}</div>
-            <div class='paragraph'>
-              ${t.content && e`<p>${t.content && a.Highlight({ hit: t, attribute: 'content' })}</p>`}
-            </div>
+          if (t.content) { t.content = t.content?.replaceAll("&quot;", `"`) }
+          if (t._highlightResult?.content?.value) {
+            t._highlightResult.content.value = t._highlightResult.content.value.replaceAll("&amp;quot;", `"`)
+          }
+          return e`
+        <div>
+          <a class="instant-search-heading-link" href="${t.url}">
+            <h2>
+              {{!-- ${title.replaceAll("&quot;", `"`)} --}}
+              ${(!!highlightedTitle && a.Highlight({ hit: t, attribute: hierarchyAttribute })) || title}
+            </h2>
+          </a>
+          <div class="instant-search-breadcrumbs">${hierarchyString.replaceAll("&quot;", `"`)}</div>
+          <div class='paragraph'>
+            ${t.content && e`<p>${t.content && a.Highlight({ hit: t, attribute: 'content' })}</p>`}
           </div>
-        `
-          }
-        }
-      }),
-      configure({ hitsPerPage: 15 }),
-      panel()(instantsearch.widgets.refinementList)({
-        container: '#internal-product-list',
-        attribute: 'hierarchy.lvl0',
-        sortBy: ["count"],
-        limit: 500,
-        templates: {
-          item: (item, h, c) => {
-            const { url, label, count, isRefined } = item;
-            let itemContainer;
-            for (const product of products) {
-              if (item.value.startsWith(product)) {
-                const version = item.value.replace(`${product} `, "");
-                itemContainer = h.html`
-                  <li data-version="${version}" data-value="${item.value}" data-item-product="${product}" class=${isRefined ? "refined" : ""}>
-                    <input class="version-checkbox" type="checkbox" checked=${isRefined}></input>
-                    <span class="version-name"> ${version}</span>
-                    <span class="version-count"> (${count})</span>
-                  </li>
-                `;
-              }
-            }
-            if (!itemContainer) {console.log("product not found", item);}
-            return itemContainer
-          },
-        }
-  }),
-      pagination({ container: "#pagination" }),
-    ])
-
-    search.start();
-
-    async function createProductItems() {
-      await new Promise((resolve, reject) => resolve());
-      for (const product of products) {
-        let productItem = productVersions[product]?.component;
-        let productTitle = productVersions[product]?.titleComponent;
-        let versionList = productVersions[product]?.listComponent;
-        let versionIcon = productVersions[product]?.iconComponent;
-        if (!productItem) {
-          productItem = document.createElement('div');
-          productItem.dataset.product = product;
-          productItem.classList.add('version-block');
-          const productTitleWrapper = document.createElement('div');
-          productTitleWrapper.classList.add('version-title-wrapper');
-          productItem.appendChild(productTitleWrapper);
-          productTitle = document.createElement('h3');
-          productTitle.classList.add('version-title');
-          productTitle.innerText = product;
-          productTitleWrapper.appendChild(productTitle);
-          productItem.classList.add('version-block');
-          productVersions[product].component = productItem;
-          productVersions[product].titleComponent = productTitle;
-          productsList.appendChild(productItem);
-          productTitleWrapper.addEventListener('click', (event) => onProductTitleClick(event, productItem));
-          versionIcon = document.querySelector('.template-version-icon').cloneNode(true);
-          versionIcon.classList.remove('template-version-icon');
-          productTitleWrapper.prepend(versionIcon);
-        }
-        if (!productTitle) {
-          productTitle = productItem.querySelector('.version-title');
-        }
-        if (!versionList) {
-          versionList = document.createElement('ul');
-          versionList.classList.add('version-list');
-          productItem.appendChild(versionList);
-          productVersions[product].listComponent = versionList;
-        }
-        let versionItems = [];
-        if (CSS.supports('selector(:has(*))')) {
-          versionItems = document.querySelectorAll(`#internal-product-list li:has(li[data-item-product="${product}"])`);
-        } else {
-          versionItemsWrappers = document.querySelectorAll(`#internal-product-list li`);
-          versionItemsWrappers.forEach(versionItemWrapper => {
-            if (!versionItems.length) {
-              versionItems = versionItemWrapper.querySelectorAll(`li[data-item-product="${product}"]`);
-            }
-          });
-        }
-        if (versionItems.length > 0 && versionItems[0].parentElement !== versionList) {
-          versionList.append(...versionItems);
-          versionItems.forEach((item) => {
-            if (productVersions[product]?.componentItem.latest?.displayVersion === item.children[0].children[0].dataset.version) {
-              versionList.prepend(item);
-            }
-          });
-          const mainCount = search.renderState['{{env.TYPESENSE_IDX_NAME}}'].refinementList["hierarchy.lvl0"].items.reduce((acc, item) => {
-            if (item.value.startsWith(product)) {
-              return acc + item.count
-            }
-            return acc
-          }, 0);
-
-          const hasCheckedItems = firstRender && search.renderState['{{env.TYPESENSE_IDX_NAME}}'].refinementList["hierarchy.lvl0"].items.some(item => {
-            if (item.value.startsWith(product)) {
-              return item.isRefined
-            }
-          });
-          if (hasCheckedItems) {
-            productItem.classList.add('version-block_expanded');
-          }
-
-          productTitle.textContent = `${product} (${mainCount})`;
-          setProductTitleHeight(productItem, productTitle);
-          setTimeout(() => {
-            firstRender = false;
-            if (versionItems[0].parentElement !== versionList) {
-              versionItems.forEach(versionItem => versionItem.hasChildNodes() && versionList.appendChild(versionItem));
-            }
-          })
+        </div>
+      `
         }
       }
+    }),
+    configure({ hitsPerPage: 15 }),
+    panel()(instantsearch.widgets.refinementList)({
+      container: '#internal-product-list',
+      attribute: 'hierarchy.lvl0',
+      sortBy: ["count"],
+      limit: 500,
+      templates: {
+        item: (item, h, c) => {
+          const { url, label, count, isRefined } = item;
+          let itemContainer;
+          for (const product of products) {
+            if (item.value.startsWith(product)) {
+              const version = item.value.replace(`${product} `, "");
+              itemContainer = h.html`
+                <li data-version="${version}" data-value="${item.value}" data-item-product="${product}" class=${isRefined ? "refined" : ""}>
+                  <input class="version-checkbox" type="checkbox" checked=${isRefined}></input>
+                  <span class="version-name"> ${version}</span>
+                  <span class="version-count"> (${count})</span>
+                </li>
+              `;
+            }
+          }
+          if (!itemContainer) {console.log("product not found", item);}
+          return itemContainer
+        },
+      }
+}),
+    pagination({ container: "#pagination" }),
+  ])
 
+  search.start();
+
+  async function createProductItems() {
+    await new Promise((resolve, reject) => resolve());
+    for (const product of products) {
+      let productItem = productVersions[product]?.component;
+      let productTitle = productVersions[product]?.titleComponent;
+      let versionList = productVersions[product]?.listComponent;
+      let versionIcon = productVersions[product]?.iconComponent;
+      if (!productItem) {
+        productItem = document.createElement('div');
+        productItem.dataset.product = product;
+        productItem.classList.add('version-block');
+        const productTitleWrapper = document.createElement('div');
+        productTitleWrapper.classList.add('version-title-wrapper');
+        productItem.appendChild(productTitleWrapper);
+        productTitle = document.createElement('h3');
+        productTitle.classList.add('version-title');
+        productTitle.innerText = product;
+        productTitleWrapper.appendChild(productTitle);
+        productItem.classList.add('version-block');
+        productVersions[product].component = productItem;
+        productVersions[product].titleComponent = productTitle;
+        productsList.appendChild(productItem);
+        productTitleWrapper.addEventListener('click', (event) => onProductTitleClick(event, productItem));
+        versionIcon = document.querySelector('.template-version-icon').cloneNode(true);
+        versionIcon.classList.remove('template-version-icon');
+        productTitleWrapper.prepend(versionIcon);
+      }
+      if (!productTitle) {
+        productTitle = productItem.querySelector('.version-title');
+      }
+      if (!versionList) {
+        versionList = document.createElement('ul');
+        versionList.classList.add('version-list');
+        productItem.appendChild(versionList);
+        productVersions[product].listComponent = versionList;
+      }
+      let versionItems = [];
+      if (CSS.supports('selector(:has(*))')) {
+        versionItems = document.querySelectorAll(`#internal-product-list li:has(li[data-item-product="${product}"])`);
+      } else {
+        versionItemsWrappers = document.querySelectorAll(`#internal-product-list li`);
+        versionItemsWrappers.forEach(versionItemWrapper => {
+          if (!versionItems.length) {
+            versionItems = versionItemWrapper.querySelectorAll(`li[data-item-product="${product}"]`);
+          }
+        });
+      }
+      if (versionItems.length > 0 && versionItems[0].parentElement !== versionList) {
+        versionList.append(...versionItems);
+        versionItems.forEach((item) => {
+          if (productVersions[product]?.componentItem.latest?.displayVersion === item.children[0].children[0].dataset.version) {
+            versionList.prepend(item);
+          }
+        });
+        const mainCount = search.renderState['{{env.TYPESENSE_IDX_NAME}}'].refinementList["hierarchy.lvl0"].items.reduce((acc, item) => {
+          if (item.value.startsWith(product)) {
+            return acc + item.count
+          }
+          return acc
+        }, 0);
+
+        const hasCheckedItems = firstRender && search.renderState['{{env.TYPESENSE_IDX_NAME}}'].refinementList["hierarchy.lvl0"].items.some(item => {
+          if (item.value.startsWith(product)) {
+            return item.isRefined
+          }
+        });
+        if (hasCheckedItems) {
+          productItem.classList.add('version-block_expanded');
+        }
+
+        productTitle.textContent = `${product} (${mainCount})`;
+        setProductTitleHeight(productItem, productTitle);
+        setTimeout(() => {
+          firstRender = false;
+          if (versionItems[0].parentElement !== versionList) {
+            versionItems.forEach(versionItem => versionItem.hasChildNodes() && versionList.appendChild(versionItem));
+          }
+        })
+      }
     }
 
-    function isLastItem(item) {
-      return item.value == search.renderState['{{env.TYPESENSE_IDX_NAME}}'].refinementList["hierarchy.lvl0"].items[search.renderState['{{env.TYPESENSE_IDX_NAME}}'].refinementList["hierarchy.lvl0"].items.length - 1].value
+  }
+
+  function isLastItem(item) {
+    return item.value == search.renderState['{{env.TYPESENSE_IDX_NAME}}'].refinementList["hierarchy.lvl0"].items[search.renderState['{{env.TYPESENSE_IDX_NAME}}'].refinementList["hierarchy.lvl0"].items.length - 1].value
+  }
+
+  const productVersions = {}
+
+  function createProductVersion(item, product, isRefined) {
+    const version = {
+      name: item.value.replace(`${product} `, ""),
+      checked: isRefined,
+      component: itemContainer,
+      value: item.value
     }
+    if (!productVersions[product]) {
+      productVersions[product] = {};
+    }
+    if (!productVersions[product].versions) {
+      productVersions[product].versions = [];
+    }
+    if (!productVersions[product].versions.some(version => version.name === item.value.replace(`${product} `, ""))) {
+      productVersions[product].versions.push(version);
+    }
+  }
 
-    const productVersions = {}
+  function onProductTitleClick(event, productItemElement) {;
+    productItemElement.classList.toggle("version-block_expanded");
+    setProductTitleHeight(productItemElement);
+  }
 
-    function createProductVersion(item, product, isRefined) {
-        const version = {
-          name: item.value.replace(`${product} `, ""),
-          checked: isRefined,
-          component: itemContainer,
-          value: item.value
-        }
-        if (!productVersions[product]) {
-          productVersions[product] = {};
-        }
-        if (!productVersions[product].versions) {
-          productVersions[product].versions = [];
-        }
-        if (!productVersions[product].versions.some(version => version.name === item.value.replace(`${product} `, ""))) {
-          productVersions[product].versions.push(version);
-        }
-      }
+  function setProductTitleHeight(productItemElement, prodTitleElement = null) {
+    if (!prodTitleElement) {
+      prodTitleElement = productItemElement.querySelector('.version-title');
+    }
+    if (!productItemElement.classList.contains('version-block_expanded')) {
+      const prodTitleElementHeight = prodTitleElement.offsetHeight;
+      productItemElement.style.maxHeight = `${prodTitleElementHeight}px`;
+    } else {
+      productItemElement.style.maxHeight = '1000px';
+    }
+  }
 
-      function onProductTitleClick(event, productItemElement) {;
-          productItemElement.classList.toggle("version-block_expanded");
-          setProductTitleHeight(productItemElement);
-      }
+  {{!-- Хардкод для разработки --}}
+  {{!-- const products = [
+    "Web-клиент",
+    "Базовые объекты",
+    "Платформа",
+    "Описание схем стандартных карточек",
+    "Модуль интеграции с реестром МЧД",
+    "Сервис уведомлений",
+    "Руководство разработчика",
+    "Windows-клиент",
+    "Управление документами",
+    "Модуль интеграции с операторами ЭДО",
+    "Конструктор согласований",
+    "Настройка системы",
+    "Управление процессами",
+    "Обновление системы",
+    "Делопроизводство",
+    "Комплект утилит Resource Kit",
+    "Менеджер решений",
+    "Консоль управления Docsvision",
+    "Установка системы на Windows",
+    "Управление архивом",
+    "Установка системы на Linux",
+    "Модуль межфилиального обмена",
+    "Модуль интеграции с УЦ Контур",
+    "Служба фоновых операций",
+    "Сервис конвертации файлов",
+    "Модуль репликации справочников",
+    "Описание системы",
+    "Конструктор шаблонов",
+    "Конструкторы и справочники"
+  ] --}}
 
-      function setProductTitleHeight(productItemElement, prodTitleElement = null) {
-        if (!prodTitleElement) {
-          prodTitleElement = productItemElement.querySelector('.version-title');
-        }
-        if (!productItemElement.classList.contains('version-block_expanded')) {
-          const prodTitleElementHeight = prodTitleElement.offsetHeight;
-          productItemElement.style.maxHeight = `${prodTitleElementHeight}px`;
-        } else {
-          productItemElement.style.maxHeight = '1000px';
-        }
-      }
+  {{!-- products.forEach(product => {
+    productVersions[product] = {
+      versions: [],
+      component: null,
+      componentItem: null
+    }
+  }) --}}
 
-    {{!-- Хардкод для разработки --}}
-    {{!-- const products = [
-      "Web-клиент",
-      "Базовые объекты",
-      "Платформа",
-      "Описание схем стандартных карточек",
-      "Модуль интеграции с реестром МЧД",
-      "Сервис уведомлений",
-      "Руководство разработчика",
-      "Windows-клиент",
-      "Управление документами",
-      "Модуль интеграции с операторами ЭДО",
-      "Конструктор согласований",
-      "Настройка системы",
-      "Управление процессами",
-      "Обновление системы",
-      "Делопроизводство",
-      "Комплект утилит Resource Kit",
-      "Менеджер решений",
-      "Консоль управления Docsvision",
-      "Установка системы на Windows",
-      "Управление архивом",
-      "Установка системы на Linux",
-      "Модуль межфилиального обмена",
-      "Модуль интеграции с УЦ Контур",
-      "Служба фоновых операций",
-      "Сервис конвертации файлов",
-      "Модуль репликации справочников",
-      "Описание системы",
-      "Конструктор шаблонов",
-      "Конструкторы и справочники"
-    ] --}}
+  var components = {{{toJson site.components}}};
 
-    {{!-- products.forEach(product => {
-      productVersions[product] = {
+  let products = [];
+  for (let key in components) {
+    const productVersionsKey = components[key].latest?.title || components[key].versions[0]?.title;
+    if (productVersionsKey) {
+      productVersions[productVersionsKey] = {
         versions: [],
         component: null,
-        componentItem: null
-      }
-    }) --}}
+        componentItem: components[key]
+      };
+      products.push(components[key].latest?.title || components[key].versions[0]?.title);
+    }
+  }
 
-    var components = {{{toJson site.components}}};
+  search.on('render', function(data) {
+    createProductItems()
+  });
 
-    let products = [];
-    for (let key in components) {
-      const productVersionsKey = components[key].latest?.title || components[key].versions[0]?.title;
-      if (productVersionsKey) {
-        productVersions[productVersionsKey] = {
-          versions: [],
-          component: null,
-          componentItem: components[key]
-        };
-        products.push(components[key].latest?.title || components[key].versions[0]?.title);
-      }
+  const searchInputElement = document.querySelector('.ais-SearchBox-input');
+
+  window.searchMode.subscribe((isAiSearchMode) => {
+    if (isAiSearchMode) {
+      searchInputElement.addEventListener('keydown', aiSearchOnKeyDown);
+      return;
     }
 
-    search.on('render', function(data) {
-      createProductItems()
+    searchInputElement.removeEventListener('keydown', aiSearchOnKeyDown);
+  })
+
+  document.addEventListener('ai-search initialised', () => {
+    if (aiSearch.isAvailable) {
+      window.searchMode.switchElement.disabled = false;
+      if (window.location.search.includes('aiquery')) {
+        window.searchMode.toggleMode(true);
+        aiSearch.search(searchInputElement.value)
+          .then(renderElementsFromAiSearch)
+          .catch((error) => {
+            disableAiMode();
+            console.error(error);
+          });
+      }
+    }
+  })
+
+  document.addEventListener('ai-search limit is reached', () => {
+    disableAiMode();
+  })
+
+  async function aiSearchOnKeyDown(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+
+      try {
+        const data = await aiSearch.search(event.target.value);
+        renderElementsFromAiSearch(data);
+      } catch(error) {
+        disableAiMode();
+        console.error(error);
+      }
+    }
+  }
+
+  function disableAiMode() {
+    window.searchMode.toggleMode(false);
+    window.searchMode.switchElement.disabled = true;
+  }
+
+  function renderElementsFromAiSearch(data) {
+    const resultsContainer = document.getElementById('hits');
+    const productList = document.getElementById('product-list');
+
+    if (resultsContainer.hasChildNodes) {
+      resultsContainer.innerHTML = '';
+    }
+
+    if (productList.hasChildNodes) {
+      productList.innerHTML = '';
+    }
+
+    const container = document.createElement('div');
+    container.classList.add('hits-container');
+    const message = document.createElement('div');
+    message.classList.add('hits-message');
+    message.innerHTML = data.message?.content;
+    container.appendChild(message);
+    
+    const list = document.createElement('ul');
+    list.classList.add('hits-list');
+    const listItems = data.sources?.map(source => {
+      const listItem = document.createElement('li');
+      listItem.classList.add('hits-list-item');
+      const anchor = document.createElement('a');
+      anchor.classList.add('hits-list-link');
+      anchor.href = source.url;
+      anchor.textContent = source.title;
+      listItem.appendChild(anchor);
+      return listItem;
     });
+    list.append(...listItems);
+
+    container.appendChild(list);
+    resultsContainer.appendChild(container);
+  }
 </script>
 {{/if}}
   </div>

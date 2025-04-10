@@ -1,0 +1,106 @@
+
+.search-mode-switch-container {
+  position: relative;
+  width: 45px;
+  display: inline-block;
+  vertical-align: middle;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  text-align: left;
+}
+
+.switch-small .search-mode-switch-container {
+  width: 40px;
+}
+
+.search-mode-switch-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.search-mode-switch-label.switch-small {
+  font-size: 1em;
+}
+
+.search-mode-switch-checkbox {
+  display: none;
+}
+
+.search-mode-switch-body {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 0 solid var(--color-gray);
+  border-radius: 20px;
+  margin: 0;
+}
+
+.search-mode-switch-body:focus,
+.search-mode-switch-body > span:focus {
+  outline: none;
+}
+
+.search-mode-switch-inner {
+  width: 200%;
+  transform: translateX(-50%);
+  transition: transform 0.3s ease-in 0s;
+}
+
+.search-mode-switch-inner::after,
+.search-mode-switch-inner::before {
+  content: "";
+  display: block;
+  float: left;
+  width: 50%;
+  height: 24px;
+  padding: 0;
+  color: var(--color-white);
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.switch-small .search-mode-switch-inner::after,
+.switch-small .search-mode-switch-inner::before {
+  height: 20px;
+}
+
+.search-mode-switch-inner::before {
+  padding-left: 10px;
+  background-color: var(--link-font-color);
+}
+
+.search-mode-switch-inner::after {
+  padding-right: 10px;
+  background-color: var(--color-gray);
+}
+
+.search-mode-switch-switch {
+  width: 18px;
+  margin: 4px;
+  background: var(--color-white);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 18px;
+  border: 0 solid var(--color-gray);
+  border-radius: 20px;
+  transition: all 0.3s ease-in 0s;
+}
+
+.switch-small .search-mode-switch-switch {
+  width: 14px;
+  right: 16px;
+}
+
+.search-mode-switch-checkbox:checked + .search-mode-switch-body .search-mode-switch-inner {
+  transform: translateX(0);
+}
+
+.search-mode-switch-checkbox:checked + .search-mode-switch-body .search-mode-switch-switch {
+  right: 0;
+}

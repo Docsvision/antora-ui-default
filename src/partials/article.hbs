@@ -5,7 +5,10 @@
 {{#if (eq page.layout 'home')}}
       <div class="navbar-item search hide-for-print">
         <div id="search-field" class="field">
-          <input id="search-input" type="text" placeholder="Поиск"{{#if page.home}} autofocus{{/if}}>
+          <div class="search-container">
+            <input id="search-input" type="text" placeholder="Поиск"{{#if page.home}} autofocus{{/if}}>
+            {{> search-mode-switch}}
+          </div>
         </div>
       </div>
 {{/if}}

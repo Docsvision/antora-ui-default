@@ -9,7 +9,10 @@
       {{else}}
       <div class="navbar-item search hide-for-print">
         <div id="search-field" class="field search-field-header">
-          <input id="search-input" type="text" placeholder="Нажмите Enter"{{#if page.home}} autofocus{{/if}}>
+          <div class="search-container">
+            <input id="search-input" type="text" placeholder="Нажмите Enter"{{#if page.home}} autofocus{{/if}}>
+             {{> search-mode-switch small=true}}
+          </div>
           <button class="header-search-button">Искать</button>
         </div>
       </div>
