@@ -33,6 +33,10 @@ export class AiSearch {
     const params = new URLSearchParams(window.location.search)
     const token = params.get('token')
 
+    if (!token) {
+      return
+    }
+
     const response = await fetch(`${this.#apiPath}/account/login`, {
       method: 'POST',
       headers: {

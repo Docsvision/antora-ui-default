@@ -36,11 +36,12 @@
 </main>
 <div id="internal-product-list" class="search-panel__internal-product-list"></div>
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" class="icon nav-version-icon template-version-icon search-version-icon"><use xlink:href="#icon-nav-version"></use></svg>
+<script src="{{uiRootPath}}/js/vendor/marked.min.js"></script>
 <script type="module">
   import { AiSearch } from '{{uiRootPath}}/js/vendor/ai-search.js';
   import { SearchMode } from '{{uiRootPath}}/js/vendor/search-mode.js';
 
-  const API_PATH = 'https://help.docsvision.com/api/search';
+  const API_PATH = '/api/search';
   const switchElement = document.getElementById("search-mode-switch");
 
   const searchMode = new SearchMode(switchElement);
@@ -451,7 +452,7 @@
     container.classList.add('hits-container');
     const message = document.createElement('div');
     message.classList.add('hits-message');
-    message.innerHTML = data.message?.content;
+    message.innerHTML = marked.parse(data.message?.content);
     container.appendChild(message);
     
     const list = document.createElement('ul');
