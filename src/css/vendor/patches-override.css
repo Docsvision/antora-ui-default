@@ -6,10 +6,6 @@ main > .content {
   margin: 2rem;
 }
 
-body {
-  font-size: calc(16 / var(--rem-base) * 1rem);
-}
-
 .content article nav.pagination a {
   color: var(--link-font-color);
 }
