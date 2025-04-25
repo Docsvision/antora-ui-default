@@ -16,11 +16,15 @@
 }
 
 .search-mode-switch-label {
-  display: flex;
-  align-items: center;
+  display: none;
   gap: 8px;
   cursor: pointer;
   white-space: nowrap;
+}
+
+.search-mode-switch-label.available {
+  display: flex;
+  align-items: center;
 }
 
 .search-mode-switch-label.switch-small {

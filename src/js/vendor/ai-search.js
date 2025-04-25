@@ -43,7 +43,7 @@ export class AiSearch {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(token),
+      body: JSON.stringify({ token }),
     })
     const data = await response.json()
 
@@ -67,7 +67,7 @@ export class AiSearch {
     const searchRequestBody = {
       content: {
         message,
-        site: [window.location.origin + window.location.pathname],
+        site: [window.location.origin + '/' + window.location.pathname.split('/')[1]],
       },
     }
     const response = await fetch(this.#apiPath, {
