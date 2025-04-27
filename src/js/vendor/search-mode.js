@@ -1,10 +1,12 @@
 export class SearchMode {
   #switchElement
+  #labelElement
   #isAiSearchMode = false
   #modeListeners = new Set()
 
   constructor (switchElement) {
     this.#switchElement = switchElement
+    this.#labelElement = switchElement.labels?.[0]
     this.#switchElement.checked = this.#isAiSearchMode
     this.#switchElement.addEventListener('change', (event) => {
       this.toggleMode(event.target.checked)
@@ -17,6 +19,24 @@ export class SearchMode {
 
   get switchElement () {
     return this.#switchElement
+  }
+
+  get labelElement () {
+    return this.#labelElement
+  }
+
+  showElement () {
+    if (this.#labelElement) {
+      this.#labelElement.classList.add('available')
+    }
+    this.#switchElement.disabled = false
+  }
+
+  hideElement () {
+    if (this.#labelElement) {
+      this.#labelElement.classList.remove('available')
+    }
+    this.#switchElement.disabled = true
   }
 
   toggleMode (value) {

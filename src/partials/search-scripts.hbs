@@ -42,8 +42,7 @@
 
   document.addEventListener('ai-search initialised', () => {
     if (aiSearch.isAvailable) {
-      searchMode.switchElement.classList.add('available');
-      searchMode.switchElement.disabled = false;
+      searchMode.showElement();
     }
   })
 

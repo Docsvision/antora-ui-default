@@ -400,8 +400,7 @@
 
   document.addEventListener('ai-search initialised', () => {
     if (aiSearch.isAvailable) {
-      searchMode.switchElement.classList.add('available');
-      searchMode.switchElement.disabled = false;
+      searchMode.showElement();
       if (window.location.search.includes('aiquery')) {
         searchMode.toggleMode(true);
         aiSearch.search(searchInputElement.value)
@@ -434,8 +433,7 @@
 
   function disableAiMode() {
     searchMode.toggleMode(false);
-    searchMode.switchElement.disabled = true;
-    searchMode.switchElement.classList.remove('available');
+    searchMode.hideElement();
   }
 
   function renderElementsFromAiSearch(data) {
