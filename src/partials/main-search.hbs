@@ -399,15 +399,20 @@
   })
 
   document.addEventListener('ai-search initialised', () => {
+    searchMode.showElement();
     if (aiSearch.isAvailable) {
-      searchMode.showElement();
+      searchMode.enableElement();
       if (window.location.search.includes('aiquery')) {
         searchMode.toggleMode(true);
+        searchInputElement.disabled = true;
         aiSearch.search(searchInputElement.value)
           .then(renderElementsFromAiSearch)
           .catch((error) => {
             disableAiMode();
             console.error(error);
+          })
+          .finally(() => {
+            searchInputElement.disabled = false;
           });
       }
     }
@@ -422,18 +427,21 @@
       event.preventDefault();
 
       try {
+        searchInputElement.disabled = true;
         const data = await aiSearch.search(event.target.value);
         renderElementsFromAiSearch(data);
       } catch(error) {
         disableAiMode();
         console.error(error);
+      } finally {
+        searchInputElement.disabled = false;
       }
     }
   }
 
   function disableAiMode() {
     searchMode.toggleMode(false);
-    searchMode.hideElement();
+    searchMode.disableElement();
   }
 
   function renderElementsFromAiSearch(data) {

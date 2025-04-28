@@ -29,13 +29,19 @@ export class SearchMode {
     if (this.#labelElement) {
       this.#labelElement.classList.add('available')
     }
-    this.#switchElement.disabled = false
   }
 
   hideElement () {
     if (this.#labelElement) {
       this.#labelElement.classList.remove('available')
     }
+  }
+
+  enableElement () {
+    this.#switchElement.disabled = false
+  }
+
+  disableElement () {
     this.#switchElement.disabled = true
   }
 

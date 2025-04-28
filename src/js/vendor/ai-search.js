@@ -45,30 +45,30 @@ export class AiSearch {
       },
       body: JSON.stringify({ token }),
     })
-    const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(`Ошибка при авторизации: ${data.message || response.statusText}`)
+      throw new Error(`Ошибка при авторизации: ${response.statusText}`)
     }
   }
 
   async getLimits () {
     const response = await fetch(`${this.#apiPath}/limits`)
-    const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(`Ошибка при запросе лимита: ${data.message || response.statusText}`)
+      throw new Error(`Ошибка при запросе лимита: ${response.statusText}`)
     }
+
+    const data = await response.json()
 
     return data
   }
 
-  async search (message) {
+  async search (content) {
     const searchRequestBody = {
-      content: {
-        message,
-        site: [window.location.origin + '/' + window.location.pathname.split('/')[1]],
+      message: {
+        content,
       },
+      site: ['https://help.docsvision.com/' + window.location.pathname.split('/')[1]],
     }
     const response = await fetch(this.#apiPath, {
       method: 'POST',
@@ -78,11 +78,12 @@ export class AiSearch {
       },
       body: JSON.stringify(searchRequestBody),
     })
-    const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(`Ошибка при запросе: ${data.message || response.statusText}`)
+      throw new Error(`Ошибка при запросе: ${response.statusText}`)
     }
+
+    const data = await response.json()
 
     this.#requestCount -= 1
 

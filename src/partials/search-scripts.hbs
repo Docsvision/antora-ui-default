@@ -33,6 +33,7 @@
       goToSearchPage(e.target.value);
     }
   })
+
   document.querySelector('.header-search-button')?.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -41,8 +42,10 @@
   })
 
   document.addEventListener('ai-search initialised', () => {
+    searchMode.showElement();
+
     if (aiSearch.isAvailable) {
-      searchMode.showElement();
+      searchMode.enableElement();
     }
   })
 
@@ -50,11 +53,11 @@
 
   searchMode.subscribe((isAiSearchMode) => {
     if (isAiSearchMode) {
-      docSearchInstance.autocomplete.autocomplete.destroy()
+      docSearchInstance.autocomplete.autocomplete.destroy();
       return
     }
 
-    docSearchInstance = initDocsearch()
+    docSearchInstance = initDocsearch();
   })
 
   function initDocsearch() {
