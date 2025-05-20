@@ -41,7 +41,9 @@
     goToSearchPage(searchInput.value);
   })
 
-  document.addEventListener('ai-search initialised', () => {
+  document.addEventListener('aiSearchStatusChanged', (event) => {
+    if (event.detail !== 'initialised') return
+
     searchMode.showElement();
 
     if (aiSearch.isAvailable) {

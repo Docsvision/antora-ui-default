@@ -23,7 +23,8 @@ export class AiSearch {
 
       const response = await this.getLimits()
       this.#requestCount = response.left
-      document.dispatchEvent(new Event('ai-search initialised'))
+
+      document.dispatchEvent(new CustomEvent('aiSearchStatusChanged', { detail: 'initialised' }))
     } catch (error) {
       console.error(error)
     }
@@ -70,6 +71,7 @@ export class AiSearch {
       },
       site: ['https://help.docsvision.com/' + window.location.pathname.split('/')[1]],
     }
+    document.dispatchEvent(new CustomEvent('aiSearchStatusChanged', { detail: 'inProgress' }))
     const response = await fetch(this.#apiPath, {
       method: 'POST',
       headers: {
@@ -80,6 +82,7 @@ export class AiSearch {
     })
 
     if (!response.ok) {
+      document.dispatchEvent(new CustomEvent('aiSearchStatusChanged', { detail: 'error' }))
       throw new Error(`Ошибка при запросе: ${response.statusText}`)
     }
 
@@ -88,9 +91,10 @@ export class AiSearch {
     this.#requestCount -= 1
 
     if (!this.#requestCount) {
-      document.dispatchEvent(new Event('ai-search limit is reached'))
+      document.dispatchEvent(new CustomEvent('aiSearchStatusChanged', { detail: 'limitIsReached' }))
     }
 
+    document.dispatchEvent(new CustomEvent('aiSearchStatusChanged', { detail: 'success' }))
     return data
   }
 }

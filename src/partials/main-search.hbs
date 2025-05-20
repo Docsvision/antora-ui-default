@@ -75,7 +75,6 @@
   });
 
   const searchClient = typesenseInstantsearchAdapter.searchClient;
-  let isAiQuery = window.location.search.includes('aiquery');
 
   const search = instantsearch({
     indexName: '{{env.TYPESENSE_IDX_NAME}}',
@@ -101,13 +100,10 @@
       },
     },
     searchFunction: async function (helper) {
-      if (isAiQuery) {
-        isAiQuery = null;
+      if (searchMode.isAiSearchMode || window.location.search.includes('aiquery')) {
         return;
       }
-      if (searchMode.isAiSearchMode) {
-        return;
-      }
+
       if (helper.state.query === '') {
         document.querySelector('.search-panel__results').classList.add('search-panel__results_empty');
         document.querySelector('.search-panel__product-list').classList.add('search-panel__product-list_empty');
@@ -391,50 +387,71 @@
 
   searchMode.subscribe((isAiSearchMode) => {
     if (isAiSearchMode) {
-      searchInputElement.addEventListener('keydown', aiSearchOnKeyDown);
+      searchInputElement.addEventListener('keydown', handleAiSearchKeyDown);
+      productsList.style.minWidth = 'auto';
       return;
     }
 
-    searchInputElement.removeEventListener('keydown', aiSearchOnKeyDown);
+    searchInputElement.removeEventListener('keydown', handleAiSearchKeyDown);
+    productsList.style.removeProperty('min-width');
   })
 
-  document.addEventListener('ai-search initialised', () => {
+  const searchLoaderShiftObserver = new ResizeObserver(() => updateSearchLoaderPosition());
+
+  document.addEventListener('aiSearchStatusChanged', (event) => {
+    switch(event.detail) {
+      case 'initialised':
+        handleAiSearchInitialised();
+        break;
+      case 'limitIsReached':
+        disableAiMode();
+        break;
+      case 'inProgress':
+        clearSearchContent();
+        searchInputElement.disabled = true;
+        renderSearchLoader();
+        break;
+      case 'error':
+        clearSearchContent();
+        disableAiMode();
+        searchInputElement.disabled = false;
+        break;
+      case 'success':
+        clearSearchContent();
+        searchInputElement.disabled = false;
+        break;
+      default: 
+        throw new Error(`Unknown ai-search status: "${event.detail}"`);
+    }
+  })
+
+  async function handleAiSearchInitialised() {
     searchMode.showElement();
+
     if (aiSearch.isAvailable) {
       searchMode.enableElement();
       if (window.location.search.includes('aiquery')) {
         searchMode.toggleMode(true);
-        searchInputElement.disabled = true;
-        aiSearch.search(searchInputElement.value)
-          .then(renderElementsFromAiSearch)
-          .catch((error) => {
-            disableAiMode();
-            console.error(error);
-          })
-          .finally(() => {
-            searchInputElement.disabled = false;
-          });
+        
+        try {
+          const data = await aiSearch.search(searchInputElement.value);
+          renderElementsFromAiSearch(data);
+        } catch(error) {
+          console.error(error);
+        }
       }
     }
-  })
+  }
 
-  document.addEventListener('ai-search limit is reached', () => {
-    disableAiMode();
-  })
-
-  async function aiSearchOnKeyDown(event) {
+  async function handleAiSearchKeyDown(event) {
     if (event.key === 'Enter') {
       event.preventDefault();
 
       try {
-        searchInputElement.disabled = true;
         const data = await aiSearch.search(event.target.value);
         renderElementsFromAiSearch(data);
       } catch(error) {
-        disableAiMode();
         console.error(error);
-      } finally {
-        searchInputElement.disabled = false;
       }
     }
   }
@@ -444,7 +461,7 @@
     searchMode.disableElement();
   }
 
-  function renderElementsFromAiSearch(data) {
+  function clearSearchContent() {
     const resultsContainer = document.getElementById('hits');
     const productList = document.getElementById('product-list');
 
@@ -456,6 +473,36 @@
       productList.innerHTML = '';
     }
 
+    searchLoaderShiftObserver && searchLoaderShiftObserver.disconnect();
+  }
+
+  function renderSearchLoader() {
+    const resultsContainer = document.getElementById('hits');
+
+    const loader = `{{> search-loader}}`;
+    resultsContainer.innerHTML = loader;
+
+    updateSearchLoaderPosition(false);
+    searchLoaderShiftObserver && searchLoaderShiftObserver.observe(searchInputElement);
+  }
+
+  function updateSearchLoaderPosition(withTransition = true) {
+    const loaderEl = document.querySelector('.scanning-pl');
+    if (!searchInputElement || !loaderEl) return;
+
+    const shift = (searchInputElement.offsetWidth - loaderEl.offsetWidth) / 2;
+    if (shift <= 0) return;
+
+    if (withTransition) {
+      loaderEl.style.transition = 'transform 0.3s ease-out';
+    }
+
+    loaderEl.style.transform = `translateX(${shift}px)`;
+  }
+
+  function renderElementsFromAiSearch(data) {
+    const resultsContainer = document.getElementById('hits');
+   
     const container = document.createElement('div');
     container.classList.add('hits-container');
     const message = document.createElement('div');
@@ -463,7 +510,7 @@
     message.innerHTML = marked.parse(data.message?.content);
     container.appendChild(message);
     
-    const list = document.createElement('ul');
+    const list = document.createElement('ol');
     list.classList.add('hits-list');
     const listItems = data.sources?.map(source => {
       const listItem = document.createElement('li');

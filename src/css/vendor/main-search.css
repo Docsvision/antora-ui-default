@@ -13,3 +13,159 @@
 .search-panel__searchbox {
   margin: 10px 0;
 }
+
+.scanning-pl {
+  width: 180px;
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scanning-pl-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  opacity: 0.5;
+  -webkit-animation: up-down 1s ease infinite alternate;
+  animation: up-down 1s ease infinite alternate;
+}
+
+@keyframes up-down {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: -220px;
+  }
+}
+
+.file-wp {
+  position: relative;
+}
+
+.square {
+  background-color: #3359cc;
+  width: 5px;
+  height: 5px;
+  display: block;
+  position: absolute;
+}
+
+.square-1 {
+  top: 25px;
+  right: -15px;
+  animation: square-1 1.5s ease infinite;
+}
+
+.square-2 {
+  top: 20px;
+  left: -40%;
+  animation: square-2 1.5s ease infinite;
+}
+
+.square-3 {
+  top: 55px;
+  left: -25px;
+  animation: square-3 1.5s ease infinite;
+  animation-delay: 0.3s;
+}
+
+.square-4 {
+  top: 65px;
+  right: -15px;
+  animation: square-4 1.5s ease infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes square-1 {
+  0% {
+    right: 10px;
+    opacity: 0;
+    transform: scale(0.2);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(2);
+  }
+
+  100% {
+    transform: scale(1.5) translateX(20px);
+    opacity: 0.1;
+  }
+}
+
+@keyframes square-2 {
+  0% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  35% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1) translateX(20px);
+    left: 10px;
+  }
+}
+
+@keyframes square-3 {
+  0% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  35% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1) translateX(20px);
+    left: 10px;
+  }
+}
+
+@keyframes square-4 {
+  0% {
+    right: 10px;
+    opacity: 0;
+    transform: scale(0.2);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(2);
+  }
+
+  100% {
+    transform: scale(1) translateX(30px);
+    opacity: 0.1;
+  }
+}
+
+.file {
+  animation: file 1.5s linear infinite alternate;
+}
+
+@keyframes file {
+  0% {
+    transform: translateY(3px);
+  }
+
+  50% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(1px);
+  }
+}
