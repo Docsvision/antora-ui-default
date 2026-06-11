@@ -344,3 +344,43 @@ If you need to access the virtual file for the current page, you can do so as fo
 
 Currently, there is no equivalent helper for resolving a non-page resource, but that may be added in the future.
 In the meantime, you could develop your own helper to provide that functionality.
+
+== log
+
+To aid with debugging, you can use Handlebars`' built-in `log` helper to print information from the UI model to the console.
+The helper accepts a single value or variable and will format it in the same way as the `console.log` function in Node.js.
+
+Let's use the `log` helper to print the URL of each page in the site.
+We'll add this logic to the [.path]_footer-content.hbs_ partial.
+Since the template logic is going to run on every page, we add a conditional so that it only runs on the site start page.
+We know it's the site start page because the value of `page.url` will match the value of `site.homeUrl`.
+
+[,html]
+----
+{{#if (eq site.homeUrl page.url)}}
+{{#each site.components}}
+{{#each ./versions}}
+{{#each ./files}}
+{{#if (eq ./src.family 'page')}}
+{{log ./pub.url}}
+{{/if}}
+{{/each}}
+{{/each}}
+{{/each}}
+{{/if}}
+----
+
+Here we are leveraging the dynamic `files` property on each component verison introduced in Antora 3.2.0.
+If you are using an earlier version of Antora, you will need to create a helper that returns the files for a component version.
+To ensure we're only logging pages, we check whether the family is `page`.
+
+This snippet prints the URL of each page.
+If you want to print the whole object, use the following statement instead:
+
+[,html]
+----
+{{log this}}
+----
+
+You could use a helper to simplify the logic.
+In fact, a helper can print to the console itself using `console.log`.
