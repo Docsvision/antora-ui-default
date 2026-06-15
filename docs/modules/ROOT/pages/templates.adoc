@@ -357,7 +357,7 @@ We know it's the site start page because the value of `page.url` will match the 
 
 [,html]
 ----
-{{#if (eq site.homeUrl page.url)}}
+{{#if page.home}}
 {{#each site.components}}
 {{#each ./versions}}
 {{#each ./files}}
