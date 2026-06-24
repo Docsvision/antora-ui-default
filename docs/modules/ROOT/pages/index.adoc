@@ -1,4 +1,5 @@
 = Antora Default UI Documentation
+:navtitle: {page-component-title}
 // Settings:
 :hide-uri-scheme:
 // URLs:
