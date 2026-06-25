@@ -1,6 +1,11 @@
 = Antora Default UI Documentation
 :navtitle: {page-component-title}
 // Settings:
+ifdef::loader-assembler[]
+:!assembly-style:
+:preface-title: Introduction
+:assembly-header-attributes: preface-title
+endif::[]
 :hide-uri-scheme:
 // URLs:
 :url-antora: https://antora.org
