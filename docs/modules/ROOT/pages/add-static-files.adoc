@@ -158,7 +158,7 @@ static_files:
 ----
 
 With this configuration in place, Antora will read the favicon images from the UI bundle and copy them to the root of the site.
-Static files that are not identified are still copied to UI output directory.
+Static files that are not matched by a pattern in the `static_files` key are copied directly to UI output directory.
 The result of the above [.path]_ui.yml_ would be the following:
 
 .Contents of site output directory

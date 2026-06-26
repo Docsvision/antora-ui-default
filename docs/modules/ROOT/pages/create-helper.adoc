@@ -5,7 +5,7 @@ A helper is a JavaScript function that's invoked by Handlebars when it comes acr
 
 == Helper anatomy
 
-A helper must be defined as a JavaScript file in the [.path]_helpers_ directory of the UI bundle.
+A helper must be defined as a (CommonJS module) JavaScript file in the [.path]_helpers_ directory of the UI bundle.
 The basename of the file without the file extension will be used as the function name.
 For example, if the helper is located at [.path]_helpers/join.js_, the name of the function will be `join`.
 
@@ -19,6 +19,14 @@ Handlebars.registerHelper('join', function () { ... })
 
 The helper file should export exactly one default function.
 The name of the function in the file does not matter.
+
+A UI helper is a CommonJS module.
+That means it has access to the global `module` object.
+The id and filename properties of that `module` object is basename of the helper relative to the pseudo `ui-helpers` subdirectory in the playbook directory.
+The `require` function operates from that folder.
+That means you can require packages that are dependencies of the playbook project.
+The parent property of the module is the `@antora/page-composer` module.
+That means you can use `module.parent.require` to require packages from the Antora installation (e.g., `./build-ui-model` or `@antora/logger`).
 
 Here's a template of a helper function you can use as a starting point:
 
@@ -49,7 +57,7 @@ always true!
 The round brackets are always required around a helper function call (except in cases when they're implied by Handlebars).
 
 The helper can access top-level variables in the template by accepting the template context as the final parameter.
-The top-level variables are stored in in the `data.root` property of this object.
+The top-level variables are stored in the `data.root` property of this object.
 
 .new-helper.js
 [,js]
