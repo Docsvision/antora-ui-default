@@ -3,10 +3,7 @@
   <div class="context">
     <span class="title">{{page.component.title}}</span>
     <span class="version">{{#if (or page.componentVersion.version (ne page.componentVersion.displayVersion 'default'))}}{{page.componentVersion.displayVersion}}{{/if}}</span>
-    {{#if (or 
-      (startsWith page.url '/webclient/6.1/layouts/ctrl/')
-      (startsWith page.url '/webclient/5.5.17/layouts/ctrl/')
-    )}}
+    {{#if (contains page.url '/layouts/ctrl/')}}
     <span style="display: none;" class="page-url">{{page.url}}</span>
     {{/if}}
   </div>

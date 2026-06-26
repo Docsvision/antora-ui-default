@@ -1,6 +1,0 @@
-'use strict'
-
-startsWith: function(string, prefix) {
-        if (!string || !prefix) return false;
-        return string.startsWith(prefix);
-      }
