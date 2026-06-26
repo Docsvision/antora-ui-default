@@ -4,7 +4,7 @@
     <span class="title">{{page.component.title}}</span>
     <span class="version">{{#if (or page.componentVersion.version (ne page.componentVersion.displayVersion 'default'))}}{{page.componentVersion.displayVersion}}{{/if}}</span>
     {{#if (contains page.url '/layouts/ctrl/')}}
-    <span style="display: none;" class="page-url">{{page.url}}</span>
+    <span class="page-url">{{page.url}}</span>
     {{/if}}
   </div>
   {{/if}}
