@@ -4,7 +4,15 @@
 {{#if (eq page.layout '404')}}
 {{> article-404}}
 {{else}}
-
+{{#if (and 
+    (eq @root.page.component.title "Делопроизводство 4.5")
+    (eq @root.page.componentVersion.version "5.5.5")
+)}}
+<div class="article-banner">
+  <i class="fas fa-file-alt"></i>
+  <p>Карточки модуля "Делопроизводство 4.5" устарели и скоро будут сняты с поддержки.</p>
+</div>
+{{/if}}
 {{#unless (or (ne page.attributes.hide-view-latest undefined) (eq page.componentVersion page.component.latest))}}
 {{#with page.latest}}
 {{#if ./missing}}
@@ -25,15 +33,6 @@
 {{/if}}
 {{/with}}
 {{/unless}}
-{{#if (and 
-    (eq @root.page.component.title "Делопроизводство 4.5")
-    (eq @root.page.componentVersion.version "5.5.5")
-)}}
-<div class="article-banner">
-    <i class="fas fa-file-alt"></i>
-    <p>Карточки модуля "Делопроизводство 4.5" устарели и скоро будут сняты с поддержки.</p>
-</div>
-{{/if}}
 <div class="content">
 {{> toc}}
 {{> article}}
