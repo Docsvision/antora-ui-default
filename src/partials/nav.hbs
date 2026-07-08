@@ -2,8 +2,8 @@
   <nav class="nav" aria-label="Docs">
   <div class="context">
     <span class="title">{{page.component.title}} {{~#if (and (eq .. @root.page.component) (eq this @root.page.componentVersion))}} is-current{{/if~}} {{~#if (eq this ../latest)}} is-latest{{/if}} {{page.version}}</span>
-    {{#if (contains page.url "/layouts/ctrl/")}}
-    <span class="page-url">{{page.url}}</span>
+    {{#if (contains page.relativeSrcPath "ctrl/")}}
+    <span class="ctrl-nm">{{ctrlNm page.relativeSrcPath}}</span>
     {{/if}}
   </div>
   <div class="nav-tree-toggle-container">
