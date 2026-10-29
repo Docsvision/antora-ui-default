@@ -165,10 +165,6 @@ body {
   cursor: pointer;
 }
 
-.navbar-menu .navbar-end .version-toggler .navbar-link {
-  background: hsl(68 64% 43% / 1);
-}
-
 .navbar-item.has-dropdown {
   padding: 0;
 }
