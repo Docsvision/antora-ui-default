@@ -1,17 +1,8 @@
 {{#if (eq env.SITE_SEARCH_PROVIDER "Typesense")}}
 <script src="{{uiRootPath}}/js/vendor/docsearch.min.js"></script>
 <script>
-  const collectionName = '{{env.TYPESENSE_IDX_NAME}}';
   const goToSearchPage = (value) => {
-    let hrefUrl = '/search?';
-    if (collectionName !== "help") {
-      //пример адреса: https://doc-online-vdv.digdes.com/dv5/upgrade/
-      //"dv5" - версия сайта
-      //добавляем версию сайта в hrefUrl перед '/search?'
-      const siteVersion = window.location.pathname.split('/')[1];
-      hrefUrl = '/' + siteVersion + '/' + hrefUrl;
-    }
-     document.location.href = hrefUrl + '{{env.TYPESENSE_IDX_NAME}}[query]=' + value;
+    document.location.href = '{{{or site.url siteRootPath}}}/search?{{env.TYPESENSE_IDX_NAME}}[query]=' + value;
   }
   const searchInput = document.querySelector('#search-input');
   searchInput?.addEventListener('keydown', function (e) {
